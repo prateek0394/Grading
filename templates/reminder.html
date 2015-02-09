@@ -1,0 +1,68 @@
+{%extends 'blank.html'%}
+{%block title%}Reminder{%endblock%}
+{%block head_content %}
+<style type="text/css">
+  table tr{
+    height: 3em;
+  }
+  input [type="text"]{
+    width:100%;
+  }
+</style>
+<script type="text/javascript">
+  function sendMail(){
+    var tox = document.getElementById('to').value;
+    var subx = document.getElementById('sub').value;
+    var msgx = document.getElementById('msg').value;
+    // alert(to+sub+msg);
+
+$.getJSON('/grade/reminder', {to:tox,sub:subx,msg:msgx}, function(data, jqXHR){
+    if(data[0]==='OK'){
+    alert("Mail sent");
+    }else{
+      alert("Error Occured");
+    }
+  });
+  }
+
+</script>
+{%endblock%}
+{%block main_content%}
+<section class="wrapper">
+     <br><br>
+     <div class="showback">
+
+                   <button class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModal" id="reportGen">
+              Send Reminder
+            </button>
+            
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Reminder</h4>
+                  </div>
+                  <div class="modal-body">
+                    <table style="width:100%">
+                    <tr>
+                    <td>To : </td><td><input type="text" id="to" style="width:100%"></td>
+                    </tr>
+                    <tr>
+                    <td>Sub:</td> <td><input type="text" id= "sub" style="width:100%"></td>
+                    </tr>
+                    <tr>
+                    <td>Msg:</td><td><textarea style="width:100%" id="msg" rows="5" id="dispComment101"></textarea></td>
+                  </table>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="dismis">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="sendMail()">Submit</button>
+                  </div>
+                </div>
+              </div>
+            </div>              
+              </div>
+              </section>
+{%endblock%}

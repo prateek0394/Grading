@@ -1,0 +1,175 @@
+{% extends "blank.html"%}
+{%block title%}
+Courses
+{%endblock%}
+{%block head_content %}
+<script type="text/javascript">
+ 
+var varID = [];
+
+function newRow(codev,titlev){
+var z =makeid();
+var code  = document.createElement('input');
+code.id = "code"+z;
+code.type = "text";
+code.value = codev;
+code.setAttribute("disabled",true);
+var title  = document.createElement('input');
+title.id = "course"+z;
+title.type = "text";
+title.value = titlev;
+title.setAttribute("disabled",true);
+var modify  = document.createElement('input');
+modify.type = "submit";
+modify.value = "Modify";
+modify.id = "modify"+z;
+modify.onclick = function(){editRow(z);};
+var saveR  = document.createElement('input');
+saveR.type = "submit";
+saveR.value = "Save";
+saveR.id = "save"+z;
+saveR.style.display = "none";
+saveR.onclick = function(){saveRow(z);};
+var delR  = document.createElement('input');
+delR.type = "submit";
+delR.value = "Delete";
+delR.id="del"+z;
+delR.onclick = function(){delRow(z);};
+var copyR  = document.createElement('input');
+copyR.type = "submit";
+copyR.value = "Create Copy";
+copyR.id="copy"+z;
+copyR.onclick = function(){newRow(document.getElementById('code'+z).value,document.getElementById('course'+z).value);};
+var col1 = document.createElement('td');
+col1.appendChild(code);
+var col2 = document.createElement('td');
+col2.appendChild(title);
+var col3 = document.createElement('td');
+col3.appendChild(modify);
+col3.appendChild(saveR);
+var col4 = document.createElement('td');
+col4.appendChild(delR);
+var col5 = document.createElement('td');
+col5.appendChild(copyR);
+var row = document.createElement('tr');
+row.id = "row"+z;
+row.appendChild(col1);
+row.appendChild(col2);
+row.appendChild(col3);
+row.appendChild(col4);
+row.appendChild(col5);
+document.getElementById('courseTable').appendChild(row);
+}
+ function editRow(id){
+    document.getElementById('code'+id).removeAttribute('disabled');
+    document.getElementById('course'+id).removeAttribute('disabled');
+    document.getElementById('save'+id).style.display = "inline";
+    document.getElementById('modify'+id).style.display = "none";
+}
+function saveRow(id){
+  //ajax code to save data
+if(validate(id)){
+var isnum = /^\d+$/.test(id);
+if(!isnum){
+    $.getJSON('/grade/courses', {action:0,code:document.getElementById('code'+id).value,title:document.getElementById('course'+id).value}, function(data, jqXHR){
+    if(data[0]==='OK'){
+       //code to change id
+       var lst = ['row','code','course','save','modify','copy','del'];
+       for(var i=0;i<lst.length;i++)
+       document.getElementById(lst[i]+id).id = lst[i]+data[1];
+     //code to change id in onclicks
+     var x;
+     x = document.getElementById('copy'+data[1]);
+     x.onclick = function(){newRow(document.getElementById('code'+data[1]).value,document.getElementById('course'+data[1]).value);};
+     x = document.getElementById('del'+data[1]);
+     x.onclick = function(){delRow(data[1]);};
+     x = document.getElementById('modify'+data[1]);
+     x.onclick = function(){editRow(data[1]);};
+     x = document.getElementById('save'+data[1]);
+     x.onclick = function(){saveRow(data[1]);};
+      document.getElementById('code'+data[1]).setAttribute('disabled',true);
+    document.getElementById('course'+data[1]).setAttribute('disabled',true);
+    document.getElementById('modify'+data[1]).style.display = "inline";
+    document.getElementById('save'+data[1]).style.display = "none"; 
+     alert('Created\n');
+}else{alert('Error!!!!!!!!!!!!!!!!!');}});}
+
+else{
+$.getJSON('/grade/courses', {action:1,pk:id,code:document.getElementById('code'+id).value,title:document.getElementById('course'+id).value}, function(data, jqXHR){
+    if(data[0]==='OK'){
+       document.getElementById('code'+id).setAttribute('disabled',true);
+    document.getElementById('course'+id).setAttribute('disabled',true);
+    document.getElementById('modify'+id).style.display = "inline";
+    document.getElementById('save'+id).style.display = "none"; 
+       alert('Updated\n');
+}else{alert('Error!!!!!!!!!!!!!!!!!');}});}
+
+}
+}
+
+function delRow(id){
+  //make a ajax call to remove the course with pk: id 
+      $.getJSON('/grade/courses', {action:2,pk:id}, function(data, jqXHR){
+    if(data[0]==='OK'){
+      document.getElementById('row'+id).remove();
+       alert('Deleted\n');
+}else{
+  alert('Error!!!!!!!!!!!!!!!!!');
+}
+});
+
+}
+function makeid()
+{
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for( var i=0; i < 3; i++ )
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    if (varID.indexOf(text) > -1){
+     return makeid();
+    }
+
+    return text;
+}
+function validate(id){
+  if(document.getElementById('code'+id).value=="" || document.getElementById('course'+id).value==""){
+    alert("Please Fill the Blanks First!!!!");
+    return false;
+  }else{return true;}}
+</script>
+{%endblock%}
+{%block main_content%}
+          <section class="wrapper">
+          <div class="row mt">
+            <div class="col-lg-12">
+                      <div class="content-panel">
+                      <!-- <h4><i class="fa fa-angle-right"></i> Responsive Table</h4> -->
+                          <section id="unseen">
+                            <table class="table table-bordered table-striped table-condensed" >
+                              <thead>
+                              <tr>
+                                  <th>Course Code</th>
+                                  <th>Curse Title</th>
+                                   </tr>
+                              </thead>
+                              <tbody id="courseTable">
+                              {% for i in courseData %}
+                              <tr id="row{{i.0}}">
+                                  <td><input type="text" id="code{{i.0}}" disabled="" value="{{i.1}}"></td>
+                                  <td><input type="text" id="course{{i.0}}" disabled="" value="{{i.2}}"></td>
+                                 <td ><input type="submit" value="Modify" onclick="editRow('{{i.0}}')" id="modify{{i.0}}"><input type="submit" value="Save" style="display:none" onclick="saveRow('{{i.0}}')" id="save{{i.0}}"></td>
+                                  <td><input type="submit" value="Delete" onclick="delRow('{{i.0}}')" id="del{{i.0}}"></td>
+                                   <td><input type="submit" value="Create Copy" onclick="newRow(document.getElementById('code{{i.0}}').value,document.getElementById('course{{i.0}}').value)" id="copy{{i.0}}"></td>
+                              </tr>
+                              {% endfor %}
+                              </tbody>
+                          </table>
+                          <input type="submit" value="New" onclick="newRow('','')">
+                          </section>
+                  </div><!-- /content-panel -->
+               </div><!-- /col-lg-4 -->     
+        </div><!-- /row -->
+    </section><!--/wrapper -->
+
+{%endblock%}

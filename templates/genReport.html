@@ -1,0 +1,148 @@
+{%extends 'blank.html'%}
+{%block title%}Report{%endblock%}
+{%block head_content %}
+<script type="text/javascript">
+	var lst = ["Dissertation","Thesis"];
+	$(document).ready(function(){
+		$('#SOP').click(function(){
+			$('#SOPStu').toggle();
+		});
+				$('#LOP').click(function(){
+			$('#LOPStu').toggle();
+		});
+			$('#DOP').click(function(){
+			$('#DOPStu').toggle();
+		});
+			$('#special').click(function(){
+			$('#specialStu').toggle();
+		});
+			$('#disser').click(function(){
+			$('#disserStu').toggle();
+		});
+			$('#thesis').click(function(){
+			$('#thesisStu').toggle();
+		});
+		$('#RP').click(function(){
+			$('#RPStu').toggle();
+		});
+		$('#indiv').click(function(){document.getElementById('indName').style.display = 'block';});
+		$('#all').click(function(){document.getElementById('indName').style.display = 'none';});
+	});
+	function abc(){
+		$('#indName').toggle();
+	}
+
+function test(){
+	
+	var y = document.getElementsByName('courseType');
+	var stuName = [];
+	var courseName = [];
+	var reportType = $("input[name=reportType]:checked").val();
+for(var i=0;i<y.length;i++){
+	if(y[i].checked){
+		courseName.push(y[i].value);
+	}
+}
+for(var i=0;i<courseName.length;i++){
+	var x = document.getElementsByName(courseName[i]+'stuid');
+	for(var j=0;j<x.length;j++)
+	if(x[j].checked){
+stuName.push(x[j].value);
+	}
+}
+
+if((stuName.length==0 && $("input[name=ind]:checked").val()!="All")|| (courseName.length==0) ){
+	alert("Incomplete Form!!!");
+	return false;
+}
+if(stuName.length==0){
+	stuName.push("All");
+}
+alert(reportType+"\n"+courseName+"\n"+stuName);
+}
+function selectAll(){
+	var main = document.getElementsByName('selectAll')[0];
+	// var lst = ["disser","DOP","SOP","LOP","special","RP","thesis"];
+	var lst = [];
+	var y = document.getElementsByName('courseType');
+	for(var i=0;i<y.length;i++){
+	if(y[i].checked){
+		lst.push(y[i].value);
+	}
+}
+	for(var j=0;j<lst.length;j++){
+	var x = document.getElementsByName(lst[j]+'stuid');
+			for(var i=0;i<x.length;i++)
+			x[i].checked = main.checked;
+	}
+}
+
+</script>
+<style type="text/css">
+	.radioCustom{
+		font-size: 1.3em;
+	}
+</style>
+{%endblock%}
+{%block main_content%}
+<section class="wrapper">
+<div class="radioCustom">
+<h4>Report Type</h4>
+    <input type="radio" name="reportType" value="MidSemReports" checked>MidSemReports&emsp;&emsp;&emsp;
+    <input type="radio" name="reportType" value="EndSemReports">EndSemReports&emsp;&emsp;&emsp;
+    <input type="radio" name="reportType" value="All">Both<br><br>
+                   <h4>Courses</h4>
+ <input type="checkbox" name="courseType" value="disser" id="disser">Dissertation&emsp;&emsp;<br>
+    <input type="checkbox" name="courseType" value="thesis" id="thesis">Thesis&emsp;&emsp;<br>
+    <input type="checkbox" name="courseType" value="DOP" id="DOP">Design Projects&emsp;&emsp;<br>
+    <input type="checkbox" name="courseType" value="LOP" id="LOP">Laboratory Projects&emsp;&emsp;<br>
+    <input type="checkbox" name="courseType" value="SOP" id="SOP">Study Projects&emsp;&emsp;<br>
+    <input type="checkbox" name="courseType" value="special" id="special">Special Projects&emsp;&emsp;<br>
+    <input type="checkbox" name="courseType" value="RP" id="RP">Research Practice<br><br>
+    <h4>Students</h4>
+    <input type="radio" id="indiv" name="ind" value="Individual">Individual&emsp;&emsp;&emsp;<input type="radio" id="all"name="ind" value="All" checked>cumulative<br>
+                   <br>
+                   <div id="indName" class="showback" style="display:none">
+                             <table class="table table-bordered table-striped table-condensed" >
+                   <thead><tr><th><input type="checkbox" name="selectAll" value="all" onclick="selectAll()"></th><th>IDNO.</th><th>Name</th></tr></thead>
+<tbody id="disserStu" style="display:none">
+{% for i in "a"%}<!--Dissertation-->
+<tr><td><input type="checkbox" name="disserstuid" value="{{i}}"></td><td>2012C6PS392P</td><td>Dissertation</td></tr>
+{%endfor%}
+</tbody>
+<tbody id="thesisStu" style="display:none">
+{% for i in "a"%}<!--Thesis-->
+<tr><td><input type="checkbox" name="thesisstuid" value="{{i}}"></td><td>2012C6PS392P</td><td>Thesis</td></tr>
+{%endfor%}
+</tbody>
+<tbody id="RPStu" style="display:none">
+{% for i in "a"%}<!--RP-->
+<tr><td><input type="checkbox" name="RPstuid" value="{{i}}"></td><td>2012C6PS392P</td><td>RP</td></tr>
+{%endfor%}
+</tbody>
+<tbody id="SOPStu" style="display:none">
+{% for i in "a"%}<!--SOP-->
+<tr><td><input type="checkbox" name="SOPstuid" value="{{i}}"></td><td>2012C6PS392P</td><td>SOP</td></tr>
+{%endfor%}
+</tbody>
+<tbody id="LOPStu" style="display:none">
+{% for i in "a"%}<!--LOP-->
+<tr><td><input type="checkbox" name="LOPstuid" value="{{i}}"></td><td>2012C6PS392P</td><td>LOP</td></tr>
+{%endfor%}
+</tbody>
+<tbody id="DOPStu" style="display:none">
+{% for i in "a"%}<!--DOP-->
+<tr><td><input type="checkbox" name="DOPstuid" value="{{i}}"></td><td>2012C6PS392P</td><td>DOP</td></tr>
+{%endfor%}
+</tbody>
+<tbody id="specialStu" style="display:none">
+{% for i in "a"%}<!--Special-->
+<tr><td><input type="checkbox" name="specialstuid" value="{{i}}"></td><td>2012C6PS392P</td><td>Special</td></tr>
+{%endfor%}
+</tbody>
+</table>
+                   </div>
+                       <br><button class="btn btn-success btn-lg" id="reportGen" onclick="test()">Generate Reports</button>   
+</div>
+              </section>
+{%endblock%}

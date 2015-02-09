@@ -1,0 +1,88 @@
+{% extends "blank.html" %}
+   {%block title%}
+   Report Submission
+   {% endblock %}
+    {%block head_content %}
+
+  <style type="text/css">
+input[type="text"]{
+  width:20%;
+
+}
+  </style>
+{% endblock %}
+  </head>
+  <body>
+{% block main_content %}
+          <section class="wrapper">
+          <center>
+            <h3>
+            <!-- <i class="fa fa-angle-right"></i> --> 
+         Mid Semester Report Submission</h3></center>
+          <div class="row mt">
+            <div class="col-lg-12">
+                      <div class="content-panel">
+                      <!-- <h4><i class="fa fa-angle-right"></i> Responsive Table</h4> -->
+                          <section id="unseen">
+                            <table class="table table-bordered table-striped table-condensed">
+                              <thead>
+                              <tr>
+                                  <th>IDNo.</th>
+                                  <th>Name</th>
+                                  <th class="numeric">Mid Sem Report</th>
+                                  <th class="numeric">Anti-Plagiarism Report (Optional)</th>
+                                   </tr>
+                              </thead>
+                              <tbody>
+                              <tr>
+                                  <td><a href="">2012C6PS392P</a></td>
+                                  <td><a href="">Prateek Jain</a></td>
+                                 <td ><input type="file"><a href="">Previous File</a></td>
+                                  <td><input type="file"><a href="">Previous File</a></td>
+                                  <td ><input type="submit" value="save"></td>
+                              </tr>
+                              </tbody>
+                          </table>
+                          </section>
+                  </div><!-- /content-panel -->
+               </div><!-- /col-lg-4 -->     
+        </div><!-- /row -->
+<br><br>
+ <center>
+            <h3>
+            <!-- <i class="fa fa-angle-right"></i> --> 
+         End Semester Report Submission</h3></center>
+          <div class="row mt">
+            <div class="col-lg-12">
+                      <div class="content-panel">
+                      <!-- <h4><i class="fa fa-angle-right"></i> Responsive Table</h4> -->
+                          <section id="unseen">
+                            <table class="table table-bordered table-striped table-condensed">
+                              <thead>
+                              <tr>
+                                  <th>IDNo.</th>
+                                  <th>Name</th>
+                                  <th class="numeric">End Sem Report</th>
+                                  <th class="numeric">Anti-Plagiarism Report</th>
+                                   </tr>
+                              </thead>
+                              <tbody>
+                              <form id="uploadForm" action="/grade/midSemReport?type=midsem&id=101" method="post" enctype="multipart/form-data">{%csrf_token%}
+                              <tr>
+                                  <td><a href="">2012C6PS392P</a></td>
+                                  <td><a href="">Prateek Jain</a></td>
+                                 <td ><input type="file" name="report101"><a href="">Previous File</a></td>
+                                  <td><input type="file" name="antiPlag101"><a href="">Previous File</a></td>
+                                  <td ><input type="submit" value="save" id="save101"></td>
+                              </tr>
+                              </form>
+                              </tbody>
+                          </table>
+                          </section>
+                  </div><!-- /content-panel -->
+               </div><!-- /col-lg-4 -->     
+        </div><!-- /row -->
+              
+
+    </section><!--/wrapper -->
+    {% endblock %}

@@ -1,0 +1,446 @@
+{% extends "blank.html" %}
+   {%block title%}
+   Thesis
+   {% endblock %}
+    {%block head_content %}
+    <script type="text/javascript">
+var x = {};
+  var lst1 =  ['viva1','midsemPresentation','midsemReport','viva2','finalThesis','finalViva'];
+  x['viva1'] = 15;
+  x['midsemPresentation'] = 15;
+  // x['projectworkviva2'] = 15;
+x['midsemReport'] = 15;
+  x['viva2'] = 15;
+   x['finalThesis'] = 25;
+    x['finalViva'] = 15;
+  
+ 
+function abc(id){
+  var z = 1;
+  var Total=0;
+  var i=0;
+  for(i=0;i<lst1.length;i++){
+    
+    z = z&compare(parseInt(document.getElementById(lst1[i]+id).value),x[lst1[i]]);
+    //alert(lst1[i]+z);
+  if(z==0){
+    alert('Incorrect Value(s)!!!'+lst1[i]);
+    document.getElementById(lst1[i]+id).value = '0';
+  return false;
+  }
+  Total = Total+parseInt(document.getElementById(lst1[i]+id).value);
+}
+document.getElementById('Total'+id).innerHTML = Total;
+ return true;
+}
+function compare(val1,val2){
+if(val1<=val2)
+  return 1;
+else
+  return 0;
+
+}
+function edit(id){
+	var lst = ['viva1','midsemPresentation','midsemReport','viva2','finalThesis','finalViva','midsemGrade','endsemGrade','seminarGrade'];
+  document.getElementById('edit'+id).style.display = 'none';
+  document.getElementById('save'+id).style.display = 'inline';
+  var i=0;
+  for(i=0;i<lst.length;i++){
+  document.getElementById(lst[i]+id).removeAttribute("disabled");}
+}
+
+function saveData(id){
+var lst = ['viva1','midsemPresentation','midsemReport','viva2','finalThesis','finalViva','midsemGrade','endsemGrade','seminarGrade'];
+var i=0;
+var x="{";
+for(i=0;i<lst.length;i++){
+  document.getElementById(lst[i]+id).setAttribute("disabled", true);
+  x = x+ "'"+lst[i]+"':"+"'"+document.getElementById(lst[i]+id).value+"',";
+}
+x=x+"'Total':'"+document.getElementById('Total'+id).innerHTML+"'}";
+document.getElementById('save'+id).style.display = 'none';
+  document.getElementById('edit'+id).style.display = 'inline'; 
+$.getJSON('/grade/thesis', {x:x,type:'1',pk:id}, function(data, jqXHR){
+    if(data[0]==='OK'){
+       alert('Awesome\n'+data[1]);
+}else{
+	alert('Error!!!!!!!!!!!!!!!!!');
+}
+});
+  }
+ function edit2(id){
+	var lst = ['writtenAbstract','technicalContent','depthKnowledge','stylePresentation','responseQuestion'];
+  document.getElementById('edit2'+id).style.display = 'none';
+  document.getElementById('save2'+id).style.display = 'inline';
+  var i=0;
+  for(i=0;i<lst.length;i++){
+  document.getElementById(lst[i]+id).removeAttribute("disabled");}
+}
+
+function saveData2(idx,seminar){
+  id = idx+seminar;
+var lst = ['writtenAbstract','technicalContent','depthKnowledge','stylePresentation','responseQuestion'];
+var i=0;
+var x="{";
+for(i=0;i<lst.length;i++){
+  document.getElementById(lst[i]+id).setAttribute("disabled", true);
+  x = x+ "'"+lst[i]+"':"+"'"+document.getElementById(lst[i]+id).value+"',";
+}
+x=x+"}";
+document.getElementById('save2'+id).style.display = 'none';
+  document.getElementById('edit2'+id).style.display = 'inline'; 
+$.getJSON('/grade/Projects', {x:x,type:'2',pk:idx,seminar:seminar}, function(data, jqXHR){
+    if(data[0]==='OK'){
+       alert('Awesome\n'+data[1]);
+}else{
+	alert('Error!!!!!!!!!!!!!!!!!');
+}
+});
+  }
+    
+ function edit3(id){
+  var lst = ['workProgress','technicalCompetence','documentation','initiative','puntuality','reliability'];
+  document.getElementById('edit3'+id).style.display = 'none';
+  document.getElementById('save3'+id).style.display = 'inline';
+  var i=0;
+  for(i=0;i<lst.length;i++){
+  document.getElementById(lst[i]+id).removeAttribute("disabled");}
+}
+
+function saveData3(id){
+var lst = ['workProgress','technicalCompetence','documentation','initiative','puntuality','reliability'];
+var i=0;
+var x="{";
+for(i=0;i<lst.length;i++){
+  document.getElementById(lst[i]+id).setAttribute("disabled", true);
+  x = x+ "'"+lst[i]+"':"+"'"+document.getElementById(lst[i]+id).value+"',";
+}
+x=x+"}";
+document.getElementById('save3'+id).style.display = 'none';
+  document.getElementById('edit3'+id).style.display = 'inline'; 
+$.getJSON('/grade/thesis', {x:x,type:'3',pk:id}, function(data, jqXHR){
+    if(data[0]==='OK'){
+       alert('Awesome\n'+data[1]);
+}else{
+	alert('Error!!!!!!!!!!!!!!!!!');
+}
+});
+  }
+    </script>
+    <style type="text/css">
+input[type="text"]{
+width:30px;
+
+}
+    </style>
+{%endblock%}
+{%block main_content %}
+          <section class="wrapper">
+          <center>
+            <h3>
+            <!-- <i class="fa fa-angle-right"></i> --> 
+            {{CourseCode}}{{CourseName}}<br>{{SemesterNumber}} Semester {{SessionYear}}<br><br>Thesis Evaluation and Seminar Grade</h3></center>
+          <div class="row mt">
+            <div class="col-lg-12">
+                      <div class="content-panel">
+                      <!-- <h4><i class="fa fa-angle-right"></i> Responsive Table</h4> -->
+                          <section id="unseen">
+                            <table class="table table-bordered table-striped table-condensed">
+                              <thead>
+                              <tr>
+                                  <th>IDNo.</th>
+                                  <th>Name</th>
+                                  <th class="numeric">Viva-1</th>
+                                  <th class="numeric">Mid Sem <br>Presentation</th>
+                                  <th class="numeric">Mid Sem <br>Written Report</th>
+                                  <th class="numeric">Viva -2</th>
+                                  <th class="numeric">Final Thesis Report</th>
+                                  <th class="numeric">Final Viva</th>
+                                  <th class="numeric">Total</th>
+                                  <th>Recommended<br> Mid Sem<br> Grade</th>
+                                  <th>Recommended <br>Final Grade</th>
+                                  <th>Recommended<br> Final Grade<br>in Seminar<br>(Good/Poor)</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              <tr>
+                                  <td>2012C6PS392P
+                                  </td>
+                                  <td>Prateek Jain</td>
+                                  <td class="numeric"><input type="text" id="viva1101" value = "0" disabled="" onchange="abc('101')"></td>
+                                  <td class="numeric"><input type="text" id="midsemPresentation101" value = "0" disabled="" onchange="abc('101')"></td>
+                                  <td class="numeric"><input type="text" id ="midsemReport101" value = "0" disabled="" onchange="abc('101')"></td>
+                                  <td class="numeric"><input type="text" id = "viva2101" value = "0" disabled="" onchange="abc('101')"></td>
+                                  <td class="numeric"><input type="text" id="finalThesis101" value = "0" disabled="" onchange="abc('101')"></td>
+                                  <td class="numeric"><input type="text" id="finalViva101" value = "0" disabled="" onchange="abc('101')"></td>
+                                  <td class="numeric"><label id="Total101">0</label></td>
+                                  <td><select id="midsemGrade101" disabled=""><option>A</option><option>A-</option><option>B</option><option>B-</option><option>C</option><option>C-</option><option>D</option><option>E</option></select></td>
+                                  <td><select id="endsemGrade101" disabled=""><option>A</option><option>A-</option><option>B</option><option>B-</option><option>C</option><option>C-</option><option>D</option><option>E</option></select></td>
+                                  <td><select id="seminarGrade101" disabled="">
+                                  <option value="good">Good</option>
+                                  <option value="poor">Poor</option>                              
+                                  </select></td>
+                                  {% if category == 1 or category == 4%}
+                                  <td><input type="submit" id="edit101" value="edit" onclick="edit('101')"><input id="save101" type="submit" value="Save" style="display:none" onclick="saveData('101')" ></td>
+                              {%endif%}
+                              </tr>
+                              </tbody>
+                          </table>
+                          
+                          </section>
+                  </div><!-- /content-panel -->
+               </div><!-- /col-lg-4 -->     
+        </div><!-- /row -->
+        <br><br>
+        <center>
+            <h3>
+            <!-- <i class="fa fa-angle-right"></i> --> 
+            Seminar Evaluation</h3></center>
+          <div class="row mt">
+            <div class="col-lg-12">
+                      <div class="content-panel">
+                      <h4><i class="fa fa-angle-right"></i> Seminar 1</h4>
+                          <section id="unseen">
+                            <table class="table table-bordered table-striped table-condensed">
+                              <thead>
+                              <tr>
+                                  <th>IDNo.</th>
+                                  <th>Name</th>
+                                  <th class="numeric">Written abstract</th>
+                                  <th class="numeric">Technical contents</th>
+                                  <th class="numeric">Depth Of knowledge</th>
+                                  <th class="numeric">Style of presentation</th>
+                                  <th class="numeric">Response to questions</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              <tr>
+                                  <td><a href="">2012C6PS392P</a></td>
+                                  <td><a href="">Prateek Jain</a></td>
+                                  <td class="numeric"><select id="writtenAbstract20S1" disabled="">
+                                  <option value="good">Good</option>
+                                  <option value="poor">Poor</option>                              
+                                  </select></td>
+                                  <td class="numeric"><select id="technicalContent20S1" disabled="">
+                                  <option value="good">Good</option>
+                                  <option value="poor">Poor</option>                              
+                                  </select></td>
+                                  <td class="numeric"><select id="depthKnowledge20S1" disabled="">
+                                  <option value="good">Good</option>
+                                  <option value="poor">Poor</option>                              
+                                  </select></td>
+                                  <td class="numeric"><select id="stylePresentation20S1" disabled="">
+                                  <option value="good">Good</option>
+                                  <option value="poor">Poor</option>                              
+                                  </select></td>
+                                  <td class="numeric"><select id="responseQuestion20S1" disabled="">
+                                  <option value="good">Good</option>
+                                  <option value="poor">Poor</option>                              
+                                  </select></td>
+                                  {% if category == 1 or category == 4%}
+                                  <td><input type="submit" id="edit220S1" value="edit" onclick="edit2('20S1')"><input id="save220S1" type="submit" value="Save" style="display:none" onclick="saveData2('20','S1')" ></td>
+                                  {%endif%}
+                              </tr>
+                              </tbody>
+                          </table>
+                          </section>
+                          <h4><i class="fa fa-angle-right"></i> Seminar 2</h4>
+                          <section id="unseen">
+                            <table class="table table-bordered table-striped table-condensed">
+                              <thead>
+                              <tr>
+                                  <th>IDNo.</th>
+                                  <th>Name</th>
+                                  <th class="numeric">Written abstract</th>
+                                  <th class="numeric">Technical contents</th>
+                                  <th class="numeric">Depth Of knowledge</th>
+                                  <th class="numeric">Style of presentation</th>
+                                  <th class="numeric">Response to questions</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              <tr>
+                                  <td><a href="">2012C6PS392P</a></td>
+                                  <td><a href="">Prateek Jain</a></td>
+                                  <td class="numeric"><select id="writtenAbstract20S2" disabled="">
+                                  <option value="good">Good</option>
+                                  <option value="poor">Poor</option>                              
+                                  </select></td>
+                                  <td class="numeric"><select id="technicalContent20S2" disabled="">
+                                  <option value="good">Good</option>
+                                  <option value="poor">Poor</option>                              
+                                  </select></td>
+                                  <td class="numeric"><select id="depthKnowledge20S2" disabled="">
+                                  <option value="good">Good</option>
+                                  <option value="poor">Poor</option>                              
+                                  </select></td>
+                                  <td class="numeric"><select id="stylePresentation20S2" disabled="">
+                                  <option value="good">Good</option>
+                                  <option value="poor">Poor</option>                              
+                                  </select></td>
+                                  <td class="numeric"><select id="responseQuestion20S2" disabled="">
+                                  <option value="good">Good</option>
+                                  <option value="poor">Poor</option>                              
+                                  </select></td>
+                                  <td>
+{% if category == 1 %}
+                                  <input type="submit" id="edit220S2" value="edit" onclick="edit2('20S2')"><input id="save220S2" type="submit" value="Save" style="display:none" onclick="saveData2('20','S2')" ></td>
+                      {%endif%}                                          </tr>
+                              </tbody>
+                          </table>
+                          </section>
+                          <h4><i class="fa fa-angle-right"></i> Seminar 3</h4>
+                          <section id="unseen">
+                            <table class="table table-bordered table-striped table-condensed">
+                              <thead>
+                              <tr>
+                                  <th>IDNo.</th>
+                                  <th>Name</th>
+                                  <th class="numeric">Written abstract</th>
+                                  <th class="numeric">Technical contents</th>
+                                  <th class="numeric">Depth Of knowledge</th>
+                                  <th class="numeric">Style of presentation</th>
+                                  <th class="numeric">Response to questions</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              <tr>
+                                  <td><a href="">2012C6PS392P</a></td>
+                                  <td><a href="">Prateek Jain</a></td>
+                                  <td class="numeric"><select id="writtenAbstract20S3" disabled="">
+                                  <option value="good">Good</option>
+                                  <option value="poor">Poor</option>                              
+                                  </select></td>
+                                  <td class="numeric"><select id="technicalContent20S3" disabled="">
+                                  <option value="good">Good</option>
+                                  <option value="poor">Poor</option>                              
+                                  </select></td>
+                                  <td class="numeric"><select id="depthKnowledge20S3" disabled="">
+                                  <option value="good">Good</option>
+                                  <option value="poor">Poor</option>                              
+                                  </select></td>
+                                  <td class="numeric"><select id="stylePresentation20S3" disabled="">
+                                  <option value="good">Good</option>
+                                  <option value="poor">Poor</option>                              
+                                  </select></td>
+                                  <td class="numeric"><select id="responseQuestion20S3" disabled="">
+                                  <option value="good">Good</option>
+                                  <option value="poor">Poor</option>                              
+                                  </select></td>
+                             {% if category == 1 or category == 4 %}     <td><input type="submit" id="edit220S3" value="edit" onclick="edit2('20S3')"><input id="save220S3" type="submit" value="Save" style="display:none" onclick="saveData2('20','S3')" ></td>
+                                  {%endif%}
+                              </tr>
+                              </tbody>
+                          </table>
+                          </section>
+                          <h4><i class="fa fa-angle-right"></i> Seminar 4</h4>
+                          <section id="unseen">
+                            <table class="table table-bordered table-striped table-condensed">
+                              <thead>
+                              <tr>
+                                  <th>IDNo.</th>
+                                  <th>Name</th>
+                                  <th class="numeric">Written abstract</th>
+                                  <th class="numeric">Technical contents</th>
+                                  <th class="numeric">Depth Of knowledge</th>
+                                  <th class="numeric">Style of presentation</th>
+                                  <th class="numeric">Response to questions</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              <tr>
+                                  <td><a href="">2012C6PS392P</a></td>
+                                  <td><a href="">Prateek Jain</a></td>
+                                  <td class="numeric"><select id="writtenAbstract20S4" disabled="">
+                                  <option value="good">Good</option>
+                                  <option value="poor">Poor</option>                              
+                                  </select></td>
+                                  <td class="numeric"><select id="technicalContent20S4" disabled="">
+                                  <option value="good">Good</option>
+                                  <option value="poor">Poor</option>                              
+                                  </select></td>
+                                  <td class="numeric"><select id="depthKnowledge20S4" disabled="">
+                                  <option value="good">Good</option>
+                                  <option value="poor">Poor</option>                              
+                                  </select></td>
+                                  <td class="numeric"><select id="stylePresentation20S4" disabled="">
+                                  <option value="good">Good</option>
+                                  <option value="poor">Poor</option>                              
+                                  </select></td>
+                                  <td class="numeric"><select id="responseQuestion20S4" disabled="">
+                                  <option value="good">Good</option>
+                                  <option value="poor">Poor</option>                              
+                                  </select></td>
+                                  {% if category == 1 or category == 4 %}
+                                  <td><input type="submit" id="edit220S4" value="edit" onclick="edit2('20S4')"><input id="save220S4" type="submit" value="Save" style="display:none" onclick="saveData2('20','S4')" ></td>
+                                                        {%endif%}       </tr>
+                              </tbody>
+                          </table>
+                          </section>
+                  </div><!-- /content-panel -->
+               </div><!-- /col-lg-4 -->     
+        </div><!-- /row -->
+    <center>
+            <h3>
+            <!-- <i class="fa fa-angle-right"></i> --> 
+           <br><br>Student's Traits Evaluation</h3></center>
+          <div class="row mt">
+            <div class="col-lg-12">
+                      <div class="content-panel">
+                      <!-- <h4><i class="fa fa-angle-right"></i> Responsive Table</h4> -->
+                          <section id="unseen">
+                            <table class="table table-bordered table-striped table-condensed">
+                              <thead>
+                              <tr>
+                                  <th>IDNo.</th>
+                                  <th>Name</th>
+                                  <th class="numeric">Work progress and achievement</th>
+                                  <th class="numeric">Technical/Professional Competence</th>
+                                  <th class="numeric">Documentation and expression</th>
+                                  <th class="numeric">Initiative and originality</th>
+                                  <th class="numeric">Puntuality</th>
+                                  <th class="numeric">Reliability</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              <tr>
+                                  <td><a href="">2012C6PS392P</a></td>
+                                  <td><a href="">Prateek Jain</a></td>
+								  <td class="numeric"><select id="workProgress301" disabled="">
+                                  <option value="good">Good</option>
+                                  <option value="poor">Poor</option>                              
+                                  </select></td>
+                                  <td class="numeric"><select id="technicalCompetence301" disabled="">
+                                  <option value="good">Good</option>
+                                  <option value="poor">Poor</option>                              
+                                  </select></td>
+                                  <td class="numeric"><select id="documentation301" disabled="">
+                                  <option value="good">Good</option>
+                                  <option value="poor">Poor</option>                              
+                                  </select></td>
+                                  <td class="numeric"><select id="initiative301" disabled="">
+                                  <option value="good">Good</option>
+                                  <option value="poor">Poor</option>                              
+                                  </select></td>
+                                  <td class="numeric"><select id="puntuality301" disabled="">
+                                  <option value="good">Good</option>
+                                  <option value="poor">Poor</option>                              
+                                  </select></td>
+								  <td class="numeric"><select id="reliability301" disabled="">
+                                  <option value="good">Good</option>
+                                  <option value="poor">Poor</option>                              
+                                  </select></td>
+                                  {% if category == 1 or category == 4 %}
+                                  <td><input type="submit" id="edit3301" value="edit" onclick="edit3('301')"><input id="save3301" type="submit" value="Save" style="display:none" onclick="saveData3('301')" ></td>
+                                  {%endif%}
+                                  
+                              </tr>
+                              </tbody>
+                          </table>
+                          </section>
+                  </div><!-- /content-panel -->
+               </div><!-- /col-lg-4 -->     
+        </div><!-- /row -->
+
+    </section><!--/wrapper -->
+     {%endblock%}

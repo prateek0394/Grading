@@ -1,0 +1,89 @@
+{% extends "blank.html" %}
+   {%block title%}
+   {{name|upper}}
+   {% endblock %}
+    {%block head_content %}
+  <script type="text/javascript">
+function reportDisp(idx){
+$.getJSON('/grade/reportDisp', {id:idx,comment:document.getElementById('dispComment'+idx).value}, function(data, jqXHR){
+    if(data[0]==='OK'){
+       alert('Awesome\n'+data[1]);
+       $('#dismis').click();
+}else{
+  alert('Error!!!!!!!!!!!!!!!!!');
+}
+});
+
+}
+  </script>
+  <style type="text/css">
+input[type="text"]{
+  width:20%;
+
+}
+  </style>
+{%endblock %}
+{% block main_content %}
+          <section class="wrapper">
+            <h3>
+            <!-- <i class="fa fa-angle-right"></i> --> 
+            ID:&emsp;&emsp; {{bitsid}}<br>Name:&emsp; {{name|title}}</h3>
+               {% for key,val in data.items %}
+               <br><br>
+          <div class="row mt">
+            <div class="col-lg-12">
+                      <div class="content-panel">
+                 
+                      
+                      <h4>{{key|upper}}</h4>
+                      <!-- <h4><i class="fa fa-angle-right"></i> Responsive Table</h4> -->
+                          <section id="unseen">
+                            <table class="table table-bordered table-striped table-condensed">
+                              <thead>
+                              <tr>
+                                  <th></th>
+                                  <th>Marks/Grade Obtained</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              {% for key,i in val.items %}
+                              <tr>
+                                  <td>{{key}}</td>
+                                  <td>{{i}}</td>
+                              </tr>
+                              {% endfor %}
+                              </tbody>
+                          </table>
+                          </section>
+                          
+                  </div><!-- /content-panel -->
+               </div><!-- /col-lg-4 -->     
+        </div><!-- /row -->
+     {% endfor %}
+     <br><br>
+     <div class="showback">
+                   <button class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModal">
+              Report Discrepancy
+            </button>
+            
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Disprecancy</h4>
+                  </div>
+                  <div class="modal-body">
+                    Comment :<br> <textarea style="width:100%" rows="5" id="dispComment101"></textarea>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="dismis">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="reportDisp('101')">Submit</button>
+                  </div>
+                </div>
+              </div>
+            </div>              
+              </div>
+    </section><!--/wrapper -->
+     {% endblock %}

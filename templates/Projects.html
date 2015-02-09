@@ -1,0 +1,236 @@
+{% extends "blank.html" %}
+   {%block title%}
+   Projects
+   {% endblock %}
+    {%block head_content %}
+  <script type="text/javascript">
+   var x = {};
+  var lst1 =  ['midregularityMentor','projectViva1','projectViva2','weekdocumentSubmission','midsemViva','midsemReport']
+  var lst2 = ['endregularityMentor','projectViva34','finalSeminar','finaldocumentSubmission'];
+  x['midregularityMentor'] = 10;
+  x['projectViva1'] = 5;
+  x['projectViva2'] = 5;
+x['weekdocumentSubmission'] = 10;
+  x['midsemViva'] = 10;
+   x['midsemReport'] = 10;
+   x["endregularityMentor"] = 10
+  x["projectViva34"] = 10
+  x["finalSeminar"] = 15
+ x["finaldocumentSubmission"] = 15
+function abc(id){
+  var z = 1;
+  var midTotal=0;
+  var total = 0;
+  var i=0;
+  for(i=0;i<lst1.length;i++){
+    z = z&compare(parseInt(document.getElementById(lst1[i]+id).value),x[lst1[i]]);
+    //alert(lst1[i]+z);
+  if(z==0){
+    alert('Incorrect Value(s)!!!'+lst1[i]);
+    document.getElementById(lst1[i]+id).value = '0';
+  return false;
+  }
+  midTotal = midTotal+parseInt(document.getElementById(lst1[i]+id).value);
+}
+document.getElementById('midsemTotal'+id).innerHTML = midTotal;
+ for(i=0;i<lst2.length;i++){
+    z = z&compare(parseInt(document.getElementById(lst2[i]+id).value),x[lst2[i]]);
+    //alert(lst1[i]+z);
+  if(z==0){
+    alert('Incorrect Value(s)!!!'+lst2[i]);
+    document.getElementById(lst2[i]+id).value = '0';
+  return false;
+  }
+  total = total+parseInt(document.getElementById(lst2[i]+id).value);
+}
+document.getElementById('Total'+id).innerHTML = midTotal+total;
+ return true;
+}
+function compare(val1,val2){
+if(val1<=val2)
+  return 1;
+else
+  return 0;
+
+}
+function edit(id){
+	var lst = ['midregularityMentor','projectViva1','projectViva2','weekdocumentSubmission','midsemViva','midsemReport','midsemGrade'];
+  document.getElementById('edit'+id).style.display = 'none';
+  document.getElementById('save'+id).style.display = 'inline';
+  var i=0;
+  for(i=0;i<lst.length;i++){
+  document.getElementById(lst[i]+id).removeAttribute("disabled");}
+}
+
+function saveData(id){
+var lst = ['midregularityMentor','projectViva1','projectViva2','weekdocumentSubmission','midsemViva','midsemReport','midsemGrade'];
+var i=0;
+var x="{";
+for(i=0;i<lst.length;i++){
+  document.getElementById(lst[i]+id).setAttribute("disabled", true);
+  x = x+ "'"+lst[i]+"':"+"'"+document.getElementById(lst[i]+id).value+"',";
+}
+x=x+"'midsemTotal':'"+document.getElementById('midsemTotal'+id).innerHTML+"'}";
+document.getElementById('save'+id).style.display = 'none';
+  document.getElementById('edit'+id).style.display = 'inline'; 
+$.getJSON('/grade/projects', {x:x,type:'MidSem Evaluation',pk:id}, function(data, jqXHR){
+    if(data[0]==='OK'){
+       alert('Awesome\n'+data[1]);
+}else{
+	alert('Error!!!!!!!!!!!!!!!!!');
+}
+});
+  
+}
+function edit2(id){
+	var lst = ['endregularityMentor','projectViva34','finalSeminar','finaldocumentSubmission','endsemGrade'];
+var i=0;
+for(i=0;i<lst.length;i++)
+  document.getElementById(lst[i]+id).removeAttribute('disabled'); 
+  document.getElementById('edit2'+id).style.display = 'none';
+  document.getElementById('save2'+id).style.display = 'inline';
+}
+function saveData2(id){
+	var lst = ['endregularityMentor','projectViva34','finalSeminar','finaldocumentSubmission','endsemGrade'];
+	var i=0;
+	var x = "{";
+for(i=0;i<lst.length;i++){
+  document.getElementById(lst[i]+id).setAttribute('disabled',true);
+  x = x+ "'"+lst[i]+"':"+"'"+document.getElementById(lst[i]+id).value+"',";
+}
+x=x+"'Total':'"+document.getElementById('Total'+id).innerHTML+"'}";
+document.getElementById('save2'+id).style.display = 'none';
+  document.getElementById('edit2'+id).style.display = 'inline';
+  $.getJSON('/grade/projects', {x:x,type:'EndSem Evaluation'}, function(data, jqXHR){
+    if(data[0]==='OK'){
+       alert('Awesome\n'+data[1]);
+}else{
+	alert('Error!!!!!!!!!!!!!!!!!');
+}
+});
+   
+}
+  </script>
+  <style type="text/css">
+input[type="text"]{
+  width:20%;
+
+}
+/*select{
+  width: 40%;
+
+}*/
+  </style>
+  {% endblock %}
+  {% block main_content %}
+          <section class="wrapper">
+          <center>
+          	<h3>
+          	<!-- <i class="fa fa-angle-right"></i> --> 
+          	{{CourseCode}}{{CourseName}}<br>{{SemesterNumber}} Semester {{SessionYear}}<br><br>Mid-Semester Evaluation</h3></center>
+		  		<div class="row mt">
+			  		<div class="col-lg-12">
+                      <div class="content-panel">
+                      <!-- <h4><i class="fa fa-angle-right"></i> Responsive Table</h4> -->
+                          <section id="unseen">
+                            <table class="table table-bordered table-striped table-condensed">
+                              <thead>
+                              <tr>
+                                  <th>IDNo.</th>
+                                  <th>Name</th>
+                                  <th class="numeric">Regularity in<br> Interaction<br> with mentor</th>
+                                  <th class="numeric">Project work <br>Viva -1</th>
+                                  <th class="numeric">Project work<br> Viva -2</th>
+                                  <th class="numeric">Weekly <br>Report/document<br> submission</th>
+                                  <th class="numeric">Mid <br>semester<br> viva</th>
+                                  <th class="numeric">Mid <br>semester<br> report</th>
+                                  <th class="numeric">Total Marks</th>
+                                  <th>Suggested <br>Mid-semester<br> Grade</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              <tr>
+                                  <td><a href="">2012C6PS392P</a></td>
+                                  <td><a href="">Prateek Jain</a></td>
+                                  <td class="numeric"><input type="text" id="midregularityMentor101" value = "0" disabled="" onchange="abc('101')"></td>
+                                  <td class="numeric"><input type="text" id="projectViva1101" value = "0" disabled="" onchange="abc('101')"></td>
+                                  <td class="numeric"><input type="text" id="projectViva2101" value = "0" disabled="" onchange="abc('101')"></td>
+                                  <td class="numeric"><input type="text" id="weekdocumentSubmission101" value = "0" disabled="" onchange="abc('101')"></td>
+                                  <td class="numeric"><input type="text" id="midsemViva101" value = "0" disabled="" onchange="abc('101')"></td>
+                                  <td class="numeric"><input type="text" id="midsemReport101" value = "0" disabled="" onchange="abc('101')"></td>
+				  <td class="numeric"><label id="midsemTotal101">0</label></td>
+                                  <td><select id="midsemGrade101" disabled="">
+                                  <option value="A">A</option>
+                                  <option value="A-">A-</option>
+                                  <option value="B">B</option>
+                                  <option value="B-">B-</option>
+                                  <option value="C">C</option>
+                                  <option value="C-">C-</option>
+                                  <option value="D">D</option>
+                                  <option value="E">E</option>
+                                  </select></td>
+                                  {% if category == 1 %}
+                                  <td><input type="submit" id="edit101" value="edit" onclick="edit('101')"><input id="save101" type="submit" value="Save" style="display:none" onclick="saveData('101')" ></td>
+                              {% endif %}
+                              </tr>
+                              </tbody>
+                          </table>
+                          </section>
+                  </div><!-- /content-panel -->
+               </div><!-- /col-lg-4 -->			
+		  	</div><!-- /row -->
+		  	<br><br>
+		  	<center>
+          	<h3>
+          	<!-- <i class="fa fa-angle-right"></i> --> 
+          	End-Semester Evaluation</h3></center>
+		  		<div class="row mt">
+			  		<div class="col-lg-12">
+                      <div class="content-panel">
+                      <!-- <h4><i class="fa fa-angle-right"></i> Responsive Table</h4> -->
+                          <section id="unseen">
+                            <table class="table table-bordered table-striped table-condensed">
+                              <thead>
+                              <tr>
+                                  <th>IDNo.</th>
+                                  <th>Name</th>
+                                  <th class="numeric">Regularity in interaction<br> with mentor</th>
+                                  <th class="numeric">Project work viva III/IV</th>
+                                  <th class="numeric">Final Seminar</th>
+                                  <th class="numeric">Final report/document<br> submission</th>
+                                  <th class="numeric">Total Marks<br>( including <br>Mid Sem marks )</th>
+                                  <th class="numeric">Suggested <br>Final Grade</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              <tr>
+                                  <td><a href="">2012C6PS392P</a></td>
+                                  <td><a href="">Prateek Jain</a></td>
+                                  <td class="numeric"><input type="text" id="endregularityMentor101" value = "0" disabled="" onchange="abc('101')"></td>
+                                  <td class="numeric"><input type="text" id="projectViva34101" value = "0" disabled="" onchange="abc('101')"></td>
+                                  <td class="numeric"><input type="text" id="finalSeminar101" value = "0" disabled="" onchange="abc('101')"></td>
+                                  <td class="numeric"><input type="text" id="finaldocumentSubmission101" value = "0" disabled="" onchange="abc('101')"></td>
+                                  <td class="numeric"><label id="Total101">0</label></td>
+                                  <td><select id="endsemGrade101" disabled="">
+                                  <option value="A">A</option>
+                                  <option value="A-">A-</option>
+                                  <option value="B">B</option>
+                                  <option value="B-">B-</option>
+                                  <option value="C">C</option>
+                                  <option value="C-">C-</option>
+                                  <option value="D">D</option>
+                                  <option value="E">E</option>
+                                  </select></td>
+                                  {% if category == 1 %}
+                                  <td><input type="submit" id="edit2101" value="edit" onclick="edit2('101')"><input id="save2101" type="submit" value="Save" style="display:none" onclick="saveData2('101')" ></td>
+                              {% endif %}
+                              </tr>
+                              </tbody>
+                          </table>
+                          </section>
+                  </div><!-- /content-panel -->
+               </div><!-- /col-lg-4 -->			
+		  	</div><!-- /row -->
+
+		</section><!--/wrapper -->
+    {% endblock %}

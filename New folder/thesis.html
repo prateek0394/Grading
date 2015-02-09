@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Dashboard">
+    <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+
+    <title>DASHGUM - Bootstrap Admin Template</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <!--external css-->
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+        
+    <!-- Custom styles for this template -->
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/style-responsive.css" rel="stylesheet">
+
+    <link href="assets/css/table-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+function abc(){
+  // alert(document.getElementById('bitsid').disabled);
+  if(!document.getElementById('bitsid').disabled)
+  document.getElementsByName('bitsid')[0].setAttribute("disabled", true);
+else{
+  document.getElementsByName('bitsid')[0].removeAttribute("disabled");
+}
+
+
+}
+    </script>
+    <style type="text/css">
+input[type="text"]{
+width:30px;
+
+}
+    </style>
+  </head>
+
+  <body>
+
+  <section id="container" >
+      
+      <!-- **********************************************************************************************************************************************************
+      MAIN CONTENT
+      ********************************************************************************************************************************************************** -->
+      <!--main content start-->
+      <section id="main-content">
+          <section class="wrapper">
+          <center>
+            <h3>
+            <!-- <i class="fa fa-angle-right"></i> --> 
+            {{CourseCode}}{{CourseName}}<br>{{SemesterNumber}} Semester {{SessionYear}}<br><br>Thesis Evaluation and Seminar Grade</h3></center>
+          <div class="row mt">
+            <div class="col-lg-12">
+                      <div class="content-panel">
+                      <!-- <h4><i class="fa fa-angle-right"></i> Responsive Table</h4> -->
+                          <section id="unseen">
+                            <table class="table table-bordered table-striped table-condensed">
+                              <thead>
+                              <tr>
+                                  <th>IDNo.</th>
+                                  <th>Name</th>
+                                  <th class="numeric">Viva-1</th>
+                                  <th class="numeric">Mid Sem <br>Presentation</th>
+                                  <th class="numeric">Mid Sem <br>Written Report</th>
+                                  <th class="numeric">Viva -2</th>
+                                  <th class="numeric">Final Thesis Report</th>
+                                  <th class="numeric">Final Viva</th>
+                                  <th class="numeric">Total</th>
+                                  <th>Recommended<br> Mid Sem<br> Grade</th>
+                                  <th>Recommended <br>Final Grade</th>
+                                  <th>Recommended<br> Final Grade<br>in Seminar<br>(Good/Poor)</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              <tr>
+                                  <td>2012C6PS392P
+                                  </td>
+                                  <td>Prateek Jain</td>
+                                  <td class="numeric"><input type="text"  value="15"></td>
+                                  <td class="numeric"><input type="text"  value="15"></td>
+                                  <td class="numeric"><input type="text"  value="15"></td>
+                                  <td class="numeric"><input type="text"  value="15"></td>
+                                  <td class="numeric"><input type="text" value="25"></td>
+                                  <td class="numeric"><input type="text"  value="15"></td>
+                                  <td class="numeric"><input type="text"  value="100"></td>
+                                  <td><input type="text"  value="A"></td>
+                                  <td><input type="text"  value="A"></td>
+                                  <td><input type="text"  value="Good" style="width:50px"></td>
+                              </tr>
+                              </tbody>
+                          </table>
+                          <input type="button" onclick="abc()">
+                          </section>
+                  </div><!-- /content-panel -->
+               </div><!-- /col-lg-4 -->     
+        </div><!-- /row -->
+        <br><br>
+        <center>
+            <h3>
+            <!-- <i class="fa fa-angle-right"></i> --> 
+            Seminar Evaluation</h3></center>
+          <div class="row mt">
+            <div class="col-lg-12">
+                      <div class="content-panel">
+                      <h4><i class="fa fa-angle-right"></i> Seminar 1</h4>
+                          <section id="unseen">
+                            <table class="table table-bordered table-striped table-condensed">
+                              <thead>
+                              <tr>
+                                  <th>IDNo.</th>
+                                  <th>Name</th>
+                                  <th class="numeric">Written abstract</th>
+                                  <th class="numeric">Technical contents</th>
+                                  <th class="numeric">Depth Of knowledge</th>
+                                  <th class="numeric">Style of presentation</th>
+                                  <th class="numeric">Response to questions</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              <tr>
+                                  <td><a href="">2012C6PS392P</a></td>
+                                  <td><a href="">Prateek Jain</a></td>
+                                  <td class="numeric">Good</td>
+                                  <td class="numeric">Good</td>
+                                  <td class="numeric">Good</td>
+                                  <td class="numeric">Good</td>
+                                  <td class="numeric">Good</td>
+                                  
+                              </tr>
+                              </tbody>
+                          </table>
+                          </section>
+                          <h4><i class="fa fa-angle-right"></i> Seminar 2</h4>
+                          <section id="unseen">
+                            <table class="table table-bordered table-striped table-condensed">
+                              <thead>
+                              <tr>
+                                  <th>IDNo.</th>
+                                  <th>Name</th>
+                                  <th class="numeric">Written abstract</th>
+                                  <th class="numeric">Technical contents</th>
+                                  <th class="numeric">Depth Of knowledge</th>
+                                  <th class="numeric">Style of presentation</th>
+                                  <th class="numeric">Response to questions</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              <tr>
+                                  <td><a href="">2012C6PS392P</a></td>
+                                  <td><a href="">Prateek Jain</a></td>
+                                  <td class="numeric">10</td>
+                                  <td class="numeric">10</td>
+                                  <td class="numeric">15</td>
+                                  <td class="numeric">15</td>
+                                  <td class="numeric">100</td>
+                                                                </tr>
+                              </tbody>
+                          </table>
+                          </section>
+                          <h4><i class="fa fa-angle-right"></i> Seminar 3</h4>
+                          <section id="unseen">
+                            <table class="table table-bordered table-striped table-condensed">
+                              <thead>
+                              <tr>
+                                  <th>IDNo.</th>
+                                  <th>Name</th>
+                                  <th class="numeric">Written abstract</th>
+                                  <th class="numeric">Technical contents</th>
+                                  <th class="numeric">Depth Of knowledge</th>
+                                  <th class="numeric">Style of presentation</th>
+                                  <th class="numeric">Response to questions</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              <tr>
+                                  <td><a href="">2012C6PS392P</a></td>
+                                  <td><a href="">Prateek Jain</a></td>
+                                  <td class="numeric">10</td>
+                                  <td class="numeric">10</td>
+                                  <td class="numeric">15</td>
+                                  <td class="numeric">15</td>
+                                  <td class="numeric">100</td>
+                                  
+                              </tr>
+                              </tbody>
+                          </table>
+                          </section>
+                          <h4><i class="fa fa-angle-right"></i> Seminar 4</h4>
+                          <section id="unseen">
+                            <table class="table table-bordered table-striped table-condensed">
+                              <thead>
+                              <tr>
+                                  <th>IDNo.</th>
+                                  <th>Name</th>
+                                  <th class="numeric">Written abstract</th>
+                                  <th class="numeric">Technical contents</th>
+                                  <th class="numeric">Depth Of knowledge</th>
+                                  <th class="numeric">Style of presentation</th>
+                                  <th class="numeric">Response to questions</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              <tr>
+                                  <td><a href="">2012C6PS392P</a></td>
+                                  <td><a href="">Prateek Jain</a></td>
+                                  <td class="numeric">10</td>
+                                  <td class="numeric">10</td>
+                                  <td class="numeric">15</td>
+                                  <td class="numeric">15</td>
+                                  <td class="numeric">100</td>
+                                                               </tr>
+                              </tbody>
+                          </table>
+                          </section>
+                  </div><!-- /content-panel -->
+               </div><!-- /col-lg-4 -->     
+        </div><!-- /row -->
+    <center>
+            <h3>
+            <!-- <i class="fa fa-angle-right"></i> --> 
+           <br><br>Student's Traits Evaluation</h3></center>
+          <div class="row mt">
+            <div class="col-lg-12">
+                      <div class="content-panel">
+                      <!-- <h4><i class="fa fa-angle-right"></i> Responsive Table</h4> -->
+                          <section id="unseen">
+                            <table class="table table-bordered table-striped table-condensed">
+                              <thead>
+                              <tr>
+                                  <th>IDNo.</th>
+                                  <th>Name</th>
+                                  <th class="numeric">Work progress and achievement</th>
+                                  <th class="numeric">Technical/Professional Competence</th>
+                                  <th class="numeric">Documentation and expression</th>
+                                  <th class="numeric">Initiative and originality</th>
+                                  <th class="numeric">Puntuality</th>
+                                  <th class="numeric">Reliability</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              <tr>
+                                  <td><a href="">2012C6PS392P</a></td>
+                                  <td><a href="">Prateek Jain</a></td>
+                                  <td><select><option>Good</option><option>Poor</option></select></td>
+                                  <td><select><option>Good</option><option>Poor</option></select></td>
+                                  <td><select><option>Good</option><option>Poor</option></select></td>
+                                  <td><select><option>Good</option><option>Poor</option></select></td>
+                                  <td><select><option>Good</option><option>Poor</option></select></td>
+                                  <td><select><option>Good</option><option>Poor</option></select></td>
+                                  
+                              </tr>
+                              </tbody>
+                          </table>
+                          </section>
+                  </div><!-- /content-panel -->
+               </div><!-- /col-lg-4 -->     
+        </div><!-- /row -->
+
+    </section><!--/wrapper -->
+      </section><!-- /MAIN CONTENT -->
+
+      <!--main content end-->
+      <!--footer start-->
+      <footer class="site-footer">
+          <div class="text-center">
+              2014 - Alvarez.is
+              <a href="responsive_table.html#" class="go-top">
+                  <i class="fa fa-angle-up"></i>
+              </a>
+          </div>
+      </footer>
+      <!--footer end-->
+  </section>
+
+    <!-- js placed at the end of the document so the pages load faster -->
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script class="include" type="text/javascript" src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="assets/js/jquery.scrollTo.min.js"></script>
+    <script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
+
+
+    <!--common script for all pages-->
+    <script src="assets/js/common-scripts.js"></script>
+
+    <!--script for this page-->
+    
+
+  </body>
+</html>

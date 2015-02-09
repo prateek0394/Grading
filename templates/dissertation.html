@@ -1,0 +1,209 @@
+ {% extends "blank.html" %}
+   {%block title%}
+   Dissertation
+   {% endblock %}
+    {%block head_content %}
+  <script type="text/javascript">
+   var x = {};
+  var lst1 = ['viva1','midsemPresentation','midsemReport','viva2','finalDissertation','finalViva'];
+  x['viva1'] = 15;
+  x['midsemPresentation'] = 15;
+  x['midsemReport'] = 15;
+x['viva2'] = 15;
+  x['finalDissertation'] = 25;
+  x['finalViva'] = 15;
+function abc(id){
+  var z = 1;
+  var Total=0;
+  var i=0;
+  for(i=0;i<lst1.length;i++){
+    z = z&compare(parseInt(document.getElementById(lst1[i]+id).value),x[lst1[i]]);
+    //alert(lst1[i]+z);
+  if(z==0){
+    alert('Incorrect Value(s)!!!');
+    document.getElementById(lst1[i]+id).value = '0';
+  return false;
+  }
+  Total = Total+parseInt(document.getElementById(lst1[i]+id).value);
+}
+document.getElementById('Total'+id).innerHTML = Total;
+ return true;
+}
+function compare(val1,val2){
+if(val1<=val2)
+  return 1;
+else
+  return 0;
+
+}
+
+function edit(id){
+	var lst = ['viva1','midsemPresentation','midsemReport','viva2','finalDissertation','finalViva','midsemGrade','endsemGrade'];
+  document.getElementById('edit'+id).style.display = 'none';
+  document.getElementById('save'+id).style.display = 'inline';
+  var i=0;
+  for(i=0;i<lst.length;i++){
+  document.getElementById(lst[i]+id).removeAttribute("disabled");}
+}
+
+function saveData(id){
+var  x = "{'id:'"+id+"','viva1':'"+document.getElementById('viva1'+id).value+"','midsemPresentation':'"+document.getElementById('midsemPresentation'+id).value+"','viva2':'"+document.getElementById('viva2'+id).value+"','finalDissertation':'"+document.getElementById('finalDissertation'+id).value+"','finalViva':'"+document.getElementById('finalViva'+id).value+"','Total':'"+document.getElementById('Total'+id).innerHTML+"','midsemReport':'"+document.getElementById('midsemReport'+id).value+"','midsemGrade':'"+document.getElementById('midsemGrade'+id).value+"','endsemGrade':'"+document.getElementById('endsemGrade'+id).value+"'}";
+$.getJSON('/grade/dissertation', {x:x,type:'table1'}, function(data, jqXHR){
+    if(data[0]==='OK'){
+       alert('Awesome\n'+data[1]);
+}else{
+	alert('Error!!!!!!!!!!!!!!!!!');
+}
+});
+	var lst = ['viva1','midsemPresentation','midsemReport','viva2','finalDissertation','finalViva','midsemGrade','endsemGrade'];
+var i=0;
+for(i=0;i<lst.length;i++)
+  document.getElementById(lst[i]+id).setAttribute("disabled", true);
+document.getElementById('save'+id).style.display = 'none';
+  document.getElementById('edit'+id).style.display = 'inline';  
+}
+function edit2(id){
+	var lst = ['workProgress','technicalCompetence','documentation','initiative','puntuality','reliability'];
+var i=0;
+for(i=0;i<lst.length;i++)
+  document.getElementById(lst[i]+id).removeAttribute('disabled'); 
+  document.getElementById('edit2'+id).style.display = 'none';
+  document.getElementById('save2'+id).style.display = 'inline';
+}
+function saveData2(id){
+	var lst = ['workProgress','technicalCompetence','documentation','initiative','puntuality','reliability'];
+	var i=0;
+	var x = "{";
+for(i=0;i<lst.length;i++){
+  document.getElementById(lst[i]+id).setAttribute('disabled',true);
+  x = x+ "'"+lst[i]+"':"+"'"+document.getElementById(lst[i]+id).value+"',";
+}
+x=x+"}";
+  $.getJSON('/grade/dissertation', {x:x,type:'table2'}, function(data, jqXHR){
+    if(data[0]==='OK'){
+       alert('Awesome\n'+data[1]);
+}else{
+	alert('Error!!!!!!!!!!!!!!!!!');
+}
+});
+  document.getElementById('save2'+id).style.display = 'none';
+  document.getElementById('edit2'+id).style.display = 'inline'; 
+}
+  </script>
+  <style type="text/css">
+input[type="text"]{
+  width:20%;
+
+}
+  </style>
+  {% endblock %}
+  <!-- </head>
+
+  <body>
+
+  <section id="container" >
+       -->
+      <!-- **********************************************************************************************************************************************************
+      MAIN CONTENT
+      *********************************************************************************************************************************************************** -->
+      <!--main content start-->
+      {% block main_content %}
+    
+          <section class="wrapper">
+          <center>
+            <h3>
+            <!-- <i class="fa fa-angle-right"></i> --> 
+            {{CourseCode}}{{CourseName}}<br>{{SemesterNumber}} Semester {{SessionYear}}<br><br>Evaluation</h3></center>
+          <div class="row mt">
+            <div class="col-lg-12">
+                      <div class="content-panel">
+                      <!-- <h4><i class="fa fa-angle-right"></i> Responsive Table</h4> -->
+                          <section id="unseen">
+                            <table class="table table-bordered table-striped table-condensed">
+                              <thead>
+                              <tr>
+                                  <th>IDNo.</th>
+                                  <th>Name</th>
+                                  <th class="numeric">Viva-1</th>
+                                  <th class="numeric">Mid Sem <br>Presentation</th>
+                                  <th class="numeric">Mid Sem <br>Written Report</th>
+                                  <th class="numeric">Viva -2</th>
+                                  <th class="numeric">Final Dissertation</th>
+                                  <th class="numeric">Final Viva</th>
+                                  <th class="numeric">Total</th>
+                                  <th>Recommended<br> Mid Sem<br> Grade</th>
+                                  <th>Recommended <br>Final Grade</th>
+                                  <!-- <th></th> -->
+                              </tr>
+                              </thead>
+                              <tbody>
+                              <tr>
+                                  <td><a href="">2012C6PS392P</a></td>
+                                  <td><a href="">Prateek Jain</a></td>
+                                 <td class="numeric"><input type="text" id="viva1101" value = "0" disabled="" onchange="abc('101')"></td>
+                                  <td class="numeric"><input type="text" id="midsemPresentation101" value = "0" disabled="" onchange="abc('101')"></td>
+                                  <td class="numeric"><input type="text" id ="midsemReport101" value = "0" disabled="" onchange="abc('101')"></td>
+                                  <td class="numeric"><input type="text" id = "viva2101" value = "0" disabled="" onchange="abc('101')"></td>
+                                  <td class="numeric"><input type="text" id="finalDissertation101" value = "0" disabled="" onchange="abc('101')"></td>
+                                  <td class="numeric"><input type="text" id="finalViva101" value = "0" disabled="" onchange="abc('101')"></td>
+                                  <td class="numeric"><label id="Total101">0</label></td>
+                                  <td><select id="midsemGrade101" disabled=""><option>A</option><option>A-</option><option>B</option><option>B-</option><option>C</option><option>C-</option><option>D</option><option>E</option></select></td>
+                                  <td><select id="endsemGrade101" disabled=""><option>A</option><option>A-</option><option>B</option><option>B-</option><option>C</option><option>C-</option><option>D</option><option>E</option></select></td>
+                                  {% if category == 1 or category == 4%}
+                                  <td><input type="submit" id="edit101" value="edit" onclick="edit('101')"><input id="save101" type="submit" value="Save" style="display:none" onclick="saveData('101')" ></td>
+                                  {% endif %}
+                              </tr>
+                              </tbody>
+                          </table>
+                          </section>
+                  </div><!-- /content-panel -->
+               </div><!-- /col-lg-4 -->     
+        </div><!-- /row -->
+        <br><br>
+    <center>
+            <h3>
+            <!-- <i class="fa fa-angle-right"></i> --> 
+           <br><br>Student's Traits Evaluation</h3></center>
+          <div class="row mt">
+            <div class="col-lg-12">
+                      <div class="content-panel">
+                      <!-- <h4><i class="fa fa-angle-right"></i> Responsive Table</h4> -->
+                          <section id="unseen">
+                            <table class="table table-bordered table-striped table-condensed">
+                              <thead>
+                              <tr>
+                                  <th>IDNo.</th>
+                                  <th>Name</th>
+                                  <th class="numeric">Work progress and achievement</th>
+                                  <th class="numeric">Technical/Professional Competence</th>
+                                  <th class="numeric">Documentation and expression</th>
+                                  <th class="numeric">Initiative and originality</th>
+                                  <th class="numeric">Puntuality</th>
+                                  <th class="numeric">Reliability</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              <tr>
+                                  <td><a href="">2012C6PS392P</a></td>
+                                  <td><a href="">Prateek Jain</a></td>
+                                  <td><select id="workProgress101" disabled=""><option>A</option><option>A-</option><option>B</option><option>B-</option><option>C</option><option>C-</option><option>D</option><option>E</option></select></td>
+                                  <td><select id="technicalCompetence101" disabled=""><option>A</option><option>A-</option><option>B</option><option>B-</option><option>C</option><option>C-</option><option>D</option><option>E</option></select></td>
+                                  <td><select id="documentation101" disabled=""><option>A</option><option>A-</option><option>B</option><option>B-</option><option>C</option><option>C-</option><option>D</option><option>E</option></select></td>
+                                  <td><select id="initiative101" disabled=""><option>A</option><option>A-</option><option>B</option><option>B-</option><option>C</option><option>C-</option><option>D</option><option>E</option></select></td>
+                                  <td><select id="puntuality101" disabled=""><option>A</option><option>A-</option><option>B</option><option>B-</option><option>C</option><option>C-</option><option>D</option><option>E</option></select></td>
+                                  <td><select id="reliability101" disabled=""><option>A</option><option>A-</option><option>B</option><option>B-</option><option>C</option><option>C-</option><option>D</option><option>E</option></select></td>
+                                  {% if category == 1 or category == 4 %}
+                                  <td><input type="submit" id="edit2101" value="edit" onclick="edit2('101')"><input id="save2101" type="submit" value="Save" style="display:none" onclick="saveData2('101')" ></td>
+                                  {% endif %}
+                              </tr>
+                              </tbody>
+                          </table>
+                          </section>
+                  </div><!-- /content-panel -->
+               </div><!-- /col-lg-4 -->     
+        </div><!-- /row -->
+
+    </section><!--/wrapper -->
+
+    {% endblock %}
+     

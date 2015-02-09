@@ -1,0 +1,240 @@
+{% extends "blank.html" %}
+   {%block title%}
+   Research Practice
+   {% endblock %}
+    {%block head_content %}
+<script type="text/javascript">
+function edit1(id){
+var lst = ['midProposalContent','midProposalPresentation','midDevelopmentReport','midDevelopmentPresentation','midResearchReport','midResearchPresentation','midsemGrade'];
+var i=0;
+for(i=0;i<lst.length;i++)
+  document.getElementById(lst[i]+id).removeAttribute('disabled');
+document.getElementById('edit1'+id).style.display = 'none';
+document.getElementById('save1'+id).style.display = 'inline';
+}
+function edit2(id){
+var lst = ['endDevelopmentReport','endDevelopmentPresentation','endResearchReport','endResearchPresentation','endsemGrade'];
+
+var i=0;
+for(i=0;i<lst.length;i++)
+  document.getElementById(lst[i]+id).removeAttribute('disabled');
+document.getElementById('edit2'+id).style.display = 'none';
+document.getElementById('save2'+id).style.display = 'inline';
+}
+function saveData1(id){
+ var lst = ['midProposalContent','midProposalPresentation','midDevelopmentReport','midDevelopmentPresentation','midResearchReport','midResearchPresentation','midsemGrade'];
+
+var i=0;
+var x = "{";
+for(i=0;i<lst.length;i++){
+  document.getElementById(lst[i]+id).setAttribute('disabled',true);
+  x = x+ "'"+lst[i]+"':'"+document.getElementById(lst[i]+id).value+"',";
+}
+x = x+"'midsemTotal':'"+document.getElementById('midsemTotal'+id).innerHTML+"'}";
+  $.getJSON('/grade/RP', {x:x,type:'table1'}, function(data, jqXHR){
+    if(data[0]==='OK'){
+       alert('Awesome\n'+data[1]);
+}else{
+  alert('Error!!!!!!!!!!!!!!!!!');
+}
+});
+  document.getElementById('save1'+id).style.display = 'none';
+  document.getElementById('edit1'+id).style.display = 'inline'; 
+}
+
+function saveData2(id){
+
+ var lst = ['endDevelopmentReport','endDevelopmentPresentation','endResearchReport','endResearchPresentation','endsemGrade'];
+
+var i=0;
+var x = "{";
+for(i=0;i<lst.length;i++){
+  document.getElementById(lst[i]+id).setAttribute('disabled',true);
+  x = x+ "'"+lst[i]+"':'"+document.getElementById(lst[i]+id).value+"',";
+}
+x = x+"'endsemTotal':'"+document.getElementById('endsemTotal'+id).innerHTML+",'Total':'"+document.getElementById('Total'+id).innerHTML+"'}";
+  $.getJSON('/grade/RP', {x:x,type:'table2'}, function(data, jqXHR){
+    if(data[0]==='OK'){
+       alert('Awesome\n'+data[1]);
+}else{
+  alert('Error!!!!!!!!!!!!!!!!!');
+}
+});
+  document.getElementById('save2'+id).style.display = 'none';
+  document.getElementById('edit2'+id).style.display = 'inline'; 
+
+}
+ var x = {};
+  var lst2 = ['endDevelopmentReport','endDevelopmentPresentation','endResearchReport','endResearchPresentation'];
+  var lst1 = ['midProposalContent','midProposalPresentation','midDevelopmentReport','midDevelopmentPresentation','midResearchReport','midResearchPresentation'];
+  x['endDevelopmentReport'] = 10;
+  x['endDevelopmentPresentation'] = 5;
+  x['endResearchReport'] = 20;
+x['endResearchPresentation'] = 15;
+  x['midDevelopmentReport'] = 5;
+  x['midDevelopmentPresentation'] = 10;
+  x['midResearchReport'] = 10;
+x['midResearchPresentation'] = 10;
+x['midProposalContent'] = 10;
+x['midProposalPresentation'] = 5;
+function abc(id){
+  var z = 1;
+  var midsemTotal=0;
+  var endsemTotal=0;
+  var i=0;
+  for(i=0;i<lst1.length;i++){
+    z = z&compare(parseInt(document.getElementById(lst1[i]+id).value),x[lst1[i]]);
+    //alert(lst1[i]+z);
+  if(z==0){
+    alert('Incorrect Value(s)!!!');
+    document.getElementById(lst1[i]+id).value = '0';
+  return false;
+  }
+  midsemTotal = midsemTotal+parseInt(document.getElementById(lst1[i]+id).value);
+}
+document.getElementById('midsemTotal'+id).innerHTML = midsemTotal;
+  for(i=0;i<lst2.length;i++){
+    z = z&compare(parseInt(document.getElementById(lst2[i]+id).value),x[lst2[i]]);
+    //alert(lst2[i]+z);
+  if(z==0){
+    alert('Incorrect Value(s)!!!');
+    document.getElementById(lst2[i]+id).value = '0';
+  return false;
+  }
+  endsemTotal = endsemTotal+parseInt(document.getElementById(lst2[i]+id).value);
+}
+document.getElementById('endsemTotal'+id).innerHTML = endsemTotal;
+document.getElementById('Total'+id).innerHTML = midsemTotal+endsemTotal;
+return true;
+}
+function compare(val1,val2){
+if(val1<=val2)
+  return 1;
+else
+  return 0;
+
+}
+
+
+    </script>
+<style type="text/css">
+  input[type="text"]{
+    width:20%;
+  }
+</style>
+{% endblock %}
+{%block main_content %}
+          <section class="wrapper">
+          <center>
+          	<h3>
+          	<!-- <i class="fa fa-angle-right"></i> --> 
+          	{{CourseCode}}{{CourseName}}<br>{{SemesterNumber}} Semester {{SessionYear}}<br><br>Mid-Semester Evaluation</h3></center>
+		  		<div class="row mt">
+			  		<div class="col-lg-12">
+                      <div class="content-panel">
+                      <!-- <h4><i class="fa fa-angle-right"></i> Responsive Table</h4> -->
+                          <section id="unseen">
+                            <table class="table table-bordered table-striped table-condensed">
+                              <thead>
+                              <tr>
+                                  <th>IDNo.</th>
+                                  <th>Name</th>
+                                  <th  colspan="2"><center>Research Proposal</center></th>
+                                  <th colspan="2"><center>Development related</center></th>
+                                  <th colspan="2"><center>Research Related</center></th>
+                                  <th >Mid Sem Marks</th>
+                                  <th>Recommended <br>Mid Sem Grade</th>
+                              </tr>
+                              <tr>
+                                  <th></th>
+                                  <th></th>
+                                  <th class="numeric">Contents</th>
+                                  <th class="numeric">Presentation</th>
+                                  <th class="numeric">Report</th>
+                                  <th class="numeric">Presentation</th>
+                                  <th class="numeric">Report</th>
+                                  <th class="numeric">Presentation</th>
+                                  <th class="numeric"></th>
+                                  <th class="numeric"></th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              <tr>
+                                  <td><a href="">2012C6PS392P</a></td>
+                                  <td><a href="">Prateek Jain</a></td>
+                                  <td class="numeric"><input type="text" disabled="" id="midProposalContent101" onchange="abc('101')" value="10"></td>
+                                  <td class="numeric"><input type="text" disabled="" id="midProposalPresentation101" onchange="abc('101')" value="5"></td>
+                                  <td class="numeric"><input type="text" disabled="" id="midDevelopmentReport101" onchange="abc('101')" value="5"></td>
+                                  <td class="numeric"><input type="text" disabled="" id="midDevelopmentPresentation101" onchange="abc('101')" value="10"></td>
+                                  <td class="numeric"><input type="text" disabled="" id="midResearchReport101" onchange="abc('101')" value="10"></td>
+                                  <td class="numeric"><input type="text" disabled="" id="midResearchPresentation101" onchange="abc('101')" value="10"></td>
+                                  <td class="numeric"><label id="midsemTotal101">50</label></td>
+                                  <td><select id="midsemGrade101" disabled=""><option>A</option><option>A-</option><option>B</option><option>B-</option><option>C</option><option>C-</option><option>D</option><option>E</option></select></td>
+                                  {% if category == 1 or category == 4 %}
+                                  <td><input type="submit" id="edit1101" value="Edit" onclick="edit1('101')"><input type="submit" id="save1101" value="Save" style="display:none" onclick="saveData1('101')"></td>
+                                {%endif%}
+                              </tr>
+                              </tbody>
+                          </table>
+                          </section>
+                  </div><!-- /content-panel -->
+               </div><!-- /col-lg-4 -->			
+		  	</div><!-- /row -->
+		  	<br><br>
+		  	  <center>
+            <h3>
+            <!-- <i class="fa fa-angle-right"></i> --> 
+        End-Semester Evaluation</h3></center>
+          <div class="row mt">
+            <div class="col-lg-12">
+                      <div class="content-panel">
+                      <!-- <h4><i class="fa fa-angle-right"></i> Responsive Table</h4> -->
+                          <section id="unseen">
+                            <table class="table table-bordered table-striped table-condensed">
+                              <thead>
+                              <tr>
+                                  <th>IDNo.</th>
+                                  <th>Name</th>
+                                  <th colspan="2"><center>Development related</center></th>
+                                  <th colspan="2"><center>Research Related</center></th>
+                                  <th >End Sem Marks</th>
+                                  <th>Total Marks</th>
+                                  <th>Recommended <br>End Sem Grade</th>
+                              </tr>
+                              <tr>
+                                  <th></th>
+                                  <th></th>
+                                  <th class="numeric">Report</th>
+                                  <th class="numeric">Presentation</th>
+                                  <th class="numeric">Report</th>
+                                  <th class="numeric">Presentation</th>
+                                  <th class="numeric"></th>
+                                  <th class="numeric"></th>
+                                  <th class="numeric"></th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              <tr>
+                                  <td><a href="">2012C6PS392P</a></td>
+                                  <td><a href="">Prateek Jain</a></td>
+                                  <td class="numeric"><input type="text" id="endDevelopmentReport101" disabled="" value="10" onchange="abc('101')"></td>
+                                  <td class="numeric"><input type="text" id="endDevelopmentPresentation101" disabled="" value="5" onchange="abc('101')"></td>
+                                  <td class="numeric"><input type="text" id="endResearchReport101" disabled="" value="20" onchange="abc('101')"></td>
+                                  <td class="numeric"><input type="text" id="endResearchPresentation101" disabled="" value="15" onchange="abc('101')"></td>
+                                  <td class="numeric"><label id="endsemTotal101">50</label></td>
+                                  <td class="numeric"><label id="Total101">100</label></td>
+                                  <td><select id="endsemGrade101" disabled=""><option>A</option><option>A-</option><option>B</option><option>B-</option><option>C</option><option>C-</option><option>D</option><option>E</option></select></td>
+                                  {% if category == 1 or category == 4  %}                                
+                                  <td><input type="submit" id="edit2101" value="Edit" onclick="edit2('101')"><input type="submit" id="save2101" value="Save" style="display:none" onclick="saveData2('101')"></td>
+                              {%endif%}
+                              </tr>
+                              </tbody>
+                          </table>
+                          </section>
+                  </div><!-- /content-panel -->
+               </div><!-- /col-lg-4 -->     
+        </div><!-- /row -->
+        
+
+		</section><! --/wrapper -->
+    {%endblock%}
