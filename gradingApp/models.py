@@ -16,16 +16,20 @@ class duration(models.Model):
 		unique_together =('semester','year')
 
 class course(models.Model):
-	courseCode = models.CharField(max_length=10)
+	courseCode = models.CharField(max_length=10,unique=True)
 	title = models.CharField(max_length = 30)
+
+class courseTemplates(models.Model):
+	courseN = models.ForeignKey(course)
+	keyDev = models.IntegerField(max_length=2)
 
 class markList(models.Model):
 	student = models.ForeignKey(studentData)
 	faculty = models.ForeignKey(facultyData)
 	course = models.ForeignKey(course)
 	dur = models.ForeignKey(duration)
-	midSemGrade = models.CharField(max_length = 1)
-	endSemGrade =  models.CharField(max_length = 1)
+	midSemGrade = models.CharField(max_length = 5)
+	endSemGrade =  models.CharField(max_length = 5)
 	evalData = models.TextField()
 	midsemReport = models.FileField(upload_to=namefile)
 	midsemAntiPlag = models.FileField(upload_to=namefile)

@@ -1,0 +1,785 @@
+{% extends "blank.html" %}
+   {%block title%}
+   Marks
+   {% endblock %}
+    {%block head_content %}
+    <script type="text/javascript" src="/marks.js"></script>
+     <style type="text/css">
+input[type="text"]{
+  width:20%;
+
+}
+ </style>
+     {%endblock%}
+    {%block main_content %}
+          <section class="wrapper">
+          <center>
+          	<h2> 
+          	Semester{{semester}},{{year}}<br>Students Marks Submission</h2>
+          	</center>
+
+          	{% for key,faculty in data.items %}
+		  	<h3>ID:{{key}}<br>Name:{{faculty.name}}</h3>
+		  	<br>
+		  	<!--Projects-->
+		  	{% if '1' in faculty.sublist %}
+ 	<h3>Projects</h3>
+		  		<div class="row mt">
+			  		<div class="col-lg-12">
+                      <div class="content-panel">
+                      <!-- <h4><i class="fa fa-angle-right"></i> Responsive Table</h4> -->
+                          <section id="unseen">
+		  	<h4>MidSemEvaluation</h4>
+
+                            <table class="table table-bordered table-striped table-condensed">
+                              <thead>
+                              <tr>
+                              <th>Course Code</th>
+                                  <th>IDNo.</th>
+                                  <th>Name</th>
+                                  <th class="numeric">Regularity in<br> Interaction<br> with mentor</th>
+                                  <th class="numeric">Project work <br>Viva -1</th>
+                                  <th class="numeric">Project work<br> Viva -2</th>
+                                  <th class="numeric">Weekly <br>Report/document<br> submission</th>
+                                  <th class="numeric">Mid <br>semester<br> viva</th>
+                                  <th class="numeric">Mid <br>semester<br> report</th>
+                                  <th class="numeric">Total Marks</th>
+                                  <th>Suggested <br>Mid-semester<br> Grade</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              {% for data in faculty.1 %}
+                              <tr>
+                              	<td>{{data.3}}</td>
+                                  <td>{{data.1}}</td>
+                                  <td>{{data.2}}</td>
+                                  <td class="numeric"><input type="text" id="1midregularityMentor{{data.0}}" value = "{{data.6.midreularityMentor}}" disabled="" onchange="abc('{{data.0}}','1')"></td>
+                                  <td class="numeric"><input type="text" id="1projectViva1{{data.0}}" value = "{{data.6.projectViva1}}" disabled="" onchange="abc('{{data.0}}','1')"></td>
+                                  <td class="numeric"><input type="text" id="1projectViva2{{data.0}}" value = "{{data.6.projectViva2}}" disabled="" onchange="abc('{{data.0}}','1')"></td>
+                                  <td class="numeric"><input type="text" id="1weekdocumentSubmission{{data.0}}" value = "{{data.6.weekdocumentSubmission}}" disabled="" onchange="abc('{{data.0}}','1')"></td>
+                                  <td class="numeric"><input type="text" id="1midsemViva{{data.0}}" value = "{{data.6.midsemViva}}" disabled="" onchange="abc('{{data.0}}','1')"></td>
+                                  <td class="numeric"><input type="text" id="1midsemReport{{data.0}}" value = "{{data.6.midsemReport}}" disabled="" onchange="abc('{{data.0}}','1')"></td>
+				  <td class="numeric"><label id="1midsemTotal{{data.0}}">{{data.6.midsemTotal}}</label></td>
+                                  <td><select id="1midsemGrade{{data.0}}" disabled="">
+                                  <option value="" selected="selected" disabled="disabled">Choose</option>
+                                  {%for i in gradeList%}
+                                  {% if i == data.4 %}
+                                  <option selected="selected">{{i}}</option>
+                                  {%else%}
+                                  <option>{{i}}</option>
+                                  {%endif%}
+                                  {%endfor%}
+                                  </select></td>
+                                  {% if category == 1 %}
+                                  <td><input type="submit" id="1edit{{data.0}}" value="edit" onclick="edit('{{data.0}}')"><input id="1save{{data.0}}" type="submit" value="Save" style="display:none" onclick="saveData('{{data.0}}')" ></td>
+                              {% endif %}
+                              </tr>
+                              </tbody>
+                          </table>
+                          		  	<br>
+		  	<h4>
+          	<!-- <i class="fa fa-angle-right"></i> --> 
+          	EndSemEvaluation</h4>
+		  		            <table class="table table-bordered table-striped table-condensed">
+                              <thead>
+                              <tr>
+                              <th>CourseCode</th>
+                                  <th>IDNo.</th>
+                                  <th>Name</th>
+                                  <th class="numeric">Regularity in interaction<br> with mentor</th>
+                                  <th class="numeric">Project work viva III/IV</th>
+                                  <th class="numeric">Final Seminar</th>
+                                  <th class="numeric">Final report/document<br> submission</th>
+                                  <th class="numeric">Total Marks<br>( including <br>Mid Sem marks )</th>
+                                  <th class="numeric">Suggested <br>Final Grade</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              {%for data in faculty.1%}
+                              <tr>
+                              <td>{{data.3}}</td>
+                                  <td>{{data.1}}</td>
+                                  <td>{{data.2}}</td>
+                                  <td class="numeric"><input type="text" id="1endregularityMentor{{data.0}}" value = "{{data.7.endregularityMentor}}" disabled="" onchange="abc('{{data.0}}','1')"></td>
+                                  <td class="numeric"><input type="text" id="1projectViva34{{data.0}}" value = "{{data.7.projectViva34}}" disabled="" onchange="abc('{{data.0}}','1')"></td>
+                                  <td class="numeric"><input type="text" id="1finalSeminar{{data.0}}" value = "{{data.7.finalSeminar}}" disabled="" onchange="abc('{{data.0}}','1')"></td>
+                                  <td class="numeric"><input type="text" id="finaldocumentSubmission{{data.0}}" value = "{{data.7.finaldocumentSubmission}}" disabled="" onchange="abc('{{data.0}}','1')"></td>
+                                  <td class="numeric"><label id="1Total{{data.0}}">{{data.7.Total}}</label></td>
+                                  <td><select id="1endsemGrade{{data.0}}" disabled="">
+                                  <option value="" selected="selected" disabled="disabled">Choose</option>
+                                  {%for i in gradeList%}
+                                  {% if i == data.5 %}
+                                  <option selected="selected">{{i}}</option>
+                                  {%else%}
+                                  <option>{{i}}</option>
+                                  {%endif%}
+                                  {%endfor%}
+                                  </select></td>
+                                  {% if category == 1 %}
+                                  <td><input type="submit" id="1edit2{{data.0}}" value="edit" onclick="edit2('{{data.0}}')"><input id="1save2{{data.0}}" type="submit" value="Save" style="display:none" onclick="saveData2('{{data.0}}')" ></td>
+                              {% endif %}
+                              </tr>
+                              </tbody>
+                          </table>
+                          </section>
+                  </div><!-- /content-panel -->
+               </div><!-- /col-lg-4 -->			
+		  	</div><!-- /row -->
+<hr>
+{% endif %}
+<!--Dissertation -->
+{% if '2' in faculty.sublist %}
+<h3>Dissertations</h3>
+         <div class="row mt">
+            <div class="col-lg-12">
+                      <div class="content-panel">
+                      <!-- <h4><i class="fa fa-angle-right"></i> Responsive Table</h4> -->
+                          <section id="unseen">
+<h4>MidSemesterEvaluation</h4>
+                            <table class="table table-bordered table-striped table-condensed">
+                              <thead>
+                              <tr>
+                              <th>Course Code</th>
+                                  <th>IDNo.</th>
+                                  <th>Name</th>
+                                  <th class="numeric">Viva-1</th>
+                                  <th class="numeric">Mid Sem <br>Presentation</th>
+                                  <th class="numeric">Mid Sem <br>Written Report</th>
+                                  <th class="numeric">Viva -2</th>
+                                  <th class="numeric">Final Dissertation</th>
+                                  <th class="numeric">Final Viva</th>
+                                  <th class="numeric">Total</th>
+                                  <th>Recommended<br> Mid Sem<br> Grade</th>
+                                  <th>Recommended <br>Final Grade</th>
+                                  <!-- <th></th> -->
+                              </tr>
+                              </thead>
+                              
+                              <tbody>
+                              {% for data in faculty.2 %}
+                              <tr>
+                              <td>{{data.3}}</td>
+                                  <td>{{data.1}}</td>
+                                  <td>{{data.2}}</td>
+                                 <td class="numeric"><input type="text" id="2viva1{{data.0}}" value = "{{data.6.viva1}}" disabled="" onchange="Dissertotal('{{data.0}}','1')"></td>
+                                  <td class="numeric"><input type="text" id="2midsemPresentation{{data.0}}" value = "{{data.6.midsemPresentation}}" disabled="" onchange="Dissertotal('{{data.0}}','1')"></td>
+                                  <td class="numeric"><input type="text" id ="2midsemReport{{data.0}}" value = "{{data.6.midsemReport}}" disabled="" onchange="Dissertotal('{{data.0}}','1')"></td>
+                                  <td class="numeric"><input type="text" id = "2viva2{{data.0}}" value = "{{data.6.viva2}}" disabled="" onchange="Dissertotal('{{data.0}}','1')"></td>
+                                  <td class="numeric"><input type="text" id="2finalDissertation{{data.0}}" value = "{{data.6.finalDissertation}}" disabled="" onchange="Dissertotal('{{data.0}}','1')"></td>
+                                  <td class="numeric"><input type="text" id="2finalViva{{data.0}}" value = "{{data.6.finalViva}}" disabled="" onchange="Dissertotal('{{data.0}}','1')"></td>
+                                  <td class="numeric"><label id="2Total{{data.0}}">{{data.6.Total}}</label></td>
+                                  <td><select id="2midsemGrade{{data.0}}" disabled=""> <option value="" selected="selected" disabled="disabled">Choose</option>
+                                  {%for i in gradeList%}
+                                  {% if i == data.4 %}
+                                  <option selected="selected">{{i}}</option>
+                                  {%else%}
+                                  <option>{{i}}</option>
+                                  {%endif%}
+                                  {%endfor%}
+                                  </select></td>
+                                  <td><select id="2endsemGrade{{data.0}}" disabled=""><option value="" selected="selected" disabled="disabled">Choose</option>
+                                  {%for i in gradeList%}
+                                  {% if i == data.5 %}
+                                  <option selected="selected">{{i}}</option>
+                                  {%else%}
+                                  <option>{{i}}</option>
+                                  {%endfor%}</select></td>
+                                  {% if category == 1 or category == 4%}
+                                  <td><input type="submit" id="2edit{{data.0}}" value="edit" onclick="Disseredit('{{data.0}}','1')"><input id="2save{{data.0}}" type="submit" value="Save" style="display:none" onclick="Dissersave('{{data.0}}','1')" ></td>
+                                  {% endif %}
+                              </tr>
+                              {%endfor%}
+                              </tbody>
+                          </table>
+                     <br>
+                            <table class="table table-bordered table-striped table-condensed">
+                              <thead>
+                              <tr>
+                              <th>Course Code</th>
+                                  <th>IDNo.</th>
+                                  <th>Name</th>
+                                  <th >Work progress and achievement</th>
+                                  <th >Technical/Professional Competence</th>
+                                  <th >Documentation and expression</th>
+                                  <th >Initiative and originality</th>
+                                  <th >Puntuality</th>
+                                  <th >Reliability</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              {%for data in faculty.2%}
+                              <tr>
+                              <td>{{data.6}}</td>
+                                  <td>{{data.1}}</td>
+                                  <td>{{data.2}}</td>
+                                  <td><select id="2workProgress{{data.0}}" disabled=""><option value="" selected="selected" disabled="disabled">Choose</option>
+                                  {%for i in gradeList%}
+                                  {% if i == data.7.workProgress %}
+                                  <option selected="selected">{{i}}</option>
+                                  {%else%}
+                                  <option>{{i}}</option>{%endif%}
+                                  {%endfor%}</select></td>
+                                  <td><select id="2technicalCompetence{{data.0}}" disabled=""><option value="" selected="selected" disabled="disabled">Choose</option>
+                                  {%for i in gradeList%}
+                                  {% if i == data.7.technicalCompetence %}
+                                  <option selected="selected">{{i}}</option>
+                                  {%else%}
+                                  <option>{{i}}</option>{%endif%}
+                                  {%endfor%}</select></td>
+                                  <td><select id="2documentation{{data.0}}" disabled=""><option value="" selected="selected" disabled="disabled">Choose</option>
+                                  {%for i in gradeList%}
+                                  {% if i == data.7.documentation %}
+                                  <option selected="selected">{{i}}</option>
+                                  {%else%}
+                                  <option>{{i}}</option>{%endif%}
+                                  {%endfor%}</select></td>
+                                  <td><select id="2initiative{{data.0}}" disabled=""><option value="" selected="selected" disabled="disabled">Choose</option>
+                                  {%for i in gradeList%}
+                                  {% if i == data.7.initiative %}
+                                  <option selected="selected">{{i}}</option>
+                                  {%else%}
+                                  <option>{{i}}</option>{%endif%}
+                                  {%endfor%}</select></td>
+                                  <td><select id="2puntuality{{data.0}}" disabled=""><option value="" selected="selected" disabled="disabled">Choose</option>
+                                  {%for i in gradeList%}
+                                  {% if i == data.7.puntuality %}
+                                  <option selected="selected">{{i}}</option>
+                                  {%else%}
+                                  <option>{{i}}</option>{%endif%}
+                                  {%endfor%}</select></td>
+                                  <td><select id="2reliability{{data.0}}" disabled=""><option value="" selected="selected" disabled="disabled">Choose</option>
+                                  {%for i in gradeList%}
+                                  {% if i == data.7.reliability %}
+                                  <option selected="selected">{{i}}</option>
+                                  {%else%}
+                                  <option>{{i}}</option>{%endif%}
+                                  {%endfor%}</select></td>
+                                  {% if category == 1 or category == 4 %}
+                                  <td><input type="submit" id="2edit2{{data.0}}" value="edit" onclick="Disseredit('{{data.0}}','1')"><input id="2save2{{data.0}}" type="submit" value="Save" style="display:none" onclick="Dissersave('{{data.0}}','2')" ></td>
+                                  {% endif %}
+                              </tr>
+                              {%endfor%}
+                              </tbody>
+                          </table>
+                          </section>
+                  </div><!-- /content-panel -->
+               </div><!-- /col-lg-4 -->     
+        </div><!-- /row -->
+		<hr>
+		{%endif%}
+		<!--RP-->
+	   {% if '3' in faculty.sublist %}
+    <h3>Research Practice
+</h3>
+          <div class="row mt">
+            <div class="col-lg-12">
+                      <div class="content-panel">
+                          <section id="unseen">
+                            <table class="table table-bordered table-striped table-condensed">
+                              <thead>
+                              <tr>
+                              <th>Course Code</th>
+                                  <th>IDNo.</th>
+                                  <th>Name</th>
+                                  <th  colspan="2"><center>Research Proposal</center></th>
+                                  <th colspan="2"><center>Development related</center></th>
+                                  <th colspan="2"><center>Research Related</center></th>
+                                  <th >Mid Sem Marks</th>
+                                  <th>Recommended <br>Mid Sem Grade</th>
+                              </tr>
+                              <tr>
+                              	<th></th>
+                                  <th></th>
+                                  <th></th>
+                                  <th class="numeric">Contents</th>
+                                  <th class="numeric">Presentation</th>
+                                  <th class="numeric">Report</th>
+                                  <th class="numeric">Presentation</th>
+                                  <th class="numeric">Report</th>
+                                  <th class="numeric">Presentation</th>
+                                  <th class="numeric"></th>
+                                  <th class="numeric"></th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              {%for data in faculty.3%}
+                              <tr>
+                              <td>{{data.3}}</td>
+                                  <td>{{data.1}}</td>
+                                  <td>{{data.2}}</td>
+                                  <td class="numeric"><input type="text" disabled="" id="3midProposalContent{{data.0}}" onchange="RPtotal('{{data.0}}','3')" value="{{data.6.midProposalContent}}"></td>
+                                  <td class="numeric"><input type="text" disabled="" id="3midProposalPresentation{{data.0}}" onchange="RPtotal('{{data.0}}','3')" value="{{data.6.midProposalPresentation}}"></td>
+                                  <td class="numeric"><input type="text" disabled="" id="3midDevelopmentReport{{data.0}}" onchange="RPtotal('{{data.0}}','3')" value="{{data.6.midDevelopmentReport}}"></td>
+                                  <td class="numeric"><input type="text" disabled="" id="3midDevelopmentPresentation{{data.0}}" onchange="RPtotal('{{data.0}}','3')" value="{{data.6.midDevelopmentPresentation}}"></td>
+                                  <td class="numeric"><input type="text" disabled="" id="3midResearchReport{{data.0}}" onchange="RPtotal('{{data.0}}','3')" value="{{data.6.midResearchReport}}"></td>
+                                  <td class="numeric"><input type="text" disabled="" id="3midResearchPresentation{{data.0}}" onchange="RPtotal('{{data.0}}','3')" value="{{data.6.midResearchPresentation}}"></td>
+                                  <td class="numeric"><label id="3midsemTotal{{data.0}}">{{data.6.midsemTotal}}</label></td>
+                                  <td><select id="3midsemGrade{{data.0}}" disabled="">
+<option value="" selected="selected" disabled="disabled">Choose</option>
+                                  {%for i in gradeList%}
+                                  {% if i == data.4 %}
+                                  <option selected="selected">{{i}}</option>
+                                  {%else%}
+                                  <option>{{i}}</option>{%endif%}
+                                  {%endfor%}
+                                  </select></td>
+                                  {% if category == 1 or category == 4 %}
+                                  <td><input type="submit" id="3edit1{{data.0}}" value="Edit" onclick="RPedit('{{data.0}}','1')"><input type="submit" id="3save1{{data.0}}" value="Save" style="display:none" onclick="RPsave('{{data.0}}','1')"></td>
+                                {%endif%}
+                              </tr>
+                              {%endfor%}
+                              </tbody>
+                          </table>
+        <br><h4>EndSemEvaluation</h4>
+                            <table class="table table-bordered table-striped table-condensed">
+                              <thead>
+                              <tr>
+                              <th>Course Code</th>
+                                  <th>IDNo.</th>
+                                  <th>Name</th>
+                                  <th colspan="2"><center>Development related</center></th>
+                                  <th colspan="2"><center>Research Related</center></th>
+                                  <th >End Sem Marks</th>
+                                  <th>Total Marks</th>
+                                  <th>Recommended <br>End Sem Grade</th>
+                              </tr>
+                              <tr>
+                              	<th></th>
+                                  <th></th>
+                                  <th></th>
+                                  <th class="numeric">Report</th>
+                                  <th class="numeric">Presentation</th>
+                                  <th class="numeric">Report</th>
+                                  <th class="numeric">Presentation</th>
+                                  <th class="numeric"></th>
+                                  <th class="numeric"></th>
+                                  <th class="numeric"></th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              {%for data in faculty%}
+                              <tr>
+                              <td>{{data.3}}</td>
+                                  <td>{{data.1}}</td>
+                                  <td>{{data.2}}</td>
+                                  <td class="numeric"><input type="text" id="3endDevelopmentReport{{data.0}}" disabled="" value="{{data.7.endDevelopmentReport}}" onchange="RPtotal('{{data.0}}','3')"></td>
+                                  <td class="numeric"><input type="text" id="3endDevelopmentPresentation{{data.0}}" disabled="" value="{{data.7.endDevelopmentPresentation}}" onchange="RPtotal('{{data.0}}','3')"></td>
+                                  <td class="numeric"><input type="text" id="3endResearchReport{{data.0}}" disabled="" value="{{data.7.endResearchReport}}" onchange="RPtotal('{{data.0}}','3')"></td>
+                                  <td class="numeric"><input type="text" id="3endResearchPresentation{{data.0}}" disabled="" value="{{data.7.endResearchPresentation}}" onchange="RPtotal('{{data.0}}','3')"></td>
+                                  <td class="numeric"><label id="3endsemTotal{{data.0}}">{{data.7.endsemTotal}}</label></td>
+                                  <td class="numeric"><label id="3Total{{data.0}}">{{data.7.Total}}</label></td>
+                                  <td><select id="endsemGrade{{data.0}}" disabled="">
+                                  <option value="" selected="selected" disabled="disabled">Choose</option>
+								{%for i in gradeList%}
+                                  {% if i == data.5 %}
+                                  <option selected="selected">{{i}}</option>
+                                  {%else%}
+                                  <option>{{i}}</option>{%endif%}
+                                  {%endfor%}
+                                  </select></td>
+                                  {% if category == 1 or category == 4  %}                                
+                                  <td><input type="submit" id="3edit2{{data.0}}" value="Edit" onclick="RPedit('{{data.0}}','2')"><input type="submit" id="3save2{{data.0}}" value="Save" style="display:none" onclick="RPsave('{{data.0}}','2')"></td>
+              	                {%endif%}
+                              </tr>
+                              {%endfor%}
+                              </tbody>
+                          </table>
+                          </section>
+                  </div><!-- /content-panel -->
+               </div><!-- /col-lg-4 -->     
+        </div><!-- /row -->
+        <hr>
+        {%endif%}
+<!--
+Thesis
+-->
+
+{% if '4' in faculty.sublist %}
+               <h3> 
+         Thesis</h3>
+<div class="row mt">
+            <div class="col-lg-12">
+                      <div class="content-panel">
+                      <!-- <h4><i class="fa fa-angle-right"></i> Responsive Table</h4> -->
+                          <section id="unseen">
+                          <h4>Evaluation</h4>
+                            <table class="table table-bordered table-striped table-condensed">
+                              <thead>
+                              <tr>
+                              	<th>Course Code</th>
+                                  <th>IDNo.</th>
+                                  <th>Name</th>
+                                  <th class="numeric">Viva-1</th>
+                                  <th class="numeric">Mid Sem <br>Presentation</th>
+                                  <th class="numeric">Mid Sem <br>Written Report</th>
+                                  <th class="numeric">Viva -2</th>
+                                  <th class="numeric">Final Thesis Report</th>
+                                  <th class="numeric">Final Viva</th>
+                                  <th class="numeric">Total</th>
+                                  <th>Recommended<br> Mid Sem<br> Grade</th>
+                                  <th>Recommended <br>Final Grade</th>
+                                  <th>Recommended<br> Final Grade<br>in Seminar<br>(Good/Poor)</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              {% for data in faculty.4 %}
+                              <tr>
+                              <td>{{data.3}}</td>
+                                  <td>{{data.1}}
+                                  </td>
+                                  <td>{{data.2}}</td>
+                                  <td class="numeric"><input type="text" id="4viva1{{data.0}}" value = "{{data.6.viva1}}" disabled="" onchange="Thesistotal('{{data.0}}','1')"></td>
+                                  <td class="numeric"><input type="text" id="4midsemPresentation{{data.0}}" value = "{{data.6.midsemPresentation}}" disabled="" onchange="Thesistotal('{{data.0}}','1')"></td>
+                                  <td class="numeric"><input type="text" id ="4midsemReport{{data.0}}" value = "{{data.6.midsemReport}}" disabled="" onchange="Thesistotal('{{data.0}}','1')"></td>
+                                  <td class="numeric"><input type="text" id = "4viva2{{data.0}}" value = "{{data.6.viva2}}" disabled="" onchange="Thesistotal('{{data.0}}','1')"></td>
+                                  <td class="numeric"><input type="text" id="4finalThesis{{data.0}}" value = "{{data.6.finalThesis}}" disabled="" onchange="Thesistotal('{{data.0}}','1')"></td>
+                                  <td class="numeric"><input type="text" id="4finalViva{{data.0}}" value = "{{data.6.finalViva}}" disabled="" onchange="Thesistotal('{{data.0}}','1')"></td>
+                                  <td class="numeric"><label id="4Total{{data.0}}">0</label></td>
+                                  <td><select id="4midsemGrade{{data.0}}" disabled="">
+								<option value="" selected="selected" disabled="disabled">Choose</option>
+								{%for i in gradeList%}
+                                  {% if i == data.4 %}
+                                  <option selected="selected">{{i}}</option>
+                                  {%else%}
+                                  <option>{{i}}</option>{%endif%}
+                                  {%endfor%}
+                                  </select></td>
+                                  <td><select id="4endsemGrade{{data.0}}" disabled="">
+								<option value="" selected="selected" disabled="disabled">Choose</option>
+								{%for i in gradeList%}
+                                  {% if i == data.5 %}
+                                  <option selected="selected">{{i}}</option>
+                                  {%else%}
+                                  <option>{{i}}</option>{%endif%}
+                                  {%endfor%}
+                                  </select></td>
+                                  <td>
+                                  <select id="4seminarGrade{{data.0}}" disabled="">
+                                  <option value="" selected="selected" disabled="disabled">Choose</option>
+								{%for i in seminarList %}
+                                  {% if i == data.6.seminarGrade %}
+                                  <option selected="selected">{{i}}</option>
+                                  {%else%}
+                                  <option>{{i}}</option>{%endif%}
+                                  {%endfor%}                              
+                                  </select></td>
+                                  {% if category == 1 or category == 4%}
+                                  <td><input type="submit" id="4edit{{data.0}}" value="edit" onclick="Thesedit('{{data.0}}','1')"><input id="4save{{data.0}}" type="submit" value="Save" style="display:none" onclick="Thessave('{{data.0}}','1')" ></td>
+                              {%endif%}
+                              </tr>
+                              {%endfor%}
+                              </tbody>
+                          </table>
+                          {% load dict_acc %}
+        <br><h4>Seminars</h4>
+                      {%for xc in [7,8,9,10] %}
+                      <h4><i class="fa fa-angle-right"></i> Seminar 1</h4>
+
+                          <section id="unseen">
+                            <table class="table table-bordered table-striped table-condensed">
+                              <thead>
+                              <tr>
+                              <th>Course Code</th>
+                                  <th>IDNo.</th>
+                                  <th>Name</th>
+                                  <th class="numeric">Written abstract</th>
+                                  <th class="numeric">Technical contents</th>
+                                  <th class="numeric">Depth Of knowledge</th>
+                                  <th class="numeric">Style of presentation</th>
+                                  <th class="numeric">Response to questions</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              {%for data in faculty.4 %}
+                              <tr>
+                              <td>{{data.3}}</td>
+                                  <td>{{data.1}}</td>
+                                  <td>{{data.2}}</td>
+                                  <td class="numeric"><select id="4writtenAbstract{{data.0}}S{{xc|add :-6}}" disabled="">
+                                  <option value="" selected="selected" disabled="disabled">Choose</option>
+								{%for i in seminarList %}
+                                  {% if i == data|access:xc,writtenAbstract %}
+                                  <option selected="selected">{{i}}</option>
+                                  {%else%}
+                                  <option>{{i}}</option>{%endif%}
+                                  {%endfor%}                            
+                                  </select></td>
+                                  <td class="numeric"><select id="4technicalContent{{data.0}}S{{xc|add :-6}}" disabled="">
+                                   <option value="" selected="selected" disabled="disabled">Choose</option>
+								{%for i in seminarList %}
+                                  {% if i == data|access:xc,technicalContent %}
+                                  <option selected="selected">{{i}}</option>
+                                  {%else%}
+                                  <option>{{i}}</option>{%endif%}
+                                  {%endfor%}                            
+                                  </select></td>
+                                  <td class="numeric"><select id="4depthKnowledge{{data.0}}S{{xc|add :-6}}" disabled="">
+                                   <option value="" selected="selected" disabled="disabled">Choose</option>
+								{%for i in seminarList %}
+                                  {% if i == data|access:xc,depthKnowledge %}
+                                  <option selected="selected">{{i}}</option>
+                                  {%else%}
+                                  <option>{{i}}</option>{%endif%}
+                                  {%endfor%}                           
+                                  </select></td>
+                                  <td class="numeric"><select id="4stylePresentation{{data.0}}S{{xc|add :-6}}" disabled="">
+                                   <option value="" selected="selected" disabled="disabled">Choose</option>
+								{%for i in seminarList %}
+                                  {% if i == data|access:xc,stylePresentation %}
+                                  <option selected="selected">{{i}}</option>
+                                  {%else%}
+                                  <option>{{i}}</option>{%endif%}
+                                  {%endfor%}                     
+                                  </select></td>
+                                  <td class="numeric"><select id="4responseQuestion{{data.0}}S{{xc|add :-6}}" disabled="">
+                                   <option value="" selected="selected" disabled="disabled">Choose</option>
+								{%for i in seminarList %}
+                                  {% if i == data|access:xc,responseQuestion %}
+                                  <option selected="selected">{{i}}</option>
+                                  {%else%}
+                                  <option>{{i}}</option>{%endif%}
+                                  {%endfor%}                             
+                                  </select></td>
+                                  {% if category == 1 or category == 4%}
+                                  <td><input type="submit" id="4edit2{{data.0}}S{{xc|add :-6}}" value="edit" onclick="Thesedit('{{data.0}}S{{xc|add :-6}}','2')"><input id="4save2{{data.0}}S{{xc|add :-6}}" type="submit" value="Save" style="display:none" onclick="Thessave('{{data.0}}','S{{xc|add :-6}}')" ></td>
+                                  {%endif%}
+                              </tr>
+                              {%endfor%}
+                              </tbody>
+                          </table>
+                          </section>
+                          {%endfor%}
+<!--                           <h4><i class="fa fa-angle-right"></i> Seminar 2</h4>
+                          <section id="unseen">
+                            <table class="table table-bordered table-striped table-condensed">
+                              <thead>
+                              <tr>
+                              <th>course Code</th>
+                                  <th>IDNo.</th>
+                                  <th>Name</th>
+                                  <th class="numeric">Written abstract</th>
+                                  <th class="numeric">Technical contents</th>
+                                  <th class="numeric">Depth Of knowledge</th>
+                                  <th class="numeric">Style of presentation</th>
+                                  <th class="numeric">Response to questions</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              {% for data in faculty.4 %}
+                              <tr>
+                              	<td>{{data.3}}</td>
+                                  <td>{{data.1}}</td>
+                                  <td>{{data.2}}</td>
+                                  <td class="numeric"><select id="writtenAbstract{{data.0}}S2" disabled="">
+                                  <option value="" selected="selected" disabled="disabled">Choose</option>
+								{%for i in seminarList %}
+                                  {% if i == data.8.writtenAbstract %}
+                                  <option selected="selected">{{i}}</option>
+                                  {%else%}
+                                  <option>{{i}}</option>{%endif%}
+                                  {%endfor%}                          
+                                  </select></td>
+                                  <td class="numeric"><select id="technicalContent20S2" disabled="">
+                                  <option value="good">Good</option>
+                                  <option value="poor">Poor</option>                              
+                                  </select></td>
+                                  <td class="numeric"><select id="depthKnowledge20S2" disabled="">
+                                  <option value="good">Good</option>
+                                  <option value="poor">Poor</option>                              
+                                  </select></td>
+                                  <td class="numeric"><select id="stylePresentation20S2" disabled="">
+                                  <option value="good">Good</option>
+                                  <option value="poor">Poor</option>                              
+                                  </select></td>
+                                  <td class="numeric"><select id="responseQuestion20S2" disabled="">
+                                  <option value="good">Good</option>
+                                  <option value="poor">Poor</option>                              
+                                  </select></td>
+                                  <td>
+{% if category == 1 %}
+                                  <input type="submit" id="edit220S2" value="edit" onclick="edit2('20S2')"><input id="save220S2" type="submit" value="Save" style="display:none" onclick="saveData2('20','S2')" ></td>
+                      {%endif%}                                          </tr>
+                              </tbody>
+                          </table>
+                          </section>
+                          <h4><i class="fa fa-angle-right"></i> Seminar 3</h4>
+                          <section id="unseen">
+                            <table class="table table-bordered table-striped table-condensed">
+                              <thead>
+                              <tr>
+                                  <th>IDNo.</th>
+                                  <th>Name</th>
+                                  <th class="numeric">Written abstract</th>
+                                  <th class="numeric">Technical contents</th>
+                                  <th class="numeric">Depth Of knowledge</th>
+                                  <th class="numeric">Style of presentation</th>
+                                  <th class="numeric">Response to questions</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              <tr>
+                                  <td><a href="">2012C6PS392P</a></td>
+                                  <td><a href="">Prateek Jain</a></td>
+                                  <td class="numeric"><select id="writtenAbstract20S3" disabled="">
+                                  <option value="good">Good</option>
+                                  <option value="poor">Poor</option>                              
+                                  </select></td>
+                                  <td class="numeric"><select id="technicalContent20S3" disabled="">
+                                  <option value="good">Good</option>
+                                  <option value="poor">Poor</option>                              
+                                  </select></td>
+                                  <td class="numeric"><select id="depthKnowledge20S3" disabled="">
+                                  <option value="good">Good</option>
+                                  <option value="poor">Poor</option>                              
+                                  </select></td>
+                                  <td class="numeric"><select id="stylePresentation20S3" disabled="">
+                                  <option value="good">Good</option>
+                                  <option value="poor">Poor</option>                              
+                                  </select></td>
+                                  <td class="numeric"><select id="responseQuestion20S3" disabled="">
+                                  <option value="good">Good</option>
+                                  <option value="poor">Poor</option>                              
+                                  </select></td>
+                             {% if category == 1 or category == 4 %}     <td><input type="submit" id="edit220S3" value="edit" onclick="edit2('20S3')"><input id="save220S3" type="submit" value="Save" style="display:none" onclick="saveData2('20','S3')" ></td>
+                                  {%endif%}
+                              </tr>
+                              </tbody>
+                          </table>
+                          </section>
+                          <h4><i class="fa fa-angle-right"></i> Seminar 4</h4>
+                          <section id="unseen">
+                            <table class="table table-bordered table-striped table-condensed">
+                              <thead>
+                              <tr>
+                                  <th>IDNo.</th>
+                                  <th>Name</th>
+                                  <th class="numeric">Written abstract</th>
+                                  <th class="numeric">Technical contents</th>
+                                  <th class="numeric">Depth Of knowledge</th>
+                                  <th class="numeric">Style of presentation</th>
+                                  <th class="numeric">Response to questions</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              <tr>
+                                  <td><a href="">2012C6PS392P</a></td>
+                                  <td><a href="">Prateek Jain</a></td>
+                                  <td class="numeric"><select id="writtenAbstract20S4" disabled="">
+                                  <option value="good">Good</option>
+                                  <option value="poor">Poor</option>                              
+                                  </select></td>
+                                  <td class="numeric"><select id="technicalContent20S4" disabled="">
+                                  <option value="good">Good</option>
+                                  <option value="poor">Poor</option>                              
+                                  </select></td>
+                                  <td class="numeric"><select id="depthKnowledge20S4" disabled="">
+                                  <option value="good">Good</option>
+                                  <option value="poor">Poor</option>                              
+                                  </select></td>
+                                  <td class="numeric"><select id="stylePresentation20S4" disabled="">
+                                  <option value="good">Good</option>
+                                  <option value="poor">Poor</option>                              
+                                  </select></td>
+                                  <td class="numeric"><select id="responseQuestion20S4" disabled="">
+                                  <option value="good">Good</option>
+                                  <option value="poor">Poor</option>                              
+                                  </select></td>
+                                  {% if category == 1 or category == 4 %}
+                                  <td><input type="submit" id="edit220S4" value="edit" onclick="edit2('20S4')"><input id="save220S4" type="submit" value="Save" style="display:none" onclick="saveData2('20','S4')" ></td>
+                                                        {%endif%}       </tr>
+                              </tbody>
+                          </table>
+                          </section>
+             <i class="fa fa-angle-right"></i>  
+ -->           <br>
+                          <h4>Supervisor's Rating of Students Traits</h4>
+                            <table class="table table-bordered table-striped table-condensed">
+                              <thead>
+                              <tr>
+                              <th>Course Code</th>
+                                  <th>IDNo.</th>
+                                  <th>Name</th>
+                                  <th class="numeric">Work progress and achievement</th>
+                                  <th class="numeric">Technical/Professional Competence</th>
+                                  <th class="numeric">Documentation and expression</th>
+                                  <th class="numeric">Initiative and originality</th>
+                                  <th class="numeric">Puntuality</th>
+                                  <th class="numeric">Reliability</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              {%for data in faculty.4%}
+                              <tr>
+                              <td>{{data.3}}</td>
+                                  <td>{{data.1}}</td>
+                                  <td>{{data.2}}</td>
+                  <td class="numeric"><select id="4workProgress{{data.0}}" disabled="">
+                                  <option value="" selected="selected" disabled="disabled">Choose</option>
+								{%for i in ["Excellent","Good","Fair","Poor"] %}
+                                  {% if i == data.11.workProgress %}
+                                  <option selected="selected">{{i}}</option>
+                                  {%else%}
+                                  <option>{{i}}</option>{%endif%}
+                                  {%endfor%}                                  
+                                  </select></td>
+                                  <td class="numeric"><select id="technicalCompetence{{data.0}}" disabled="">
+                                 <option value="" selected="selected" disabled="disabled">Choose</option>
+								{%for i in ["Excellent","Good","Fair","Poor"] %}
+                                  {% if i == data.11.technicalCompetence %}
+                                  <option selected="selected">{{i}}</option>
+                                  {%else%}
+                                  <option>{{i}}</option>{%endif%}
+                                  {%endfor%}                                 
+                                  </select></td>
+                                  <td class="numeric"><select id="documentation{{data.0}}" disabled="">
+                                  <option value="" selected="selected" disabled="disabled">Choose</option>
+								{%for i in ["Excellent","Good","Fair","Poor"] %}
+                                  {% if i == data.11.documentation %}
+                                  <option selected="selected">{{i}}</option>
+                                  {%else%}
+                                  <option>{{i}}</option>{% endif %}
+                                  {%endfor%}                             
+                                  </select></td>
+                                  <td class="numeric"><select id="4initiative{{data.0}}" disabled="">
+                                  <option value="" selected="selected" disabled="disabled">Choose</option>
+								{%for i in ["Excellent","Good","Fair","Poor"] %}
+                                  {% if i == data.11.initiative %}
+                                  <option selected="selected">{{i}}</option>
+                                  {%else%}
+                                  <option>{{i}}</option>{%endif%}
+                                  {%endfor%}                              
+                                  </select></td>
+                                  <td class="numeric"><select id="4puntuality{{data.0}}" disabled="">
+                                  <option value="" selected="selected" disabled="disabled">Choose</option>
+								{%for i in ["Excellent","Good","Fair","Poor"] %}
+                                  {% if i == data.11.puntuality %}
+                                  <option selected="selected">{{i}}</option>
+                                  {%else%}
+                                  <option>{{i}}</option>{%endif%}
+                                  {%endfor%}                                    
+                                  </select></td>
+                  <td class="numeric"><select id="4reliability{{data.0}}" disabled="">
+                                  <option value="" selected="selected" disabled="disabled">Choose</option>
+								{%for i in ["Excellent","Good","Fair","Poor"] %}
+                                  {% if i == data.11.reliability %}
+                                  <option selected="selected">{{i}}</option>
+                                  {%else%}
+                                  <option>{{i}}</option>{%endif%}
+                                  {%endfor%}                                  
+                                  </select></td>
+                                  {% if category == 1 or category == 4 %}
+                                  <td><input type="submit" id="4edit3{{data.0}}" value="edit" onclick="Thesedit('{{data.0}}','3')"><input id="4save3{{data.0}}" type="submit" value="Save" style="display:none" onclick="Thessave('{{data.0}}','3')" ></td>
+                                  {%endif%}
+                                  
+                              </tr>
+                              </tbody>
+                          </table>
+                          </section>
+                  </div><!-- /content-panel -->
+               </div><!-- /col-lg-4 -->     
+        </div><!-- /row -->
+{%endif%}
+{%endfor%}
+    	</section><!--/wrapper -->
+
+    {%endblock%}

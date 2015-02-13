@@ -5,18 +5,91 @@ from random import randint
 from django.contrib.auth.decorators import permission_required
 from django.utils.decorators import method_decorator
 from models import *
+from finalauth.models import *
 from django.core.mail import EmailMessage
-
+import datetime
 # Create your views here.
 nameDict = {
 'viva1': 'Viva -1','midsemPresentation' : 'Mid Semester Presentation','viva2': 'Viva-2','finalDissertation': 'Final Dissertation','finalViva' : 'Final Viva','Total' : 'Total','midsemReport' : 'mid Semester Written Report','midsemGrade': 'Mid Semester Grade','endsemGrade':' End Semester Grade','workProgress':	'Work Progress And Achievement','technicalCompetence' :'Technical/Professional Competence','documentation':'Documentation/Expression','initiative' :'Initiative and Originality','puntuality':'Puntuality','reliability' :'Reliability', 'endDevelopmentReport ': 'Development Related Report', 'endDevelopmentPresentation' :' Development Related Presentation', 'endResearchReport':'Research Related Report', 'endResearchPresentation':'Research Related Presentation', 'midProposalContent': 'Research Proposal Content', 'midProposalPresentation': 'Research Proposal Presentation','midDevelopmentReport': 'Development Related Report','midDevelopmentPresentation' :' Development Related Presentation', 'midResearchReport':'Research Related Report','midResearchPresentation' : 'Research Related Presentation','midsemTotal':'Mid Sem Total','endsemTotal':'End Sem Total','finalThesis':'Final Thesis Report','seminarGrade':'Final Seminar Grade','writtenAbstract':'Written Abstract','technicalContent':'Technical Contents','depthKnowledge':'Depth Of Knowledge','stylePresentation':'Style Of Presentation','responseQuestion':'Response To Questions','midregularityMentor':'Regularity in Interaction with mentor','projectViva1':'Project Viva 1', 'projectViva2' : 'Project Viva 2', 'weekdocumentSubmission' : 'Weekly Report/document Submission','midsemViva': 'MidSem Viva', 'endregularityMentor': 'Regularity in Interaction with mentor','projectViva34':'Project Viva III/IV','finalSeminar': 'Final Seminar','finaldocumentSubmission':'Final report/document submission'}
 allow_dict = {'key1':[1,2,3,4],'key2':[2,3,4],'key3':[0,4],'key4':[1,4],'key5':[3,4]}
+now = datetime.datetime.now()
+month = now.month
+year = now.year
+semester = 1
+if month < 7:
+	semester = 2
+durObj  = duration.objects.get(semester = semester,year = year)
+
 def AccessPermission(dictkey,val):
 	if not val in allow_dict[dictkey]:
 		return False
 	return True
 def index(request):
 	return render(request,'blank.html',{'category':int(str(request.session["category"]))})#
+
+def marks(request):
+	if request.is_ajax():
+		try:
+			tabname = str(request.GET.get('tabname'));
+			enterdata = request.GET.get('data')
+			midsemGrade = request.GET.get('midsemGrade','')
+			endsemGrade = request.GET.get('endsemGrade','')
+			token = request.GET.get('id')
+			ob = markList.objects.get(pk=token)
+			ob.midSemGrade = midsemGrade
+			ob.endsemGrade = endsemGrade
+			z = ob.evalData
+			z = simplejson.loads(z)
+			x = simplejson.dumps(enterdata)
+			z[tabname] = x
+			z = simplejson.dumps(z)
+			ob.evalData = z
+			ob.save()
+			data = ["OK"]
+		except Exception,e:
+			data = ["NOK",str(e)]
+		return HttpResponse(simplejson.dumps(data), content_type='application/json')
+	context = {'semester':durObj.semester,'year':durObj.year,'data':{},'category':int(request.session["category"]),'gradeList':["","A","A-","B","B-","C","C-","D","E","NC"],'seminarList':["Good","Poor"]}
+	try:
+		uid = str(request.session["userid"])
+		x = userData.objects.get(userid = uid)
+		# data = {'semester':,'year':,'faculty':}
+		if str(request.session["userid"]) =="1":
+			m = markList.objects.filter(faculty=x,dur = durObj).order_by('course')
+		else:
+			m = markList.objects.filter(dur = durObj).order_by('faculty','course')
+		lst = []
+		ct = courseTemplates.objects.all()
+		courTemp = {}
+		for t in ct:
+			courTemp[str(t.courseN.courseCode)] = int(t.keyDev)
+			#print t.courseN.courseCode,t.keyDev
+		facultylst = list(set([nb.faculty.user.userid for nb in m]))
+		print '$@#%@$#%@^%^%'
+		print facultylst
+		dataLst = {}
+		for we in facultylst:
+			perLst = {}
+			sublist = ""
+			for ze in m:
+				if we == ze.faculty.user.userid:
+					perLst["name"] = str(ze.faculty.user.name)
+					if not courTemp[ze.course.courseCode] in perLst:
+						perLst[courTemp[ze.course.courseCode]] = []
+						sublist = sublist+str(courTemp[ze.course.courseCode])
+					stuLst = [ze.pk,ze.student.user.bitsid,ze.student.user.name,ze.course.courseCode,ze.midSemGrade,ze.endSemGrade]
+					print "$@#$@#$@#$@#"
+					x =  simplejson.loads(ze.evalData)
+					for key,bv in x:	
+						stuLst.append(bv)
+					perLst[courTemp[ze.course.courseCode]].append(stuLst)
+			perLst['sublist'] = sublist
+			dataLst[str(we)] = perLst						
+		print dataLst
+		context['data'] = dataLst
+	except Exception,e:
+		print e
+	return render(request,'marks.html',context)
 
 # @permission_required('AccessPermission.is_allowed',str(request.session["userid"]),int(str(request.session["category"])))
 def dissertation(request):
@@ -33,7 +106,7 @@ def dissertation(request):
 		return render(request,'dissertation.html',{'category':1})#int(str(request.session["category"]))
 
 def researchPractice(request):
-	if not AccessPermission('key1',int(str(request.session["category"]))):
+	if not AccessPermission('key1',4):#int(str(request.session["category"]))):
 		raise Http404
 	if request.is_ajax():
 		data = request.GET.get("x")
@@ -41,8 +114,34 @@ def researchPractice(request):
 		data = ['OK',data+typeTable]
 		return HttpResponse(simplejson.dumps(data), content_type='application/json')
 	else:
+		'''
+		Data format = {'MidSemEvaluation':{'midProposalContent':'','midProposalPresentation':'','midDevelopementReport':'','midDevelopmentPresentation':'','midResearchReport':'','midResearchPresentation':'','midsemTotal':''},
+		'EndSemEvaluation':{'endDevelopmentReport':'','endDevelopmentPresentation':'','endResearchReport':'','endResearchPresentation':'','endsemTotal':'','Total':''}}
+		'''
+		#get the present year semester
+
+		# cor = course.objects.filter(title = 'Research Practice')
+		# uid = str(request.session["userid"])
+		# x  = userData.objects.get(userid = uid)
+		# lst = []
+		# if x.userType > 1:
+		# 	#get all the data
+		# 	for cx in cor:
+		# 		stuData = markList.objects.filter(course = cx)
+		# 		for i in stuData:
+		# 			data = simplejson.loads(i.evalData)
+		# 			sd = [i.pk,i.student.bitsid,i.student.name,data]
+		# 			lst.append(sd)
+		# else:
+		# 	for cx in cor:
+		# 		stuData = markList.objects.filter(course = cx,faculty = x)
+		# 		for i in stuData:
+		# 			data = simplejson.loads(i.evalData)
+		# 			sd = [i.pk,i.student.bitsid,i.student.name,data]
+		# 			lst.append(sd)
+		#context = {'Semester':,'Year':}
 		#ID,Name,token_ID,Eval_Data,Semester,Year,CourseCode,CourseName,
-		return render(request,'ResearchPractice.html',{'category':int(str(request.session["category"]))})#int(str(request.session["category"]))
+		return render(request,'ResearchPractice.html',{'category':4})#int(str(request.session["category"]))})#int(str(request.session["category"]))
 
 def thesis(request):
 	if not AccessPermission('key1',int(str(request.session["category"]))):

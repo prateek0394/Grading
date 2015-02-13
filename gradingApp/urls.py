@@ -17,4 +17,5 @@ urlpatterns = patterns('',
     url(r'^projects$',projects),
     url(r'^reportGen$',reportGen),
     url(r'^reminder$',reminder),
+    url(r'^marks$',marks),
 )
