@@ -5,7 +5,7 @@ from datetime import datetime
 def namefile(instance,filename):
  	#ext = filename.split('.')[-1]
  	if not filename=="None":
-	    return os.path.join('Grading/%s/' %(instance.student.userid),filename)
+	    return os.path.join('Grading/%s/' %(instance.student.user.userid),filename)
 	else:
 	    return None
 

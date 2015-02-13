@@ -302,6 +302,61 @@ def reminder(request):
 		return HttpResponse(simplejson.dumps(data),content_type='application/json')
 	return render(request,'reminder.html',{'category':int(str(request.session["category"]))})
 
+def reportSubmit(request):
+	if request.method =="POST":
+		try:
+			typ = str(request.GET.get("type"))
+			pk = str(request.GET.get("id"))
+			x = markList.objects.get(pk = pk)
+			try:
+				f1 = request.FILES["report"+pk]
+			except:
+				f1 = None
+			try:
+				f2 = request.FILES["antiPlag"+pk]
+			except:
+				f2  = None
+			if typ == "1":
+				x.midsemReport = f1
+				x.midsemAntiPlag = f2
+			elif typ =="2":
+				x.endsemReport = f1
+				x.endsemAntiPlag = f2
+			x.save()
+			return redirect('/grade/submitReport')
+		except Exception,e:
+			print e
+			return HttpResponse("ERROR!!!!! contact Developers")
+	else:
+		try:
+			uid  = str(request.session["userid"])
+			x = userData.objects.get(userid=uid)
+			ds = markList.objects.filter(faculty = facultyData.objects.get(user = x))
+			lst = []
+			for u in ds:
+				lst1 = [u.pk,u.student.user.bitsid,u.student.user.name,u.course.courseCode,u.course.title]
+				if u.midsemReport:
+					lst1.append('/media/'+u.midsemReport.name)
+				else:
+					lst1.append('')
+				if u.midsemAntiPlag:
+					lst1.append('/media/'+u.midsemAntiPlag.name)
+				else:
+					lst1.append('')
+				if u.endsemReport:
+					lst1.append('/media/'+u.endsemReport.name)
+				else:
+					lst1.append('')
+				if u.endsemAntiPlag:
+					lst1.append('/media/'+u.endsemAntiPlag.name) 
+				else:
+					lst1.append('')
+				lst.append(lst1)
+			context = {'data':lst,'category':int(request.session["category"])}	
+			return render(request,'SubmitReport.html',context)
+		except Exception,e:
+			print e
+			return HttpResponse("Error!!!!! Contact Developers")
 def midSemReport(request):
 	if not AccessPermission('key4',int(str(request.session["category"]))):
 		raise Http404
