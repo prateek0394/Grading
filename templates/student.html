@@ -28,13 +28,15 @@ input[type="text"]{
             <h3>
             <!-- <i class="fa fa-angle-right"></i> --> 
             ID:&emsp;&emsp; {{bitsid}}<br>Name:&emsp; {{name|title}}</h3>
-               {% for key,val in data.items %}
-               <br><br>
+               {% for courses in data %}
+               <br>
+               <h3>{{courses.0}} {{courses.1}}</h3>
+               <br>
+               <h4>Mid Semster Grade : &emsp;{{courses.3}}</h4>
+          {% for key,val in courses.2.items %}
           <div class="row mt">
             <div class="col-lg-12">
-                      <div class="content-panel">
-                 
-                      
+                      <div class="content-panel">                   
                       <h4>{{key|upper}}</h4>
                       <!-- <h4><i class="fa fa-angle-right"></i> Responsive Table</h4> -->
                           <section id="unseen">
@@ -59,6 +61,8 @@ input[type="text"]{
                   </div><!-- /content-panel -->
                </div><!-- /col-lg-4 -->     
         </div><!-- /row -->
+        {% endfor %}
+        <hr><br>
      {% endfor %}
      <br><br>
      <div class="showback">

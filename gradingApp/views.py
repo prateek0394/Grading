@@ -8,9 +8,8 @@ from models import *
 from finalauth.models import *
 from django.core.mail import EmailMessage
 import datetime
-# Create your views here.
 nameDict = {
-'viva1': 'Viva -1','midsemPresentation' : 'Mid Semester Presentation','viva2': 'Viva-2','finalDissertation': 'Final Dissertation','finalViva' : 'Final Viva','Total' : 'Total','midsemReport' : 'mid Semester Written Report','midsemGrade': 'Mid Semester Grade','endsemGrade':' End Semester Grade','workProgress':	'Work Progress And Achievement','technicalCompetence' :'Technical/Professional Competence','documentation':'Documentation/Expression','initiative' :'Initiative and Originality','puntuality':'Puntuality','reliability' :'Reliability', 'endDevelopmentReport ': 'Development Related Report', 'endDevelopmentPresentation' :' Development Related Presentation', 'endResearchReport':'Research Related Report', 'endResearchPresentation':'Research Related Presentation', 'midProposalContent': 'Research Proposal Content', 'midProposalPresentation': 'Research Proposal Presentation','midDevelopmentReport': 'Development Related Report','midDevelopmentPresentation' :' Development Related Presentation', 'midResearchReport':'Research Related Report','midResearchPresentation' : 'Research Related Presentation','midsemTotal':'Mid Sem Total','endsemTotal':'End Sem Total','finalThesis':'Final Thesis Report','seminarGrade':'Final Seminar Grade','writtenAbstract':'Written Abstract','technicalContent':'Technical Contents','depthKnowledge':'Depth Of Knowledge','stylePresentation':'Style Of Presentation','responseQuestion':'Response To Questions','midregularityMentor':'Regularity in Interaction with mentor','projectViva1':'Project Viva 1', 'projectViva2' : 'Project Viva 2', 'weekdocumentSubmission' : 'Weekly Report/document Submission','midsemViva': 'MidSem Viva', 'endregularityMentor': 'Regularity in Interaction with mentor','projectViva34':'Project Viva III/IV','finalSeminar': 'Final Seminar','finaldocumentSubmission':'Final report/document submission'}
+'viva1': 'Viva -1','midsemPresentation' : 'Mid Semester Presentation','viva2': 'Viva-2','finalDissertation': 'Final Dissertation','finalViva' : 'Final Viva','Total' : 'Total','midsemReport' : 'mid Semester Written Report','midsemGrade': 'Mid Semester Grade','endsemGrade':' End Semester Grade','workProgress':	'Work Progress And Achievement','technicalCompetence' :'Technical/Professional Competence','documentation':'Documentation/Expression','initiative' :'Initiative and Originality','puntuality':'Puntuality','reliability' :'Reliability', 'endDevelopmentReport': 'Development Related Report', 'endDevelopmentPresentation' :'Development Related Presentation', 'endResearchReport':'Research Related Report', 'endResearchPresentation':'Research Related Presentation', 'midProposalContent': 'Research Proposal Content', 'midProposalPresentation': 'Research Proposal Presentation','midDevelopmentReport': 'Development Related Report','midDevelopmentPresentation' :' Development Related Presentation', 'midResearchReport':'Research Related Report','midResearchPresentation' : 'Research Related Presentation','midsemTotal':'Mid Sem Total','endsemTotal':'End Sem Total','finalThesis':'Final Thesis Report','seminarGrade':'Final Seminar Grade','writtenAbstract':'Written Abstract','technicalContent':'Technical Contents','depthKnowledge':'Depth Of Knowledge','stylePresentation':'Style Of Presentation','responseQuestion':'Response To Questions','midregularityMentor':'Regularity in Interaction with mentor','projectViva1':'Project Viva 1', 'projectViva2' : 'Project Viva 2', 'weekdocumentSubmission' : 'Weekly Report/document Submission','midsemViva': 'MidSem Viva', 'endregularityMentor': 'Regularity in Interaction with mentor','projectViva34':'Project Viva III/IV','finalSeminar': 'Final Seminar','finaldocumentSubmission':'Final report/document submission'}
 allow_dict = {'key1':[1,2,3,4],'key2':[2,3,4],'key3':[0,4],'key4':[1,4],'key5':[3,4]}
 now = datetime.datetime.now()
 month = now.month
@@ -32,16 +31,17 @@ def marks(request):
 		try:
 			tabname = str(request.GET.get('tabname'));
 			enterdata = request.GET.get('data')
+			print enterdata
 			midsemGrade = request.GET.get('midsemGrade','')
 			endsemGrade = request.GET.get('endsemGrade','')
+			print endsemGrade
 			token = request.GET.get('id')
 			ob = markList.objects.get(pk=token)
 			ob.midSemGrade = midsemGrade
-			ob.endsemGrade = endsemGrade
+			ob.endSemGrade = endsemGrade
 			z = ob.evalData
 			z = simplejson.loads(z)
-			x = simplejson.dumps(enterdata)
-			z[tabname] = x
+			z[tabname] = str(enterdata)
 			z = simplejson.dumps(z)
 			ob.evalData = z
 			ob.save()
@@ -49,7 +49,7 @@ def marks(request):
 		except Exception,e:
 			data = ["NOK",str(e)]
 		return HttpResponse(simplejson.dumps(data), content_type='application/json')
-	context = {'semester':durObj.semester,'year':durObj.year,'data':{},'category':int(request.session["category"]),'gradeList':["","A","A-","B","B-","C","C-","D","E","NC"],'seminarList':["Good","Poor"]}
+	context = {'semester':durObj.semester,'year':durObj.year,'data':{},'category':int(request.session["category"]),'gradeList':["","A","A-","B","B-","C","C-","D","E","NC"],'seminarList':["Good","Poor"],'seml':[7,8,9,10],'trait':["Excellent","Good","Fair","Poor"]}
 	try:
 		uid = str(request.session["userid"])
 		x = userData.objects.get(userid = uid)
@@ -65,7 +65,7 @@ def marks(request):
 			courTemp[str(t.courseN.courseCode)] = int(t.keyDev)
 			#print t.courseN.courseCode,t.keyDev
 		facultylst = list(set([nb.faculty.user.userid for nb in m]))
-		print '$@#%@$#%@^%^%'
+		# print '$@#%@$#%@^%^%'
 		print facultylst
 		dataLst = {}
 		for we in facultylst:
@@ -78,10 +78,53 @@ def marks(request):
 						perLst[courTemp[ze.course.courseCode]] = []
 						sublist = sublist+str(courTemp[ze.course.courseCode])
 					stuLst = [ze.pk,ze.student.user.bitsid,ze.student.user.name,ze.course.courseCode,ze.midSemGrade,ze.endSemGrade]
-					print "$@#$@#$@#$@#"
+					#print "$@#$@#$@#$@#"
 					x =  simplejson.loads(ze.evalData)
-					for key,bv in x:	
-						stuLst.append(bv)
+					# print x
+					for key in x:
+						if type(x[key]) is unicode:
+							x[key] = simplejson.loads(str(x[key]))
+					if courTemp[ze.course.courseCode] == 1:
+						if not "MidSemEvaluation" in x:
+							x["MidSemEvaluation"] = {}
+						if not "EndSemEvaluation" in x:
+							x["EndSemEvaluation"]  = {}
+						stuLst.append(x["MidSemEvaluation"])
+						stuLst.append(x["EndSemEvaluation"])
+					elif courTemp[ze.course.courseCode] == 2:
+						if not "Evaluation" in x:
+							x["Evaluation"] = {}
+						if not "StudentTraits" in x:
+							x["StudentTraits"] = {}
+						stuLst.append(x["Evaluation"])
+						stuLst.append(x["StudentTraits"])
+					elif courTemp[ze.course.courseCode] ==3:
+						if not "MidSemEvaluation" in x:
+							x["MidSemEvaluation"] = {}
+						if not "EndSemEvaluation"in x:
+							x["EndSemEvaluation"] = {}
+						stuLst.append(x["MidSemEvaluation"])
+						stuLst.append(x["EndSemEvaluation"])
+					elif courTemp[ze.course.courseCode] ==4:
+						if not "Evaluation" in x:
+							x["Evaluation"] = {}
+						if not "Seminar1" in x:
+							x["Seminar1"] = {}
+						if not "Seminar2" in x:
+							x["Seminar2"] = {}
+						if not "Seminar3" in x:
+							x["Seminar3"] = {}
+						if not "Seminar4" in x:
+							x["Seminar4"] = {}
+						if not "StudentTraits" in x:
+							x["StudentTraits"] = {}
+						stuLst.append(x["Evaluation"])
+						stuLst.append(x["Seminar1"])
+						stuLst.append(x["Seminar2"])
+						stuLst.append(x["Seminar3"])
+						stuLst.append(x["Seminar4"])
+						stuLst.append(x["StudentTraits"])
+					# print 'nex'
 					perLst[courTemp[ze.course.courseCode]].append(stuLst)
 			perLst['sublist'] = sublist
 			dataLst[str(we)] = perLst						
@@ -189,16 +232,38 @@ def projects(request):
 
 def student(request):
 #	data = simplejson.loads(markList.objects.get(student = student.objects.get(userid=str(request.session["userid"]))).evalData)
-	table1 = {'midsemTotal':100,'endsemGrade':'A'}
-	table2= {'reliability':'A','initiative':'Good'}
-	data = {'Mid Sem Evaluation':table1,'End Sem Evaluation':table2}
-	for key in data:
-		x = data[key]
-		print x 
-		for key2 in x:
-			x[nameDict[key2]] = x.pop(key2)
-	context = {'data':data,'bitsid':'2012C6PS392P','name':'prateek jain','category':int(str(request.session["category"]))}
-	return render(request,'student.html',context)
+#	context = {'userid':,'name':,'data':}
+#	data = [[courseCode,title,asd]]
+#	asd = {tabname:tabdata}
+#	tabdata = {fieldname:value}	
+	try:
+		uid = str(request.session["userid"])
+		usr  = userData.objects.get(userid = uid)
+		dall = markList.objects.filter(student = studentData.objects.get(user = usr))
+		dataLst = []
+		for dd in dall:
+			ed = dd.evalData
+			ed = simplejson.loads(ed)
+			for x in ed:
+				if type(ed[x]) is unicode:
+					ed[x] = simplejson.loads(ed[x])
+			newed = {}
+			for key in ed:
+				x = ed[key]
+				print x
+				ined = {} 
+				for key2 in x:
+					print "@#@!#@$#@$@#",
+					ined[nameDict[key2]] = x[key2]
+				newed[key] = ined
+			# print ed
+			dataLst.append([dd.course.courseCode,dd.course.title,newed,dd.midSemGrade])
+		context = {'data':dataLst,'bitsid':usr.bitsid,'name':usr.name,'category':int(request.session["category"])}
+		return render(request,'student.html',context)	
+	except Exception,e:
+		print e
+		return HttpResponse("ERROR!!!!! CONTACT DEVELOPER")
+
 
 def reportDisp(request):
 	if not AccessPermission('key3',int(str(request.session["category"]))):

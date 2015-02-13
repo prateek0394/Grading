@@ -2,9 +2,10 @@
    {%block title%}
    Marks
    {% endblock %}
-    {%block head_content %}
-    <script type="text/javascript" src="/marks.js"></script>
-     <style type="text/css">
+    {% block head_content %}
+ <script src="/static/marks23.js"></script>
+
+ <style type="text/css">
 input[type="text"]{
   width:20%;
 
@@ -15,7 +16,7 @@ input[type="text"]{
           <section class="wrapper">
           <center>
           	<h2> 
-          	Semester{{semester}},{{year}}<br>Students Marks Submission</h2>
+          	Semester {{semester}}, {{year}}<br>Students Marks Submission</h2>
           	</center>
 
           	{% for key,faculty in data.items %}
@@ -48,32 +49,33 @@ input[type="text"]{
                               </tr>
                               </thead>
                               <tbody>
-                              {% for data in faculty.1 %}
+                              {% for corDat in faculty.1 %}
                               <tr>
-                              	<td>{{data.3}}</td>
-                                  <td>{{data.1}}</td>
-                                  <td>{{data.2}}</td>
-                                  <td class="numeric"><input type="text" id="1midregularityMentor{{data.0}}" value = "{{data.6.midreularityMentor}}" disabled="" onchange="abc('{{data.0}}','1')"></td>
-                                  <td class="numeric"><input type="text" id="1projectViva1{{data.0}}" value = "{{data.6.projectViva1}}" disabled="" onchange="abc('{{data.0}}','1')"></td>
-                                  <td class="numeric"><input type="text" id="1projectViva2{{data.0}}" value = "{{data.6.projectViva2}}" disabled="" onchange="abc('{{data.0}}','1')"></td>
-                                  <td class="numeric"><input type="text" id="1weekdocumentSubmission{{data.0}}" value = "{{data.6.weekdocumentSubmission}}" disabled="" onchange="abc('{{data.0}}','1')"></td>
-                                  <td class="numeric"><input type="text" id="1midsemViva{{data.0}}" value = "{{data.6.midsemViva}}" disabled="" onchange="abc('{{data.0}}','1')"></td>
-                                  <td class="numeric"><input type="text" id="1midsemReport{{data.0}}" value = "{{data.6.midsemReport}}" disabled="" onchange="abc('{{data.0}}','1')"></td>
-				  <td class="numeric"><label id="1midsemTotal{{data.0}}">{{data.6.midsemTotal}}</label></td>
-                                  <td><select id="1midsemGrade{{data.0}}" disabled="">
+                              	<td>{{corDat.3}}</td>
+                                  <td>{{corDat.1}}</td>
+                                  <td>{{corDat.2}}</td>
+                                  <td class="numeric"><input type="text" id="1midregularityMentor{{corDat.0}}" value = "{{corDat.6.midregularityMentor}}" disabled="" onchange="Projtotal('{{corDat.0}}','1')"></td>
+                                  <td class="numeric"><input type="text" id="1projectViva1{{corDat.0}}" value = "{{corDat.6.projectViva1}}" disabled="" onchange="Projtotal('{{corDat.0}}','1')"></td>
+                                  <td class="numeric"><input type="text" id="1projectViva2{{corDat.0}}" value = "{{corDat.6.projectViva2}}" disabled="" onchange="Projtotal('{{corDat.0}}','1')"></td>
+                                  <td class="numeric"><input type="text" id="1weekdocumentSubmission{{corDat.0}}" value = "{{corDat.6.weekdocumentSubmission}}" disabled="" onchange="Projtotal('{{corDat.0}}','1')"></td>
+                                  <td class="numeric"><input type="text" id="1midsemViva{{corDat.0}}" value = "{{corDat.6.midsemViva}}" disabled="" onchange="Projtotal('{{corDat.0}}','1')"></td>
+                                  <td class="numeric"><input type="text" id="1midsemReport{{corDat.0}}" value = "{{corDat.6.midsemReport}}" disabled="" onchange="Projtotal('{{corDat.0}}','1')"></td>
+				  <td class="numeric"><label id="1midsemTotal{{corDat.0}}">{{corDat.6.midsemTotal}}</label></td>
+                                  <td><select id="1midsemGrade{{corDat.0}}" disabled="">
                                   <option value="" selected="selected" disabled="disabled">Choose</option>
                                   {%for i in gradeList%}
-                                  {% if i == data.4 %}
+                                  {% if i == corDat.4 %}
                                   <option selected="selected">{{i}}</option>
                                   {%else%}
                                   <option>{{i}}</option>
                                   {%endif%}
                                   {%endfor%}
                                   </select></td>
-                                  {% if category == 1 %}
-                                  <td><input type="submit" id="1edit{{data.0}}" value="edit" onclick="edit('{{data.0}}')"><input id="1save{{data.0}}" type="submit" value="Save" style="display:none" onclick="saveData('{{data.0}}')" ></td>
+                                  {% if category == 1 or category == 4 %}
+                                  <td><input type="submit" id="1edit1{{corDat.0}}" value="edit" onclick="Projedit('{{corDat.0}}','1')"><input id="1save1{{corDat.0}}" type="submit" value="Save" style="display:none" onclick="Projsave('{{corDat.0}}','1')" ></td>
                               {% endif %}
                               </tr>
+                              {%endfor%}
                               </tbody>
                           </table>
                           		  	<br>
@@ -95,30 +97,31 @@ input[type="text"]{
                               </tr>
                               </thead>
                               <tbody>
-                              {%for data in faculty.1%}
+                              {%for corDat in faculty.1%}
                               <tr>
-                              <td>{{data.3}}</td>
-                                  <td>{{data.1}}</td>
-                                  <td>{{data.2}}</td>
-                                  <td class="numeric"><input type="text" id="1endregularityMentor{{data.0}}" value = "{{data.7.endregularityMentor}}" disabled="" onchange="abc('{{data.0}}','1')"></td>
-                                  <td class="numeric"><input type="text" id="1projectViva34{{data.0}}" value = "{{data.7.projectViva34}}" disabled="" onchange="abc('{{data.0}}','1')"></td>
-                                  <td class="numeric"><input type="text" id="1finalSeminar{{data.0}}" value = "{{data.7.finalSeminar}}" disabled="" onchange="abc('{{data.0}}','1')"></td>
-                                  <td class="numeric"><input type="text" id="finaldocumentSubmission{{data.0}}" value = "{{data.7.finaldocumentSubmission}}" disabled="" onchange="abc('{{data.0}}','1')"></td>
-                                  <td class="numeric"><label id="1Total{{data.0}}">{{data.7.Total}}</label></td>
-                                  <td><select id="1endsemGrade{{data.0}}" disabled="">
+                              <td>{{corDat.3}}</td>
+                                  <td>{{corDat.1}}</td>
+                                  <td>{{corDat.2}}</td>
+                                  <td class="numeric"><input type="text" id="1endregularityMentor{{corDat.0}}" value = "{{corDat.7.endregularityMentor}}" disabled="" onchange="Projtotal('{{corDat.0}}','2')"></td>
+                                  <td class="numeric"><input type="text" id="1projectViva34{{corDat.0}}" value = "{{corDat.7.projectViva34}}" disabled="" onchange="Projtotal('{{corDat.0}}','2')"></td>
+                                  <td class="numeric"><input type="text" id="1finalSeminar{{corDat.0}}" value = "{{corDat.7.finalSeminar}}" disabled="" onchange="Projtotal('{{corDat.0}}','2')"></td>
+                                  <td class="numeric"><input type="text" id="1finaldocumentSubmission{{corDat.0}}" value = "{{corDat.7.finaldocumentSubmission}}" disabled="" onchange="Projtotal('{{corDat.0}}','2')"></td>
+                                  <td class="numeric"><label id="1Total{{corDat.0}}">{{corDat.7.Total}}</label></td>
+                                  <td><select id="1endsemGrade{{corDat.0}}" disabled="">
                                   <option value="" selected="selected" disabled="disabled">Choose</option>
                                   {%for i in gradeList%}
-                                  {% if i == data.5 %}
+                                  {% if i == corDat.5 %}
                                   <option selected="selected">{{i}}</option>
                                   {%else%}
                                   <option>{{i}}</option>
                                   {%endif%}
                                   {%endfor%}
                                   </select></td>
-                                  {% if category == 1 %}
-                                  <td><input type="submit" id="1edit2{{data.0}}" value="edit" onclick="edit2('{{data.0}}')"><input id="1save2{{data.0}}" type="submit" value="Save" style="display:none" onclick="saveData2('{{data.0}}')" ></td>
+                                  {% if category == 1 or category == 4 %}
+                                  <td><input type="submit" id="1edit2{{corDat.0}}" value="edit" onclick="Projedit('{{corDat.0}}','2')"><input id="1save2{{corDat.0}}" type="submit" value="Save" style="display:none" onclick="Projsave('{{corDat.0}}','2')" ></td>
                               {% endif %}
                               </tr>
+                              {%endfor%}
                               </tbody>
                           </table>
                           </section>
@@ -156,36 +159,36 @@ input[type="text"]{
                               </thead>
                               
                               <tbody>
-                              {% for data in faculty.2 %}
+                              {% for corDat in faculty.2 %}
                               <tr>
-                              <td>{{data.3}}</td>
-                                  <td>{{data.1}}</td>
-                                  <td>{{data.2}}</td>
-                                 <td class="numeric"><input type="text" id="2viva1{{data.0}}" value = "{{data.6.viva1}}" disabled="" onchange="Dissertotal('{{data.0}}','1')"></td>
-                                  <td class="numeric"><input type="text" id="2midsemPresentation{{data.0}}" value = "{{data.6.midsemPresentation}}" disabled="" onchange="Dissertotal('{{data.0}}','1')"></td>
-                                  <td class="numeric"><input type="text" id ="2midsemReport{{data.0}}" value = "{{data.6.midsemReport}}" disabled="" onchange="Dissertotal('{{data.0}}','1')"></td>
-                                  <td class="numeric"><input type="text" id = "2viva2{{data.0}}" value = "{{data.6.viva2}}" disabled="" onchange="Dissertotal('{{data.0}}','1')"></td>
-                                  <td class="numeric"><input type="text" id="2finalDissertation{{data.0}}" value = "{{data.6.finalDissertation}}" disabled="" onchange="Dissertotal('{{data.0}}','1')"></td>
-                                  <td class="numeric"><input type="text" id="2finalViva{{data.0}}" value = "{{data.6.finalViva}}" disabled="" onchange="Dissertotal('{{data.0}}','1')"></td>
-                                  <td class="numeric"><label id="2Total{{data.0}}">{{data.6.Total}}</label></td>
-                                  <td><select id="2midsemGrade{{data.0}}" disabled=""> <option value="" selected="selected" disabled="disabled">Choose</option>
+                              <td>{{corDat.3}}</td>
+                                  <td>{{corDat.1}}</td>
+                                  <td>{{corDat.2}}</td>
+                                 <td class="numeric"><input type="text" id="2viva1{{corDat.0}}" value = "{{corDat.6.viva1}}" disabled="" onchange="Dissertotal('{{corDat.0}}','1')"></td>
+                                  <td class="numeric"><input type="text" id="2midsemPresentation{{corDat.0}}" value = "{{corDat.6.midsemPresentation}}" disabled="" onchange="Dissertotal('{{corDat.0}}','1')"></td>
+                                  <td class="numeric"><input type="text" id ="2midsemReport{{corDat.0}}" value = "{{corDat.6.midsemReport}}" disabled="" onchange="Dissertotal('{{corDat.0}}','1')"></td>
+                                  <td class="numeric"><input type="text" id = "2viva2{{corDat.0}}" value = "{{corDat.6.viva2}}" disabled="" onchange="Dissertotal('{{corDat.0}}','1')"></td>
+                                  <td class="numeric"><input type="text" id="2finalDissertation{{corDat.0}}" value = "{{corDat.6.finalDissertation}}" disabled="" onchange="Dissertotal('{{corDat.0}}','1')"></td>
+                                  <td class="numeric"><input type="text" id="2finalViva{{corDat.0}}" value = "{{corDat.6.finalViva}}" disabled="" onchange="Dissertotal('{{corDat.0}}','1')"></td>
+                                  <td class="numeric"><label id="2Total{{corDat.0}}">{{corDat.6.Total}}</label></td>
+                                  <td><select id="2midsemGrade{{corDat.0}}" disabled=""> <option value="" selected="selected" disabled="disabled">Choose</option>
                                   {%for i in gradeList%}
-                                  {% if i == data.4 %}
+                                  {% if i == corDat.4 %}
                                   <option selected="selected">{{i}}</option>
                                   {%else%}
                                   <option>{{i}}</option>
                                   {%endif%}
                                   {%endfor%}
                                   </select></td>
-                                  <td><select id="2endsemGrade{{data.0}}" disabled=""><option value="" selected="selected" disabled="disabled">Choose</option>
+                                  <td><select id="2endsemGrade{{corDat.0}}" disabled=""><option value="" selected="selected" disabled="disabled">Choose</option>
                                   {%for i in gradeList%}
-                                  {% if i == data.5 %}
+                                  {% if i == corDat.5 %}
                                   <option selected="selected">{{i}}</option>
                                   {%else%}
-                                  <option>{{i}}</option>
+                                  <option>{{i}}</option>{%endif%}
                                   {%endfor%}</select></td>
                                   {% if category == 1 or category == 4%}
-                                  <td><input type="submit" id="2edit{{data.0}}" value="edit" onclick="Disseredit('{{data.0}}','1')"><input id="2save{{data.0}}" type="submit" value="Save" style="display:none" onclick="Dissersave('{{data.0}}','1')" ></td>
+                                  <td><input type="submit" id="2edit1{{corDat.0}}" value="edit" onclick="Disseredit('{{corDat.0}}','1')"><input id="2save1{{corDat.0}}" type="submit" value="Save" style="display:none" onclick="Dissersave('{{corDat.0}}','1')" ></td>
                                   {% endif %}
                               </tr>
                               {%endfor%}
@@ -207,55 +210,55 @@ input[type="text"]{
                               </tr>
                               </thead>
                               <tbody>
-                              {%for data in faculty.2%}
+                              {%for corDat in faculty.2%}
                               <tr>
-                              <td>{{data.6}}</td>
-                                  <td>{{data.1}}</td>
-                                  <td>{{data.2}}</td>
-                                  <td><select id="2workProgress{{data.0}}" disabled=""><option value="" selected="selected" disabled="disabled">Choose</option>
+                              <td>{{corDat.3}}</td>
+                                  <td>{{corDat.1}}</td>
+                                  <td>{{corDat.2}}</td>
+                                  <td><select id="2workProgress{{corDat.0}}" disabled=""><option value="" selected="selected" disabled="disabled">Choose</option>
                                   {%for i in gradeList%}
-                                  {% if i == data.7.workProgress %}
+                                  {% if i == corDat.7.workProgress %}
                                   <option selected="selected">{{i}}</option>
                                   {%else%}
                                   <option>{{i}}</option>{%endif%}
                                   {%endfor%}</select></td>
-                                  <td><select id="2technicalCompetence{{data.0}}" disabled=""><option value="" selected="selected" disabled="disabled">Choose</option>
+                                  <td><select id="2technicalCompetence{{corDat.0}}" disabled=""><option value="" selected="selected" disabled="disabled">Choose</option>
                                   {%for i in gradeList%}
-                                  {% if i == data.7.technicalCompetence %}
+                                  {% if i == corDat.7.technicalCompetence %}
                                   <option selected="selected">{{i}}</option>
                                   {%else%}
                                   <option>{{i}}</option>{%endif%}
                                   {%endfor%}</select></td>
-                                  <td><select id="2documentation{{data.0}}" disabled=""><option value="" selected="selected" disabled="disabled">Choose</option>
+                                  <td><select id="2documentation{{corDat.0}}" disabled=""><option value="" selected="selected" disabled="disabled">Choose</option>
                                   {%for i in gradeList%}
-                                  {% if i == data.7.documentation %}
+                                  {% if i == corDat.7.documentation %}
                                   <option selected="selected">{{i}}</option>
                                   {%else%}
                                   <option>{{i}}</option>{%endif%}
                                   {%endfor%}</select></td>
-                                  <td><select id="2initiative{{data.0}}" disabled=""><option value="" selected="selected" disabled="disabled">Choose</option>
+                                  <td><select id="2initiative{{corDat.0}}" disabled=""><option value="" selected="selected" disabled="disabled">Choose</option>
                                   {%for i in gradeList%}
-                                  {% if i == data.7.initiative %}
+                                  {% if i == corDat.7.initiative %}
                                   <option selected="selected">{{i}}</option>
                                   {%else%}
                                   <option>{{i}}</option>{%endif%}
                                   {%endfor%}</select></td>
-                                  <td><select id="2puntuality{{data.0}}" disabled=""><option value="" selected="selected" disabled="disabled">Choose</option>
+                                  <td><select id="2puntuality{{corDat.0}}" disabled=""><option value="" selected="selected" disabled="disabled">Choose</option>
                                   {%for i in gradeList%}
-                                  {% if i == data.7.puntuality %}
+                                  {% if i == corDat.7.puntuality %}
                                   <option selected="selected">{{i}}</option>
                                   {%else%}
                                   <option>{{i}}</option>{%endif%}
                                   {%endfor%}</select></td>
-                                  <td><select id="2reliability{{data.0}}" disabled=""><option value="" selected="selected" disabled="disabled">Choose</option>
+                                  <td><select id="2reliability{{corDat.0}}" disabled=""><option value="" selected="selected" disabled="disabled">Choose</option>
                                   {%for i in gradeList%}
-                                  {% if i == data.7.reliability %}
+                                  {% if i == corDat.7.reliability %}
                                   <option selected="selected">{{i}}</option>
                                   {%else%}
                                   <option>{{i}}</option>{%endif%}
                                   {%endfor%}</select></td>
                                   {% if category == 1 or category == 4 %}
-                                  <td><input type="submit" id="2edit2{{data.0}}" value="edit" onclick="Disseredit('{{data.0}}','1')"><input id="2save2{{data.0}}" type="submit" value="Save" style="display:none" onclick="Dissersave('{{data.0}}','2')" ></td>
+                                  <td><input type="submit" id="2edit2{{corDat.0}}" value="edit" onclick="Disseredit('{{corDat.0}}','2')"><input id="2save2{{corDat.0}}" type="submit" value="Save" style="display:none" onclick="Dissersave('{{corDat.0}}','2')" ></td>
                                   {% endif %}
                               </tr>
                               {%endfor%}
@@ -302,29 +305,29 @@ input[type="text"]{
                               </tr>
                               </thead>
                               <tbody>
-                              {%for data in faculty.3%}
+                              {%for corDat in faculty.3%}
                               <tr>
-                              <td>{{data.3}}</td>
-                                  <td>{{data.1}}</td>
-                                  <td>{{data.2}}</td>
-                                  <td class="numeric"><input type="text" disabled="" id="3midProposalContent{{data.0}}" onchange="RPtotal('{{data.0}}','3')" value="{{data.6.midProposalContent}}"></td>
-                                  <td class="numeric"><input type="text" disabled="" id="3midProposalPresentation{{data.0}}" onchange="RPtotal('{{data.0}}','3')" value="{{data.6.midProposalPresentation}}"></td>
-                                  <td class="numeric"><input type="text" disabled="" id="3midDevelopmentReport{{data.0}}" onchange="RPtotal('{{data.0}}','3')" value="{{data.6.midDevelopmentReport}}"></td>
-                                  <td class="numeric"><input type="text" disabled="" id="3midDevelopmentPresentation{{data.0}}" onchange="RPtotal('{{data.0}}','3')" value="{{data.6.midDevelopmentPresentation}}"></td>
-                                  <td class="numeric"><input type="text" disabled="" id="3midResearchReport{{data.0}}" onchange="RPtotal('{{data.0}}','3')" value="{{data.6.midResearchReport}}"></td>
-                                  <td class="numeric"><input type="text" disabled="" id="3midResearchPresentation{{data.0}}" onchange="RPtotal('{{data.0}}','3')" value="{{data.6.midResearchPresentation}}"></td>
-                                  <td class="numeric"><label id="3midsemTotal{{data.0}}">{{data.6.midsemTotal}}</label></td>
-                                  <td><select id="3midsemGrade{{data.0}}" disabled="">
+                              <td>{{corDat.3}}</td>
+                                  <td>{{corDat.1}}</td>
+                                  <td>{{corDat.2}}</td>
+                                  <td class="numeric"><input type="text" disabled="" id="3midProposalContent{{corDat.0}}" onchange="RPtotal('{{corDat.0}}','1')" value="{{corDat.6.midProposalContent}}"></td>
+                                  <td class="numeric"><input type="text" disabled="" id="3midProposalPresentation{{corDat.0}}" onchange="RPtotal('{{corDat.0}}','1')" value="{{corDat.6.midProposalPresentation}}"></td>
+                                  <td class="numeric"><input type="text" disabled="" id="3midDevelopmentReport{{corDat.0}}" onchange="RPtotal('{{corDat.0}}','1')" value="{{corDat.6.midDevelopmentReport}}"></td>
+                                  <td class="numeric"><input type="text" disabled="" id="3midDevelopmentPresentation{{corDat.0}}" onchange="RPtotal('{{corDat.0}}','1')" value="{{corDat.6.midDevelopmentPresentation}}"></td>
+                                  <td class="numeric"><input type="text" disabled="" id="3midResearchReport{{corDat.0}}" onchange="RPtotal('{{corDat.0}}','1')" value="{{corDat.6.midResearchReport}}"></td>
+                                  <td class="numeric"><input type="text" disabled="" id="3midResearchPresentation{{corDat.0}}" onchange="RPtotal('{{corDat.0}}','1')" value="{{corDat.6.midResearchPresentation}}"></td>
+                                  <td class="numeric"><label id="3midsemTotal{{corDat.0}}">{{corDat.6.midsemTotal}}</label></td>
+                                  <td><select id="3midsemGrade{{corDat.0}}" disabled="">
 <option value="" selected="selected" disabled="disabled">Choose</option>
                                   {%for i in gradeList%}
-                                  {% if i == data.4 %}
+                                  {% if i == corDat.4 %}
                                   <option selected="selected">{{i}}</option>
                                   {%else%}
                                   <option>{{i}}</option>{%endif%}
                                   {%endfor%}
                                   </select></td>
                                   {% if category == 1 or category == 4 %}
-                                  <td><input type="submit" id="3edit1{{data.0}}" value="Edit" onclick="RPedit('{{data.0}}','1')"><input type="submit" id="3save1{{data.0}}" value="Save" style="display:none" onclick="RPsave('{{data.0}}','1')"></td>
+                                  <td><input type="submit" id="3edit1{{corDat.0}}" value="Edit" onclick="RPedit('{{corDat.0}}','1')"><input type="submit" id="3save1{{corDat.0}}" value="Save" style="display:none" onclick="RPsave('{{corDat.0}}','1')"></td>
                                 {%endif%}
                               </tr>
                               {%endfor%}
@@ -357,28 +360,28 @@ input[type="text"]{
                               </tr>
                               </thead>
                               <tbody>
-                              {%for data in faculty%}
+                              {%for corDat in faculty.3%}
                               <tr>
-                              <td>{{data.3}}</td>
-                                  <td>{{data.1}}</td>
-                                  <td>{{data.2}}</td>
-                                  <td class="numeric"><input type="text" id="3endDevelopmentReport{{data.0}}" disabled="" value="{{data.7.endDevelopmentReport}}" onchange="RPtotal('{{data.0}}','3')"></td>
-                                  <td class="numeric"><input type="text" id="3endDevelopmentPresentation{{data.0}}" disabled="" value="{{data.7.endDevelopmentPresentation}}" onchange="RPtotal('{{data.0}}','3')"></td>
-                                  <td class="numeric"><input type="text" id="3endResearchReport{{data.0}}" disabled="" value="{{data.7.endResearchReport}}" onchange="RPtotal('{{data.0}}','3')"></td>
-                                  <td class="numeric"><input type="text" id="3endResearchPresentation{{data.0}}" disabled="" value="{{data.7.endResearchPresentation}}" onchange="RPtotal('{{data.0}}','3')"></td>
-                                  <td class="numeric"><label id="3endsemTotal{{data.0}}">{{data.7.endsemTotal}}</label></td>
-                                  <td class="numeric"><label id="3Total{{data.0}}">{{data.7.Total}}</label></td>
-                                  <td><select id="endsemGrade{{data.0}}" disabled="">
+                              <td>{{corDat.3}}</td>
+                                  <td>{{corDat.1}}</td>
+                                  <td>{{corDat.2}}</td>
+                                  <td class="numeric"><input type="text" id="3endDevelopmentReport{{corDat.0}}" disabled="" value="{{corDat.7.endDevelopmentReport}}" onchange="RPtotal('{{corDat.0}}','2')"></td>
+                                  <td class="numeric"><input type="text" id="3endDevelopmentPresentation{{corDat.0}}" disabled="" value="{{corDat.7.endDevelopmentPresentation}}" onchange="RPtotal('{{corDat.0}}','2')"></td>
+                                  <td class="numeric"><input type="text" id="3endResearchReport{{corDat.0}}" disabled="" value="{{corDat.7.endResearchReport}}" onchange="RPtotal('{{corDat.0}}','2')"></td>
+                                  <td class="numeric"><input type="text" id="3endResearchPresentation{{corDat.0}}" disabled="" value="{{corDat.7.endResearchPresentation}}" onchange="RPtotal('{{corDat.0}}','2')"></td>
+                                  <td class="numeric"><label id="3endsemTotal{{corDat.0}}">{{corDat.7.endsemTotal}}</label></td>
+                                  <td class="numeric"><label id="3Total{{corDat.0}}">{{corDat.7.Total}}</label></td>
+                                  <td><select id="3endsemGrade{{corDat.0}}" disabled="">
                                   <option value="" selected="selected" disabled="disabled">Choose</option>
 								{%for i in gradeList%}
-                                  {% if i == data.5 %}
+                                  {% if i == corDat.5 %}
                                   <option selected="selected">{{i}}</option>
                                   {%else%}
                                   <option>{{i}}</option>{%endif%}
                                   {%endfor%}
                                   </select></td>
                                   {% if category == 1 or category == 4  %}                                
-                                  <td><input type="submit" id="3edit2{{data.0}}" value="Edit" onclick="RPedit('{{data.0}}','2')"><input type="submit" id="3save2{{data.0}}" value="Save" style="display:none" onclick="RPsave('{{data.0}}','2')"></td>
+                                  <td><input type="submit" id="3edit2{{corDat.0}}" value="Edit" onclick="RPedit('{{corDat.0}}','2')"><input type="submit" id="3save2{{corDat.0}}" value="Save" style="display:none" onclick="RPsave('{{corDat.0}}','2')"></td>
               	                {%endif%}
                               </tr>
                               {%endfor%}
@@ -422,49 +425,49 @@ Thesis
                               </tr>
                               </thead>
                               <tbody>
-                              {% for data in faculty.4 %}
+                              {% for corDat in faculty.4 %}
                               <tr>
-                              <td>{{data.3}}</td>
-                                  <td>{{data.1}}
+                              <td>{{corDat.3}}</td>
+                                  <td>{{corDat.1}}
                                   </td>
-                                  <td>{{data.2}}</td>
-                                  <td class="numeric"><input type="text" id="4viva1{{data.0}}" value = "{{data.6.viva1}}" disabled="" onchange="Thesistotal('{{data.0}}','1')"></td>
-                                  <td class="numeric"><input type="text" id="4midsemPresentation{{data.0}}" value = "{{data.6.midsemPresentation}}" disabled="" onchange="Thesistotal('{{data.0}}','1')"></td>
-                                  <td class="numeric"><input type="text" id ="4midsemReport{{data.0}}" value = "{{data.6.midsemReport}}" disabled="" onchange="Thesistotal('{{data.0}}','1')"></td>
-                                  <td class="numeric"><input type="text" id = "4viva2{{data.0}}" value = "{{data.6.viva2}}" disabled="" onchange="Thesistotal('{{data.0}}','1')"></td>
-                                  <td class="numeric"><input type="text" id="4finalThesis{{data.0}}" value = "{{data.6.finalThesis}}" disabled="" onchange="Thesistotal('{{data.0}}','1')"></td>
-                                  <td class="numeric"><input type="text" id="4finalViva{{data.0}}" value = "{{data.6.finalViva}}" disabled="" onchange="Thesistotal('{{data.0}}','1')"></td>
-                                  <td class="numeric"><label id="4Total{{data.0}}">0</label></td>
-                                  <td><select id="4midsemGrade{{data.0}}" disabled="">
+                                  <td>{{corDat.2}}</td>
+                                  <td class="numeric"><input type="text" id="4viva1{{corDat.0}}" value = "{{corDat.6.viva1}}" disabled="" onchange="Thesistotal('{{corDat.0}}','1')"></td>
+                                  <td class="numeric"><input type="text" id="4midsemPresentation{{corDat.0}}" value = "{{corDat.6.midsemPresentation}}" disabled="" onchange="Thesistotal('{{corDat.0}}','1')"></td>
+                                  <td class="numeric"><input type="text" id ="4midsemReport{{corDat.0}}" value = "{{corDat.6.midsemReport}}" disabled="" onchange="Thesistotal('{{corDat.0}}','1')"></td>
+                                  <td class="numeric"><input type="text" id = "4viva2{{corDat.0}}" value = "{{corDat.6.viva2}}" disabled="" onchange="Thesistotal('{{corDat.0}}','1')"></td>
+                                  <td class="numeric"><input type="text" id="4finalThesis{{corDat.0}}" value = "{{corDat.6.finalThesis}}" disabled="" onchange="Thesistotal('{{corDat.0}}','1')"></td>
+                                  <td class="numeric"><input type="text" id="4finalViva{{corDat.0}}" value = "{{corDat.6.finalViva}}" disabled="" onchange="Thesistotal('{{corDat.0}}','1')"></td>
+                                  <td class="numeric"><label id="4Total{{corDat.0}}">{{corDat.6.Total}}</label></td>
+                                  <td><select id="4midsemGrade{{corDat.0}}" disabled="">
 								<option value="" selected="selected" disabled="disabled">Choose</option>
 								{%for i in gradeList%}
-                                  {% if i == data.4 %}
+                                  {% if i == corDat.4 %}
                                   <option selected="selected">{{i}}</option>
                                   {%else%}
                                   <option>{{i}}</option>{%endif%}
                                   {%endfor%}
                                   </select></td>
-                                  <td><select id="4endsemGrade{{data.0}}" disabled="">
+                                  <td><select id="4endsemGrade{{corDat.0}}" disabled="">
 								<option value="" selected="selected" disabled="disabled">Choose</option>
 								{%for i in gradeList%}
-                                  {% if i == data.5 %}
+                                  {% if i == corDat.5 %}
                                   <option selected="selected">{{i}}</option>
                                   {%else%}
                                   <option>{{i}}</option>{%endif%}
                                   {%endfor%}
                                   </select></td>
                                   <td>
-                                  <select id="4seminarGrade{{data.0}}" disabled="">
+                                  <select id="4seminarGrade{{corDat.0}}" disabled="">
                                   <option value="" selected="selected" disabled="disabled">Choose</option>
 								{%for i in seminarList %}
-                                  {% if i == data.6.seminarGrade %}
+                                  {% if i == corDat.6.seminarGrade %}
                                   <option selected="selected">{{i}}</option>
                                   {%else%}
                                   <option>{{i}}</option>{%endif%}
                                   {%endfor%}                              
                                   </select></td>
                                   {% if category == 1 or category == 4%}
-                                  <td><input type="submit" id="4edit{{data.0}}" value="edit" onclick="Thesedit('{{data.0}}','1')"><input id="4save{{data.0}}" type="submit" value="Save" style="display:none" onclick="Thessave('{{data.0}}','1')" ></td>
+                                  <td><input type="submit" id="4edit1{{corDat.0}}" value="edit" onclick="Thesedit('{{corDat.0}}','1')"><input id="4save1{{corDat.0}}" type="submit" value="Save" style="display:none" onclick="Thessave('{{corDat.0}}','1')" ></td>
                               {%endif%}
                               </tr>
                               {%endfor%}
@@ -472,7 +475,7 @@ Thesis
                           </table>
                           {% load dict_acc %}
         <br><h4>Seminars</h4>
-                      {%for xc in [7,8,9,10] %}
+                      
                       <h4><i class="fa fa-angle-right"></i> Seminar 1</h4>
 
                           <section id="unseen">
@@ -490,71 +493,71 @@ Thesis
                               </tr>
                               </thead>
                               <tbody>
-                              {%for data in faculty.4 %}
+                              {%for corDat in faculty.4 %}
                               <tr>
-                              <td>{{data.3}}</td>
-                                  <td>{{data.1}}</td>
-                                  <td>{{data.2}}</td>
-                                  <td class="numeric"><select id="4writtenAbstract{{data.0}}S{{xc|add :-6}}" disabled="">
+                              <td>{{corDat.3}}</td>
+                                  <td>{{corDat.1}}</td>
+                                  <td>{{corDat.2}}</td>
+                                  <td class="numeric"><select id="4writtenAbstract{{corDat.0}}S1" disabled="">
                                   <option value="" selected="selected" disabled="disabled">Choose</option>
 								{%for i in seminarList %}
-                                  {% if i == data|access:xc,writtenAbstract %}
+                                  {% if i == corDat.7.writtenAbstract %}
                                   <option selected="selected">{{i}}</option>
                                   {%else%}
                                   <option>{{i}}</option>{%endif%}
                                   {%endfor%}                            
                                   </select></td>
-                                  <td class="numeric"><select id="4technicalContent{{data.0}}S{{xc|add :-6}}" disabled="">
+                                  <td class="numeric"><select id="4technicalContent{{corDat.0}}S1" disabled="">
                                    <option value="" selected="selected" disabled="disabled">Choose</option>
 								{%for i in seminarList %}
-                                  {% if i == data|access:xc,technicalContent %}
+                                  {% if i == corDat.7.technicalContent %}
                                   <option selected="selected">{{i}}</option>
                                   {%else%}
                                   <option>{{i}}</option>{%endif%}
                                   {%endfor%}                            
                                   </select></td>
-                                  <td class="numeric"><select id="4depthKnowledge{{data.0}}S{{xc|add :-6}}" disabled="">
+                                  <td class="numeric"><select id="4depthKnowledge{{corDat.0}}S1" disabled="">
                                    <option value="" selected="selected" disabled="disabled">Choose</option>
 								{%for i in seminarList %}
-                                  {% if i == data|access:xc,depthKnowledge %}
+                                  {% if i == corDat.7.depthKnowledge %}
                                   <option selected="selected">{{i}}</option>
                                   {%else%}
                                   <option>{{i}}</option>{%endif%}
                                   {%endfor%}                           
                                   </select></td>
-                                  <td class="numeric"><select id="4stylePresentation{{data.0}}S{{xc|add :-6}}" disabled="">
+                                  <td class="numeric"><select id="4stylePresentation{{corDat.0}}S1" disabled="">
                                    <option value="" selected="selected" disabled="disabled">Choose</option>
 								{%for i in seminarList %}
-                                  {% if i == data|access:xc,stylePresentation %}
+                                  {% if i == corDat.7.stylePresentation %}
                                   <option selected="selected">{{i}}</option>
                                   {%else%}
                                   <option>{{i}}</option>{%endif%}
                                   {%endfor%}                     
                                   </select></td>
-                                  <td class="numeric"><select id="4responseQuestion{{data.0}}S{{xc|add :-6}}" disabled="">
+                                  <td class="numeric"><select id="4responseQuestion{{corDat.0}}S1" disabled="">
                                    <option value="" selected="selected" disabled="disabled">Choose</option>
 								{%for i in seminarList %}
-                                  {% if i == data|access:xc,responseQuestion %}
+                                  {% if i == corDat.7.responseQuestion %}
                                   <option selected="selected">{{i}}</option>
                                   {%else%}
                                   <option>{{i}}</option>{%endif%}
                                   {%endfor%}                             
                                   </select></td>
                                   {% if category == 1 or category == 4%}
-                                  <td><input type="submit" id="4edit2{{data.0}}S{{xc|add :-6}}" value="edit" onclick="Thesedit('{{data.0}}S{{xc|add :-6}}','2')"><input id="4save2{{data.0}}S{{xc|add :-6}}" type="submit" value="Save" style="display:none" onclick="Thessave('{{data.0}}','S{{xc|add :-6}}')" ></td>
+                                  <td><input type="submit" id="4edit2{{corDat.0}}S1" value="edit" onclick="Thesedit('{{corDat.0}}S1','2')"><input id="4save2{{corDat.0}}S1" type="submit" value="Save" style="display:none" onclick="Thessave('{{corDat.0}}','S1')" ></td>
                                   {%endif%}
                               </tr>
                               {%endfor%}
                               </tbody>
                           </table>
                           </section>
-                          {%endfor%}
-<!--                           <h4><i class="fa fa-angle-right"></i> Seminar 2</h4>
+                           <h4><i class="fa fa-angle-right"></i> Seminar 2</h4>
+
                           <section id="unseen">
                             <table class="table table-bordered table-striped table-condensed">
                               <thead>
                               <tr>
-                              <th>course Code</th>
+                              <th>Course Code</th>
                                   <th>IDNo.</th>
                                   <th>Name</th>
                                   <th class="numeric">Written abstract</th>
@@ -565,92 +568,71 @@ Thesis
                               </tr>
                               </thead>
                               <tbody>
-                              {% for data in faculty.4 %}
+                              {%for corDat in faculty.4 %}
                               <tr>
-                              	<td>{{data.3}}</td>
-                                  <td>{{data.1}}</td>
-                                  <td>{{data.2}}</td>
-                                  <td class="numeric"><select id="writtenAbstract{{data.0}}S2" disabled="">
+                              <td>{{corDat.3}}</td>
+                                  <td>{{corDat.1}}</td>
+                                  <td>{{corDat.2}}</td>
+                                  <td class="numeric"><select id="4writtenAbstract{{corDat.0}}S2" disabled="">
                                   <option value="" selected="selected" disabled="disabled">Choose</option>
 								{%for i in seminarList %}
-                                  {% if i == data.8.writtenAbstract %}
+                                  {% if i == corDat.8.writtenAbstract %}
                                   <option selected="selected">{{i}}</option>
                                   {%else%}
                                   <option>{{i}}</option>{%endif%}
-                                  {%endfor%}                          
+                                  {%endfor%}                            
                                   </select></td>
-                                  <td class="numeric"><select id="technicalContent20S2" disabled="">
-                                  <option value="good">Good</option>
-                                  <option value="poor">Poor</option>                              
+                                  <td class="numeric"><select id="4technicalContent{{corDat.0}}S2" disabled="">
+                                   <option value="" selected="selected" disabled="disabled">Choose</option>
+								{%for i in seminarList %}
+                                  {% if i == corDat.8.technicalContent %}
+                                  <option selected="selected">{{i}}</option>
+                                  {%else%}
+                                  <option>{{i}}</option>{%endif%}
+                                  {%endfor%}                            
                                   </select></td>
-                                  <td class="numeric"><select id="depthKnowledge20S2" disabled="">
-                                  <option value="good">Good</option>
-                                  <option value="poor">Poor</option>                              
+                                  <td class="numeric"><select id="4depthKnowledge{{corDat.0}}S2" disabled="">
+                                   <option value="" selected="selected" disabled="disabled">Choose</option>
+								{%for i in seminarList %}
+                                  {% if i == corDat.8.depthKnowledge %}
+                                  <option selected="selected">{{i}}</option>
+                                  {%else%}
+                                  <option>{{i}}</option>{%endif%}
+                                  {%endfor%}                           
                                   </select></td>
-                                  <td class="numeric"><select id="stylePresentation20S2" disabled="">
-                                  <option value="good">Good</option>
-                                  <option value="poor">Poor</option>                              
+                                  <td class="numeric"><select id="4stylePresentation{{corDat.0}}S2" disabled="">
+                                   <option value="" selected="selected" disabled="disabled">Choose</option>
+								{%for i in seminarList %}
+                                  {% if i == corDat.8.stylePresentation %}
+                                  <option selected="selected">{{i}}</option>
+                                  {%else%}
+                                  <option>{{i}}</option>{%endif%}
+                                  {%endfor%}                     
                                   </select></td>
-                                  <td class="numeric"><select id="responseQuestion20S2" disabled="">
-                                  <option value="good">Good</option>
-                                  <option value="poor">Poor</option>                              
+                                  <td class="numeric"><select id="4responseQuestion{{corDat.0}}S2" disabled="">
+                                   <option value="" selected="selected" disabled="disabled">Choose</option>
+								{%for i in seminarList %}
+                                  {% if i == corDat.8.responseQuestion %}
+                                  <option selected="selected">{{i}}</option>
+                                  {%else%}
+                                  <option>{{i}}</option>{%endif%}
+                                  {%endfor%}                             
                                   </select></td>
-                                  <td>
-{% if category == 1 %}
-                                  <input type="submit" id="edit220S2" value="edit" onclick="edit2('20S2')"><input id="save220S2" type="submit" value="Save" style="display:none" onclick="saveData2('20','S2')" ></td>
-                      {%endif%}                                          </tr>
-                              </tbody>
-                          </table>
-                          </section>
-                          <h4><i class="fa fa-angle-right"></i> Seminar 3</h4>
-                          <section id="unseen">
-                            <table class="table table-bordered table-striped table-condensed">
-                              <thead>
-                              <tr>
-                                  <th>IDNo.</th>
-                                  <th>Name</th>
-                                  <th class="numeric">Written abstract</th>
-                                  <th class="numeric">Technical contents</th>
-                                  <th class="numeric">Depth Of knowledge</th>
-                                  <th class="numeric">Style of presentation</th>
-                                  <th class="numeric">Response to questions</th>
-                              </tr>
-                              </thead>
-                              <tbody>
-                              <tr>
-                                  <td><a href="">2012C6PS392P</a></td>
-                                  <td><a href="">Prateek Jain</a></td>
-                                  <td class="numeric"><select id="writtenAbstract20S3" disabled="">
-                                  <option value="good">Good</option>
-                                  <option value="poor">Poor</option>                              
-                                  </select></td>
-                                  <td class="numeric"><select id="technicalContent20S3" disabled="">
-                                  <option value="good">Good</option>
-                                  <option value="poor">Poor</option>                              
-                                  </select></td>
-                                  <td class="numeric"><select id="depthKnowledge20S3" disabled="">
-                                  <option value="good">Good</option>
-                                  <option value="poor">Poor</option>                              
-                                  </select></td>
-                                  <td class="numeric"><select id="stylePresentation20S3" disabled="">
-                                  <option value="good">Good</option>
-                                  <option value="poor">Poor</option>                              
-                                  </select></td>
-                                  <td class="numeric"><select id="responseQuestion20S3" disabled="">
-                                  <option value="good">Good</option>
-                                  <option value="poor">Poor</option>                              
-                                  </select></td>
-                             {% if category == 1 or category == 4 %}     <td><input type="submit" id="edit220S3" value="edit" onclick="edit2('20S3')"><input id="save220S3" type="submit" value="Save" style="display:none" onclick="saveData2('20','S3')" ></td>
+                                  {% if category == 1 or category == 4%}
+                                  <td><input type="submit" id="4edit2{{corDat.0}}S2" value="edit" onclick="Thesedit('{{corDat.0}}S2','2')"><input id="4save2{{corDat.0}}S2" type="submit" value="Save" style="display:none" onclick="Thessave('{{corDat.0}}','S2')" ></td>
                                   {%endif%}
                               </tr>
+                              {%endfor%}
                               </tbody>
                           </table>
                           </section>
-                          <h4><i class="fa fa-angle-right"></i> Seminar 4</h4>
+                           <h4><i class="fa fa-angle-right"></i> Seminar 3</h4>
+
                           <section id="unseen">
                             <table class="table table-bordered table-striped table-condensed">
                               <thead>
                               <tr>
+                              <th>Course Code</th>
                                   <th>IDNo.</th>
                                   <th>Name</th>
                                   <th class="numeric">Written abstract</th>
@@ -661,37 +643,140 @@ Thesis
                               </tr>
                               </thead>
                               <tbody>
+                              {%for corDat in faculty.4 %}
                               <tr>
-                                  <td><a href="">2012C6PS392P</a></td>
-                                  <td><a href="">Prateek Jain</a></td>
-                                  <td class="numeric"><select id="writtenAbstract20S4" disabled="">
-                                  <option value="good">Good</option>
-                                  <option value="poor">Poor</option>                              
+                              <td>{{corDat.3}}</td>
+                                  <td>{{corDat.1}}</td>
+                                  <td>{{corDat.2}}</td>
+                                  <td class="numeric"><select id="4writtenAbstract{{corDat.0}}S3" disabled="">
+                                  <option value="" selected="selected" disabled="disabled">Choose</option>
+								{%for i in seminarList %}
+                                  {% if i == corDat.9.writtenAbstract %}
+                                  <option selected="selected">{{i}}</option>
+                                  {%else%}
+                                  <option>{{i}}</option>{%endif%}
+                                  {%endfor%}                            
                                   </select></td>
-                                  <td class="numeric"><select id="technicalContent20S4" disabled="">
-                                  <option value="good">Good</option>
-                                  <option value="poor">Poor</option>                              
+                                  <td class="numeric"><select id="4technicalContent{{corDat.0}}S3" disabled="">
+                                   <option value="" selected="selected" disabled="disabled">Choose</option>
+								{%for i in seminarList %}
+                                  {% if i == corDat.9.technicalContent %}
+                                  <option selected="selected">{{i}}</option>
+                                  {%else%}
+                                  <option>{{i}}</option>{%endif%}
+                                  {%endfor%}                            
                                   </select></td>
-                                  <td class="numeric"><select id="depthKnowledge20S4" disabled="">
-                                  <option value="good">Good</option>
-                                  <option value="poor">Poor</option>                              
+                                  <td class="numeric"><select id="4depthKnowledge{{corDat.0}}S3" disabled="">
+                                   <option value="" selected="selected" disabled="disabled">Choose</option>
+								{%for i in seminarList %}
+                                  {% if i == corDat.9.depthKnowledge %}
+                                  <option selected="selected">{{i}}</option>
+                                  {%else%}
+                                  <option>{{i}}</option>{%endif%}
+                                  {%endfor%}                           
                                   </select></td>
-                                  <td class="numeric"><select id="stylePresentation20S4" disabled="">
-                                  <option value="good">Good</option>
-                                  <option value="poor">Poor</option>                              
+                                  <td class="numeric"><select id="4stylePresentation{{corDat.0}}S3" disabled="">
+                                   <option value="" selected="selected" disabled="disabled">Choose</option>
+								{%for i in seminarList %}
+                                  {% if i == corDat.9.stylePresentation %}
+                                  <option selected="selected">{{i}}</option>
+                                  {%else%}
+                                  <option>{{i}}</option>{%endif%}
+                                  {%endfor%}                     
                                   </select></td>
-                                  <td class="numeric"><select id="responseQuestion20S4" disabled="">
-                                  <option value="good">Good</option>
-                                  <option value="poor">Poor</option>                              
+                                  <td class="numeric"><select id="4responseQuestion{{corDat.0}}S3" disabled="">
+                                   <option value="" selected="selected" disabled="disabled">Choose</option>
+								{%for i in seminarList %}
+                                  {% if i == corDat.9.responseQuestion %}
+                                  <option selected="selected">{{i}}</option>
+                                  {%else%}
+                                  <option>{{i}}</option>{%endif%}
+                                  {%endfor%}                             
                                   </select></td>
-                                  {% if category == 1 or category == 4 %}
-                                  <td><input type="submit" id="edit220S4" value="edit" onclick="edit2('20S4')"><input id="save220S4" type="submit" value="Save" style="display:none" onclick="saveData2('20','S4')" ></td>
-                                                        {%endif%}       </tr>
+                                  {% if category == 1 or category == 4%}
+                                  <td><input type="submit" id="4edit2{{corDat.0}}S3" value="edit" onclick="Thesedit('{{corDat.0}}S3','2')"><input id="4save2{{corDat.0}}S3" type="submit" value="Save" style="display:none" onclick="Thessave('{{corDat.0}}','S3')" ></td>
+                                  {%endif%}
+                              </tr>
+                              {%endfor%}
                               </tbody>
                           </table>
                           </section>
-             <i class="fa fa-angle-right"></i>  
- -->           <br>
+                           <h4><i class="fa fa-angle-right"></i> Seminar 4</h4>
+
+                          <section id="unseen">
+                            <table class="table table-bordered table-striped table-condensed">
+                              <thead>
+                              <tr>
+                              <th>Course Code</th>
+                                  <th>IDNo.</th>
+                                  <th>Name</th>
+                                  <th class="numeric">Written abstract</th>
+                                  <th class="numeric">Technical contents</th>
+                                  <th class="numeric">Depth Of knowledge</th>
+                                  <th class="numeric">Style of presentation</th>
+                                  <th class="numeric">Response to questions</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              {%for corDat in faculty.4 %}
+                              <tr>
+                              <td>{{corDat.3}}</td>
+                                  <td>{{corDat.1}}</td>
+                                  <td>{{corDat.2}}</td>
+                                  <td class="numeric"><select id="4writtenAbstract{{corDat.0}}S4" disabled="">
+                                  <option value="" selected="selected" disabled="disabled">Choose</option>
+								{%for i in seminarList %}
+                                  {% if i == corDat.10.writtenAbstract %}
+                                  <option selected="selected">{{i}}</option>
+                                  {%else%}
+                                  <option>{{i}}</option>{%endif%}
+                                  {%endfor%}                            
+                                  </select></td>
+                                  <td class="numeric"><select id="4technicalContent{{corDat.0}}S4" disabled="">
+                                   <option value="" selected="selected" disabled="disabled">Choose</option>
+								{%for i in seminarList %}
+                                  {% if i == corDat.10.technicalContent %}
+                                  <option selected="selected">{{i}}</option>
+                                  {%else%}
+                                  <option>{{i}}</option>{%endif%}
+                                  {%endfor%}                            
+                                  </select></td>
+                                  <td class="numeric"><select id="4depthKnowledge{{corDat.0}}S4" disabled="">
+                                   <option value="" selected="selected" disabled="disabled">Choose</option>
+								{%for i in seminarList %}
+                                  {% if i == corDat.10.depthKnowledge %}
+                                  <option selected="selected">{{i}}</option>
+                                  {%else%}
+                                  <option>{{i}}</option>{%endif%}
+                                  {%endfor%}                           
+                                  </select></td>
+                                  <td class="numeric"><select id="4stylePresentation{{corDat.0}}S4" disabled="">
+                                   <option value="" selected="selected" disabled="disabled">Choose</option>
+								{%for i in seminarList %}
+                                  {% if i == corDat.10.stylePresentation %}
+                                  <option selected="selected">{{i}}</option>
+                                  {%else%}
+                                  <option>{{i}}</option>{%endif%}
+                                  {%endfor%}                     
+                                  </select></td>
+                                  <td class="numeric"><select id="4responseQuestion{{corDat.0}}S4" disabled="">
+                                   <option value="" selected="selected" disabled="disabled">Choose</option>
+								{%for i in seminarList %}
+                                  {% if i == corDat.10.responseQuestion %}
+                                  <option selected="selected">{{i}}</option>
+                                  {%else%}
+                                  <option>{{i}}</option>{%endif%}
+                                  {%endfor%}                             
+                                  </select></td>
+                                  {% if category == 1 or category == 4%}
+                                  <td><input type="submit" id="4edit2{{corDat.0}}S4" value="edit" onclick="Thesedit('{{corDat.0}}S4','2')"><input id="4save2{{corDat.0}}S4" type="submit" value="Save" style="display:none" onclick="Thessave('{{corDat.0}}','S4')" ></td>
+                                  {%endif%}
+                              </tr>
+                              {%endfor%}
+                              </tbody>
+                          </table>
+                          </section>
+                          <br>
                           <h4>Supervisor's Rating of Students Traits</h4>
                             <table class="table table-bordered table-striped table-condensed">
                               <thead>
@@ -708,70 +793,71 @@ Thesis
                               </tr>
                               </thead>
                               <tbody>
-                              {%for data in faculty.4%}
+                              {%for corDat in faculty.4%}
                               <tr>
-                              <td>{{data.3}}</td>
-                                  <td>{{data.1}}</td>
-                                  <td>{{data.2}}</td>
-                  <td class="numeric"><select id="4workProgress{{data.0}}" disabled="">
+                              <td>{{corDat.3}}</td>
+                                  <td>{{corDat.1}}</td>
+                                  <td>{{corDat.2}}</td>
+                  <td class="numeric"><select id="4workProgress{{corDat.0}}" disabled="">
                                   <option value="" selected="selected" disabled="disabled">Choose</option>
-								{%for i in ["Excellent","Good","Fair","Poor"] %}
-                                  {% if i == data.11.workProgress %}
+								{%for i in trait %}
+                                  {% if i == corDat.11.workProgress %}
                                   <option selected="selected">{{i}}</option>
                                   {%else%}
                                   <option>{{i}}</option>{%endif%}
                                   {%endfor%}                                  
                                   </select></td>
-                                  <td class="numeric"><select id="technicalCompetence{{data.0}}" disabled="">
+                                  <td class="numeric"><select id="4technicalCompetence{{corDat.0}}" disabled="">
                                  <option value="" selected="selected" disabled="disabled">Choose</option>
-								{%for i in ["Excellent","Good","Fair","Poor"] %}
-                                  {% if i == data.11.technicalCompetence %}
+								{%for i in trait %}
+                                  {% if i == corDat.11.technicalCompetence %}
                                   <option selected="selected">{{i}}</option>
                                   {%else%}
                                   <option>{{i}}</option>{%endif%}
                                   {%endfor%}                                 
                                   </select></td>
-                                  <td class="numeric"><select id="documentation{{data.0}}" disabled="">
+                                  <td class="numeric"><select id="4documentation{{corDat.0}}" disabled="">
                                   <option value="" selected="selected" disabled="disabled">Choose</option>
-								{%for i in ["Excellent","Good","Fair","Poor"] %}
-                                  {% if i == data.11.documentation %}
+								{%for i in trait %}
+                                  {% if i == corDat.11.documentation %}
                                   <option selected="selected">{{i}}</option>
                                   {%else%}
                                   <option>{{i}}</option>{% endif %}
                                   {%endfor%}                             
                                   </select></td>
-                                  <td class="numeric"><select id="4initiative{{data.0}}" disabled="">
+                                  <td class="numeric"><select id="4initiative{{corDat.0}}" disabled="">
                                   <option value="" selected="selected" disabled="disabled">Choose</option>
-								{%for i in ["Excellent","Good","Fair","Poor"] %}
-                                  {% if i == data.11.initiative %}
+								{%for i in trait %}
+                                  {% if i == corDat.11.initiative %}
                                   <option selected="selected">{{i}}</option>
                                   {%else%}
                                   <option>{{i}}</option>{%endif%}
                                   {%endfor%}                              
                                   </select></td>
-                                  <td class="numeric"><select id="4puntuality{{data.0}}" disabled="">
+                                  <td class="numeric"><select id="4puntuality{{corDat.0}}" disabled="">
                                   <option value="" selected="selected" disabled="disabled">Choose</option>
-								{%for i in ["Excellent","Good","Fair","Poor"] %}
-                                  {% if i == data.11.puntuality %}
+								{%for i in trait %}
+                                  {% if i == corDat.11.puntuality %}
                                   <option selected="selected">{{i}}</option>
                                   {%else%}
                                   <option>{{i}}</option>{%endif%}
                                   {%endfor%}                                    
                                   </select></td>
-                  <td class="numeric"><select id="4reliability{{data.0}}" disabled="">
+                  <td class="numeric"><select id="4reliability{{corDat.0}}" disabled="">
                                   <option value="" selected="selected" disabled="disabled">Choose</option>
-								{%for i in ["Excellent","Good","Fair","Poor"] %}
-                                  {% if i == data.11.reliability %}
+								{%for i in trait %}
+                                  {% if i == corDat.11.reliability %}
                                   <option selected="selected">{{i}}</option>
                                   {%else%}
                                   <option>{{i}}</option>{%endif%}
                                   {%endfor%}                                  
                                   </select></td>
                                   {% if category == 1 or category == 4 %}
-                                  <td><input type="submit" id="4edit3{{data.0}}" value="edit" onclick="Thesedit('{{data.0}}','3')"><input id="4save3{{data.0}}" type="submit" value="Save" style="display:none" onclick="Thessave('{{data.0}}','3')" ></td>
+                                  <td><input type="submit" id="4edit3{{corDat.0}}" value="edit" onclick="Thesedit('{{corDat.0}}','3')"><input id="4save3{{corDat.0}}" type="submit" value="Save" style="display:none" onclick="Thessave('{{corDat.0}}','3')" ></td>
                                   {%endif%}
                                   
                               </tr>
+                              {%endfor%}
                               </tbody>
                           </table>
                           </section>
