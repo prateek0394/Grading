@@ -413,7 +413,7 @@ ul.sidebar-menu li a.active i {
 }
 
 .black-bg {
-    background: #ffd777;
+    background: #fff;
     border-bottom: 1px solid #c9aa5f;
 }
 
@@ -445,7 +445,8 @@ a.logo:hover, a.logo:focus {
 }
 
 a.logo span {
-    color: #68dff0;
+    /*color: #68dff0;*/
+    color: #fff;
 }
 
 
@@ -2216,8 +2217,9 @@ label {
 
 /*footer*/
 .site-footer {
-    background: #68dff0;
-    color: #fff;
+    /*background: #68dff0;*/
+    background: #FFF;
+    color: #000;
     padding: 10px 0;
 }
 

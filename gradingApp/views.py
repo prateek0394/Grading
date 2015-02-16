@@ -51,7 +51,11 @@ def marks(request):
 		except Exception,e:
 			data = ["NOK",str(e)]
 		return HttpResponse(simplejson.dumps(data), content_type='application/json')
-	context = {'semester':durObj.semester,'year':durObj.year,'data':{},'category':int(request.session["category"]),'gradeList':["","A","A-","B","B-","C","C-","D","E","NC"],'seminarList':["Good","Poor"],'seml':[7,8,9,10],'trait':["Excellent","Good","Fair","Poor"]}
+	if durObj.semester == 1:
+		showYear = 	str(durObj.year)+"-"+str((durObj.year+1)%100)
+	else:
+		showYear = 	str(durObj.year-1)+"-"+str(durObj.year%100)
+	context = {'semester':durObj.semester,'year':showYear,'data':{},'category':int(request.session["category"]),'gradeList':["","A","A-","B","B-","C","C-","D","E","NC"],'seminarList':["Good","Poor"],'seml':[7,8,9,10],'trait':["Excellent","Good","Fair","Poor"]}
 	try:
 		uid = str(request.session["userid"])
 		x = userData.objects.get(userid = uid)
@@ -241,7 +245,10 @@ def student(request):
 	try:
 		uid = str(request.session["userid"])
 		usr  = userData.objects.get(userid = uid)
-		dall = markList.objects.filter(student = studentData.objects.get(user = usr))
+		if uid =="cs.elective":
+			dall = markList.objects.all()
+		else:
+			dall = markList.objects.filter(student = studentData.objects.get(user=usr))
 		dataLst = []
 		for dd in dall:
 			ed = dd.evalData
@@ -277,7 +284,22 @@ def reportDisp(request):
 		raise Http404
 @login_required(login_url='/')
 def reportGen(request):
-	return render(request,'genReport.html',{'type':str(request.GET.get('type')),'category':int(str(request.session["category"]))})
+	x = course.objects.all()
+	lst = [[z.pk,z.courseCode,z.title] for z in x]
+	studData = {}
+	cat = int(request.session["category"])
+	for z in x:
+		if cat ==0:
+			a = markList.objects.filter(course = z,student = studentData.objects.get(user=userData.objects.get(userid = str(request.session["userid"]))))
+		elif cat == 1:
+			a = markList.objects.filter(course = z,faculty = facultyData.objects.get(user=userData.objects.get(userid = str(request.session["userid"]))))
+		else:
+			a = markList.objects.filter(course = z)
+		lst1 = []
+		for e in a:
+			lst1.append([e.pk,e.student.user.bitsid,e.student.user.name,z.courseCode])
+		studData[z.pk] = lst1
+	return render(request,'genReport.html',{'type':str(request.GET.get('type')),'courses':lst,'category':int(str(request.session["category"])),'studentData':studData})
 @login_required(login_url='/')
 def reminder(request):
 	if request.is_ajax():

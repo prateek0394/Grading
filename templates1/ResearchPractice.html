@@ -1,0 +1,127 @@
+{% extends "blank.html" %}
+   {%block title%}
+   Research Practice
+   {% endblock %}
+    {%block head_content %}
+
+<style type="text/css">
+  input[type="text"]{
+    width:20%;
+  }
+</style>
+{% endblock %}
+{%block main_content %}
+          <section class="wrapper">
+          <center>
+          	<h3>
+          	<!-- <i class="fa fa-angle-right"></i> --> 
+          	{{CourseCode}}{{CourseName}}<br>{{SemesterNumber}} Semester {{SessionYear}}<br><br>Mid-Semester Evaluation</h3></center>
+		  		<div class="row mt">
+			  		<div class="col-lg-12">
+                      <div class="content-panel">
+                      <!-- <h4><i class="fa fa-angle-right"></i> Responsive Table</h4> -->
+                          <section id="unseen">
+                            <table class="table table-bordered table-striped table-condensed">
+                              <thead>
+                              <tr>
+                                  <th>IDNo.</th>
+                                  <th>Name</th>
+                                  <th  colspan="2"><center>Research Proposal</center></th>
+                                  <th colspan="2"><center>Development related</center></th>
+                                  <th colspan="2"><center>Research Related</center></th>
+                                  <th >Mid Sem Marks</th>
+                                  <th>Recommended <br>Mid Sem Grade</th>
+                              </tr>
+                              <tr>
+                                  <th></th>
+                                  <th></th>
+                                  <th class="numeric">Contents</th>
+                                  <th class="numeric">Presentation</th>
+                                  <th class="numeric">Report</th>
+                                  <th class="numeric">Presentation</th>
+                                  <th class="numeric">Report</th>
+                                  <th class="numeric">Presentation</th>
+                                  <th class="numeric"></th>
+                                  <th class="numeric"></th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              <tr>
+                                  <td><a href="">2012C6PS392P</a></td>
+                                  <td><a href="">Prateek Jain</a></td>
+                                  <td class="numeric"><input type="text" disabled="" id="midProposalContent101" onchange="abc('101')" value="10"></td>
+                                  <td class="numeric"><input type="text" disabled="" id="midProposalPresentation101" onchange="abc('101')" value="5"></td>
+                                  <td class="numeric"><input type="text" disabled="" id="midDevelopmentReport101" onchange="abc('101')" value="5"></td>
+                                  <td class="numeric"><input type="text" disabled="" id="midDevelopmentPresentation101" onchange="abc('101')" value="10"></td>
+                                  <td class="numeric"><input type="text" disabled="" id="midResearchReport101" onchange="abc('101')" value="10"></td>
+                                  <td class="numeric"><input type="text" disabled="" id="midResearchPresentation101" onchange="abc('101')" value="10"></td>
+                                  <td class="numeric"><label id="midsemTotal101">50</label></td>
+                                  <td><select id="midsemGrade101" disabled=""><option>A</option><option>A-</option><option>B</option><option>B-</option><option>C</option><option>C-</option><option>D</option><option>E</option></select></td>
+                                  {% if category == 1 or category == 4 %}
+                                  <td><input type="submit" id="edit1101" value="Edit" onclick="edit1('101')"><input type="submit" id="save1101" value="Save" style="display:none" onclick="saveData1('101')"></td>
+                                {%endif%}
+                              </tr>
+                              </tbody>
+                          </table>
+                          </section>
+                  </div><!-- /content-panel -->
+               </div><!-- /col-lg-4 -->			
+		  	</div><!-- /row -->
+		  	<br><br>
+		  	  <center>
+            <h3>
+            <!-- <i class="fa fa-angle-right"></i> --> 
+        End-Semester Evaluation</h3></center>
+          <div class="row mt">
+            <div class="col-lg-12">
+                      <div class="content-panel">
+                      <!-- <h4><i class="fa fa-angle-right"></i> Responsive Table</h4> -->
+                          <section id="unseen">
+                            <table class="table table-bordered table-striped table-condensed">
+                              <thead>
+                              <tr>
+                                  <th>IDNo.</th>
+                                  <th>Name</th>
+                                  <th colspan="2"><center>Development related</center></th>
+                                  <th colspan="2"><center>Research Related</center></th>
+                                  <th >End Sem Marks</th>
+                                  <th>Total Marks</th>
+                                  <th>Recommended <br>End Sem Grade</th>
+                              </tr>
+                              <tr>
+                                  <th></th>
+                                  <th></th>
+                                  <th class="numeric">Report</th>
+                                  <th class="numeric">Presentation</th>
+                                  <th class="numeric">Report</th>
+                                  <th class="numeric">Presentation</th>
+                                  <th class="numeric"></th>
+                                  <th class="numeric"></th>
+                                  <th class="numeric"></th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              <tr>
+                                  <td><a href="">2012C6PS392P</a></td>
+                                  <td><a href="">Prateek Jain</a></td>
+                                  <td class="numeric"><input type="text" id="endDevelopmentReport101" disabled="" value="10" onchange="abc('101')"></td>
+                                  <td class="numeric"><input type="text" id="endDevelopmentPresentation101" disabled="" value="5" onchange="abc('101')"></td>
+                                  <td class="numeric"><input type="text" id="endResearchReport101" disabled="" value="20" onchange="abc('101')"></td>
+                                  <td class="numeric"><input type="text" id="endResearchPresentation101" disabled="" value="15" onchange="abc('101')"></td>
+                                  <td class="numeric"><label id="endsemTotal101">50</label></td>
+                                  <td class="numeric"><label id="Total101">100</label></td>
+                                  <td><select id="endsemGrade101" disabled=""><option>A</option><option>A-</option><option>B</option><option>B-</option><option>C</option><option>C-</option><option>D</option><option>E</option></select></td>
+                                  {% if category == 1 or category == 4  %}                                
+                                  <td><input type="submit" id="edit2101" value="Edit" onclick="edit2('101')"><input type="submit" id="save2101" value="Save" style="display:none" onclick="saveData2('101')"></td>
+                              {%endif%}
+                              </tr>
+                              </tbody>
+                          </table>
+                          </section>
+                  </div><!-- /content-panel -->
+               </div><!-- /col-lg-4 -->     
+        </div><!-- /row -->
+        
+
+		</section><! --/wrapper -->
+    {%endblock%}

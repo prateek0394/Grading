@@ -1141,11 +1141,3 @@ table.facsHistory th.dt{
 		color: #ff0000;
 		display: block;
 }
-
-#footinfo li
-{
-display: inline;
-font-size: 14px;
-list-style-type: none;
-padding-right: 20px;
-}

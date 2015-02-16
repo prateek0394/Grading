@@ -2,16 +2,15 @@ from django.shortcuts import render
 from django.http import Http404,HttpResponse
 import simplejson
 from models import *
+from django.contrib.auth.decorators import login_required
 
 allow_dict = {'key1':[1,2,3,4],'key2':[2,3,4],'key3':[0,4],'key4':[1,4],'key5':[3,4]}
 def AccessPermission(dictkey,val):
 	if not val in allow_dict[dictkey]:
 		return False
 	return True
-
+@login_required(login_url='/')
 def onOff(request):
-	if not AccessPermission('key5',int(str(request.session["category"]))):
-		raise Http404
 	if request.is_ajax():
 		try:
 			appID = request.GET.get("appID")

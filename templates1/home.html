@@ -1,0 +1,27 @@
+{% extends 'login.html' %}
+{% block main %}
+<script type="text/javascript">
+	function X(){
+		$.getJSON('', {x:x,type:'1',pk:id}, function(data, jqXHR){
+    if(data[0]==='OK'){
+       alert('Awesome\n'+data[1]);
+}else{
+	alert('Error!!!!!!!!!!!!!!!!!');
+}
+});
+	}
+</script>
+	<div>
+	<h1>Auth demo</h1>
+
+	<p>
+		{% if user and not user.is_anonymous %}
+			Hello {{ user.get_full_name}}!
+			<a href="{% url 'auth:logout' %}?next={{ request.path}}">logout</a>
+	<!-- 		<a href="{% url 'socialauth_disconnect' 'backend-name' %}">Logout</a>
+ -->		{% else %}
+			<a href="{% url 'socialauth_begin' 'google-oauth2' %}?next={{ request.path }}" style="margin-left:2em">Login</a><br>Please login using BITS userid (eg. f20XXXXX@pilani.bits-pilani.ac.in)
+		{% endif %}
+	</p>
+	</div>
+	{% endblock %}

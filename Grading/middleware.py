@@ -2,8 +2,8 @@ import datetime
 from django.conf import settings
 from django.http import HttpResponseRedirect,Http404
 from django.shortcuts import redirect
-
-def checkGrade(x):
+from appSetting.models import *
+def checkGrade(request, x):
     if x[1] =="student":
         if not (int(request.session["category"]) ==0 or int(request.session["category"]) == 4):
             raise Http404
@@ -26,16 +26,23 @@ def checkGrade(x):
         if int(request.session["category"])==0:
             raise Http404
     
-def checkSetting(x):
-    if x[1] =="OnOff" and not(int(request.session["category"])==3 and int(request.session["category"]==4)):
+def checkSetting(request, x):
+    if x[1] =="OnOff" and not int(request.session["category"])==3 and not int(request.session["category"]==4):
         raise Http404
 
 class StayMiddleware(object):
     def process_request(self,request):
         x = str(request.path)
         x = x.split('/')[1:]
-        print x
+        # print x
         if not request.user.is_anonymous():
-            print "dsadsd"
             if x[0] =="grade":
-                return checkGrade(x)
+                xy = appOnOff.objects.filter(app = appName.objects.get(appID  = 4)).order_by("-pk")[0]
+                if xy.startDate == "" or xy.endDate == "":
+                    return HttpResponse("Application not properly configured!!! Contact Administrator for that")
+                elif datetime.strptime(xy.startDate,"%m/%d/%Y") > datetime.now() or datetime.strptime(xy.endDate,"%m/%d/%Y") < datetime.now():
+                    raise Http404
+                else:
+                    return checkGrade(request, x)
+            elif x[0] == "appSetting":
+                    return checkSetting(request, x)
