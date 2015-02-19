@@ -67,7 +67,7 @@
                                 <p>
 		{% if user and not user.is_anonymous %}
 			Hello {{ user.get_full_name}}!
-			<a href="{% url 'auth:logout' %}?next={{ request.path}}">logout</a>
+			<a href="{% url 'socialauth_disconnect' 'google-oauth2' %}?next={{ request.path}}">logout</a>
 	<!-- 		<a href="{% url 'socialauth_disconnect' 'backend-name' %}">Logout</a>
  -->		{% else %}
  			 <div id="gSignInWrapper">

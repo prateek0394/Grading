@@ -51,6 +51,7 @@ AUTHENTICATION_BACKENDS = (
 
 
 MIDDLEWARE_CLASSES = (
+    'social_auth.middleware.SocialAuthExceptionMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -58,7 +59,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'Grading.middleware.StayMiddleware'
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -72,12 +72,12 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 SOCIAL_AUTH_BACKEND_ERROR_URL = '/new-error-url/'
 
 LOGIN_REDIRECT_URL = '/'
-
+LOGIN_ERROR_URL = '/'
 GOOGLE_OAUTH2_CLIENT_ID = "1074910271539-8dhgsdcq2uqqr0am5lugq25rjfv1fu4i.apps.googleusercontent.com"
 GOOGLE_OAUTH2_CLIENT_SECRET = "6-R3n0xkHjTKoLM_KtEysF30"
 GOOGLE_WHITE_LISTED_DOMAINS = ['pilani.bits-pilani.ac.in']
 SOCIAL_AUTH_USER_MODEL = 'auth.User'
-
+GOOGLE_OAUTH2_AUTH_EXTRA_ARGUMENTS = {'approval_prompt': 'force'}
 ROOT_URLCONF = 'Grading.urls'
 
 WSGI_APPLICATION = 'Grading.wsgi.application'

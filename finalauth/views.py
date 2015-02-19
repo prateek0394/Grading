@@ -1,5 +1,6 @@
 from django.core.urlresolvers import reverse
 from django.contrib import messages
+from django.contrib.auth import logout
 from django.http import HttpResponse, HttpResponseRedirect,Http404
 from django.views.generic.base import View
 from social_auth.exceptions import AuthFailed
@@ -23,7 +24,9 @@ def home(request):
     context = {'request':request,'user': request.user}
     return render(request,'home.html',context)
  
-def logout(request):
+def logout1(request):
+    #return redirect('https://mail.google.com/?logout')
+    logout(request)
     return redirect('https://mail.google.com/?logout')
 
 def insertData(f,idu):
