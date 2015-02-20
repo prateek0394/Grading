@@ -24,10 +24,15 @@ def home(request):
     context = {'request':request,'user': request.user}
     return render(request,'home.html',context)
  
+def exit(request):
+    logout(request)
+    return redirect('/')
+
 def logout1(request):
     #return redirect('https://mail.google.com/?logout')
     logout(request)
-    return redirect('https://mail.google.com/?logout')
+    #return redirect('/')
+    return HttpResponse("<h1>Login with your bits mail.</h1><br><a href = '/exit/'>logout</a>")
 
 def insertData(f,idu):
     if idu=="Student":
