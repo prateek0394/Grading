@@ -71,7 +71,7 @@ input[type="text"]{
                                   {%endif%}
                                   {%endfor%}
                                   </select></td>
-                                  {% if category == 1 or category == 4 %}
+                                  {% if category == 1 or category == 4 or AL==1 %}
                                   <td><input type="submit" id="1edit1{{corDat.0}}" value="edit" onclick="Projedit('{{corDat.0}}','1')"><input id="1save1{{corDat.0}}" type="submit" value="Save" style="display:none" onclick="Projsave('{{corDat.0}}','1')" ></td>
                               {% endif %}
                               </tr>
@@ -117,7 +117,7 @@ input[type="text"]{
                                   {%endif%}
                                   {%endfor%}
                                   </select></td>
-                                  {% if category == 1 or category == 4 %}
+                                  {% if category == 1 or category == 4 or AL==1 %}
                                   <td><input type="submit" id="1edit2{{corDat.0}}" value="edit" onclick="Projedit('{{corDat.0}}','2')"><input id="1save2{{corDat.0}}" type="submit" value="Save" style="display:none" onclick="Projsave('{{corDat.0}}','2')" ></td>
                               {% endif %}
                               </tr>
@@ -257,7 +257,7 @@ input[type="text"]{
                                   {%else%}
                                   <option>{{i}}</option>{%endif%}
                                   {%endfor%}</select></td>
-                                  {% if category == 1 or category == 4 %}
+                                  {% if category == 1 or category == 4 or AL==1 %}
                                   <td><input type="submit" id="2edit2{{corDat.0}}" value="edit" onclick="Disseredit('{{corDat.0}}','2')"><input id="2save2{{corDat.0}}" type="submit" value="Save" style="display:none" onclick="Dissersave('{{corDat.0}}','2')" ></td>
                                   {% endif %}
                               </tr>
@@ -326,7 +326,7 @@ input[type="text"]{
                                   <option>{{i}}</option>{%endif%}
                                   {%endfor%}
                                   </select></td>
-                                  {% if category == 1 or category == 4 %}
+                                  {% if category == 1 or category == 4 or AL==1 %}
                                   <td><input type="submit" id="3edit1{{corDat.0}}" value="Edit" onclick="RPedit('{{corDat.0}}','1')"><input type="submit" id="3save1{{corDat.0}}" value="Save" style="display:none" onclick="RPsave('{{corDat.0}}','1')"></td>
                                 {%endif%}
                               </tr>
@@ -380,7 +380,7 @@ input[type="text"]{
                                   <option>{{i}}</option>{%endif%}
                                   {%endfor%}
                                   </select></td>
-                                  {% if category == 1 or category == 4  %}                                
+                                  {% if category == 1 or category == 4  or AL==1 %}                                
                                   <td><input type="submit" id="3edit2{{corDat.0}}" value="Edit" onclick="RPedit('{{corDat.0}}','2')"><input type="submit" id="3save2{{corDat.0}}" value="Save" style="display:none" onclick="RPsave('{{corDat.0}}','2')"></td>
               	                {%endif%}
                               </tr>
@@ -466,7 +466,7 @@ Thesis
                                   <option>{{i}}</option>{%endif%}
                                   {%endfor%}                              
                                   </select></td>
-                                  {% if category == 1 or category == 4%}
+                                  {% if category == 1 or category == 4 or AL==1 %}
                                   <td><input type="submit" id="4edit1{{corDat.0}}" value="edit" onclick="Thesedit('{{corDat.0}}','1')"><input id="4save1{{corDat.0}}" type="submit" value="Save" style="display:none" onclick="Thessave('{{corDat.0}}','1')" ></td>
                               {%endif%}
                               </tr>
@@ -543,7 +543,7 @@ Thesis
                                   <option>{{i}}</option>{%endif%}
                                   {%endfor%}                             
                                   </select></td>
-                                  {% if category == 1 or category == 4%}
+                                  {% if category == 1 or category == 4 or AL==1 %}
                                   <td><input type="submit" id="4edit2{{corDat.0}}S1" value="edit" onclick="Thesedit('{{corDat.0}}S1','2')"><input id="4save2{{corDat.0}}S1" type="submit" value="Save" style="display:none" onclick="Thessave('{{corDat.0}}','S1')" ></td>
                                   {%endif%}
                               </tr>
@@ -618,7 +618,7 @@ Thesis
                                   <option>{{i}}</option>{%endif%}
                                   {%endfor%}                             
                                   </select></td>
-                                  {% if category == 1 or category == 4%}
+                                  {% if category == 1 or category == 4 or AL==1 %}
                                   <td><input type="submit" id="4edit2{{corDat.0}}S2" value="edit" onclick="Thesedit('{{corDat.0}}S2','2')"><input id="4save2{{corDat.0}}S2" type="submit" value="Save" style="display:none" onclick="Thessave('{{corDat.0}}','S2')" ></td>
                                   {%endif%}
                               </tr>
@@ -693,7 +693,7 @@ Thesis
                                   <option>{{i}}</option>{%endif%}
                                   {%endfor%}                             
                                   </select></td>
-                                  {% if category == 1 or category == 4%}
+                                  {% if category == 1 or category == 4 or AL==1 %}
                                   <td><input type="submit" id="4edit2{{corDat.0}}S3" value="edit" onclick="Thesedit('{{corDat.0}}S3','2')"><input id="4save2{{corDat.0}}S3" type="submit" value="Save" style="display:none" onclick="Thessave('{{corDat.0}}','S3')" ></td>
                                   {%endif%}
                               </tr>
@@ -768,7 +768,7 @@ Thesis
                                   <option>{{i}}</option>{%endif%}
                                   {%endfor%}                             
                                   </select></td>
-                                  {% if category == 1 or category == 4%}
+                                  {% if category == 1 or category == 4 or AL==1 %}
                                   <td><input type="submit" id="4edit2{{corDat.0}}S4" value="edit" onclick="Thesedit('{{corDat.0}}S4','2')"><input id="4save2{{corDat.0}}S4" type="submit" value="Save" style="display:none" onclick="Thessave('{{corDat.0}}','S4')" ></td>
                                   {%endif%}
                               </tr>
@@ -852,7 +852,7 @@ Thesis
                                   <option>{{i}}</option>{%endif%}
                                   {%endfor%}                                  
                                   </select></td>
-                                  {% if category == 1 or category == 4 %}
+                                  {% if category == 1 or category == 4 or AL == 1 %}
                                   <td><input type="submit" id="4edit3{{corDat.0}}" value="edit" onclick="Thesedit('{{corDat.0}}','3')"><input id="4save3{{corDat.0}}" type="submit" value="Save" style="display:none" onclick="Thessave('{{corDat.0}}','3')" ></td>
                                   {%endif%}
                                   
@@ -866,6 +866,30 @@ Thesis
         </div><!-- /row -->
 {%endif%}
 {%endfor%}
-    	</section><!--/wrapper -->
+	</section><!--/wrapper -->
 
     {%endblock%}
+    <!--
+<div class="showback">
+<button class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModal">Edit Marks</button>
+<form id="uploadForm" action="/grade/marks" method="post" enctype="multipart/form-data">
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Marks Editing By HOD</h4>
+                  </div>
+                  <div class="modal-body">
+                  Reason:<select name="reason"><option>A</option><option>B</option><option>C</option><option>D</option></select>
+                    Comment :<br> <textarea style="width:100%" rows="5" name="comment"></textarea>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="dismis">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+                </div>
+              </div>
+          </div> 
+     </form> </div>
+    -->

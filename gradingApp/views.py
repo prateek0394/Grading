@@ -55,7 +55,14 @@ def marks(request):
 		showYear = 	str(durObj.year)+"-"+str((durObj.year+1)%100)
 	else:
 		showYear = 	str(durObj.year-1)+"-"+str(durObj.year%100)
-	context = {'semester':durObj.semester,'year':showYear,'data':{},'category':int(request.session["category"]),'gradeList':["","A","A-","B","B-","C","C-","D","E","NC"],'seminarList':["Good","Poor"],'seml':[7,8,9,10],'trait':["Excellent","Good","Fair","Poor"]}
+	AL = 0
+	if request.method =="POST":
+		reason = str(request.POST.get("reason"))
+		comment = str(request.POST.get("comment",""))
+		w = HODoverLoad(user = userData.objects.get(userid=str(request.session["userid"])),reason=reason,comment=comment)
+		w.save()
+		AL = 1
+	context = {'semester':durObj.semester,'AL':AL,'year':showYear,'data':{},'category':int(request.session["category"]),'gradeList':["","A","A-","B","B-","C","C-","D","E","NC"],'seminarList':["Good","Poor"],'seml':[7,8,9,10],'trait':["Excellent","Good","Fair","Poor"]}
 	try:
 		uid = str(request.session["userid"])
 		x = userData.objects.get(userid = uid)
