@@ -17,7 +17,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'h!1dbh754y(gbq+-l(z65@-h%&u)pp&qi_o2=5^n7=iumr+g72'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -74,7 +73,6 @@ SOCIAL_AUTH_BACKEND_ERROR_URL = '/new-error-url/'
 LOGIN_REDIRECT_URL = '/'
 
 GOOGLE_OAUTH2_CLIENT_ID = "1074910271539-8dhgsdcq2uqqr0am5lugq25rjfv1fu4i.apps.googleusercontent.com"
-GOOGLE_OAUTH2_CLIENT_SECRET = "6-R3n0xkHjTKoLM_KtEysF30"
 GOOGLE_WHITE_LISTED_DOMAINS = ['pilani.bits-pilani.ac.in']
 SOCIAL_AUTH_USER_MODEL = 'auth.User'
 
